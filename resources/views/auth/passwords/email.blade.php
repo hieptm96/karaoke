@@ -25,7 +25,7 @@
         <![endif]-->
 
         <script src="/vendor/ubold/assets/js/modernizr.min.js"></script>
-        
+
     </head>
     <body>
         <div class="account-pages"></div>
@@ -43,7 +43,9 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }} role="form" class="form-horizontal text-center">
+                    <form method="POST" action="{{ route('password.email') }}" role="form" class="form-horizontal text-center">
+                        {{ csrf_field() }}
+
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
                                 ×
@@ -62,7 +64,7 @@
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn btn-pink w-sm waves-effect waves-light">
                                         Reset
-                                    </button> 
+                                    </button>
                                 </span>
                             </div>
                         </div>
@@ -70,8 +72,8 @@
                     </form>
                 </div>
             </div>
-        </div>        
-        
+        </div>
+
         <script>
             var resizefunc = [];
         </script>
@@ -91,6 +93,6 @@
 
         <script src="/vendor/ubold/assets/js/jquery.core.js"></script>
         <script src="/vendor/ubold/assets/js/jquery.app.js"></script>
-    
+
     </body>
 </html>

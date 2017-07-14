@@ -15,17 +15,19 @@ class CreateSingersTable extends Migration
     {
         Schema::create('singer', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('Name', 80);
+            $table->string('Name', 80)->index();
             $table->integer('Sex');
             $table->integer('Lang');
-            $table->String('Spell', 12);
+            $table->string('Spell', 12)->index();
             $table->String('FileName', 12);
             $table->integer('star');
-            $table->String('NameRaw', 80);
-            $table->integer('frep');
+            $table->string('NameRaw', 80)->index();
+            $table->integer('freq');
             $table->integer('created_by');
             $table->integer('updated_by');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

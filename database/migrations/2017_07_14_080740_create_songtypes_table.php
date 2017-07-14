@@ -15,7 +15,12 @@ class CreateSongtypesTable extends Migration
     {
         Schema::create('songtype', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('SongTypeName', 40);
+            $table->string('SongTypeName', 40)->index();
+            $table->integer('created_by');
+            $table->integer('updated_by');
+            $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

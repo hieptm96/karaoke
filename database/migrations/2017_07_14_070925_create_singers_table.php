@@ -37,6 +37,6 @@ class CreateSingersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('singer');
+        Schema::dropIfExists('singers');
     }
 }

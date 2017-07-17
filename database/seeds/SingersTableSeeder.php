@@ -19,6 +19,8 @@ class SingersTableSeeder extends Seeder
                 'sex' => $faker->randomElement([1, 2, 3]),
                 'language' => $faker->randomElement([1, 2, 3]),
                 'star' => 1,
+                'created_by' => 1,
+                'updated_by' => 1,
             ]);
         }
     }

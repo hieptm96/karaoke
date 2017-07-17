@@ -108,34 +108,16 @@
                         <h4 class="modal-title" id="myModalLabel">Experiment Account</h4>
                     </div>
                     <div class="modal-body">
-                        <table class="table m-0 text-center">
+                        <table class="table m-0 text-center table-bordered">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center">Username</th>
                                     <th class="text-center">Email</th>
+                                    <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>admin@gmail.com</td>
-                                    <td class="text-right"><button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Select</button></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>editor@gmail.com</td>
-                                    <td class="text-right"><button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Select</button></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>manager@gmail.com</td>
-                                    <td class="text-right"><button type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Select</button></td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -164,7 +146,31 @@
 
         <script src="/vendor/ubold/assets/js/jquery.core.js"></script>
         <script src="/vendor/ubold/assets/js/jquery.app.js"></script>
-    
+        <script>
+            $(document).ready(function() {
+                $.ajax({ 
+                    url: "/sample-users",
+                    method: "GET",
+                    success: function(response) {
+                        var str = '';
+                        for (var i = 0; i < response.length; i++) {
+                            str += '<tr><th scope="row">' + (i + 1) + '</td>';
+                            str += '<td>' + response[i].name + '</td>';
+                            str += '<td class="sample-email">' + response[i].email + '</td>';
+                            str += '<td class="text-right"><button type="button" class="btn btn-primary waves-effect select-account" data-dismiss="modal">Select</button></td></tr>';
+                        }
+                        $('table tbody').html(str);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+                $(document).on('click', '.select-account', function() {
+                    $('#email').val($(this).parent().parent().find('.sample-email').text());
+                    $('#password').val('123456');
+                });
+            });
+        </script>
     </body>
 </html>
 

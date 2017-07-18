@@ -19,3 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/sample-users', 'SampleUsersController@index');
+
+// Songs
+Route::get('songs/datatables', 'SongsController@datatables')->name('songs.datatables');
+Route::resource('songs', 'SongsController');
+
+// Singers
+Route::get('singers/datatables', 'SingersController@datatables')->name('singers.datatables');
+Route::resource('singers', 'SingersController');

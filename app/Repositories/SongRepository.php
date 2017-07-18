@@ -39,4 +39,8 @@ class SongRepository implements Contract
             //
         ];
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> develop

@@ -36,11 +36,7 @@ class AppServiceProvider extends ServiceProvider
     protected function registerServices()
     {
         $services = [
-<<<<<<< HEAD
             'Song', 'Singer'
-=======
-            'Song',
->>>>>>> develop
         ];
 
         foreach ($services as $service) {

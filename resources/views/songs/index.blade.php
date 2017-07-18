@@ -60,7 +60,8 @@
                     <thead>
                     <tr>
                         <th width="2%">Mã</th>
-                        <th>Tên ca sĩ</th>
+                        <th>Tên</th>
+                        <th>Ca sỹ</th>
                         <th width="10%">Language</th>
                         <th width="10%">Người tạo</th>
                         <th width="10%">Ngày tạo</th>
@@ -94,7 +95,7 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{!! route('singers.datatables') !!}",
+                url: "{!! route('songs.datatables') !!}",
                 data: function (d) {
                     d.name = $('input[name=name]').val();
                 }
@@ -102,6 +103,7 @@
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
+                {data: 'singers', name: 'singers', orderable: false, searchable: false},
                 {data: 'language', name: 'language'},
                 {data: 'created_by', name: 'created_by'},
                 {data: 'created_at', name: 'created_at'},

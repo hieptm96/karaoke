@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use Illuminate\Http\Request;
-use App\Contracts\Repositories\SingerRepository;
+use App\Contracts\Repositories\SongRepository;
 
-class SingersController extends Controller
+class SongsController extends Controller
 {
-    protected $singerRepository;
+    protected $songRepository;
 
-    public function __construct(SingerRepository $singerRepository)
+    public function __construct(SongRepository $songRepository)
     {
-        $this->singerRepository = $singerRepository;
+        $this->songRepository = $songRepository;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -23,7 +22,7 @@ class SingersController extends Controller
      */
     public function index()
     {
-        return view('singers.index');
+        return view('songs.index');
     }
 
     /**
@@ -50,10 +49,10 @@ class SingersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Song $song)
     {
         //
     }
@@ -61,10 +60,10 @@ class SingersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Song $song)
     {
         //
     }
@@ -73,10 +72,10 @@ class SingersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Song $song)
     {
         //
     }
@@ -84,10 +83,10 @@ class SingersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Song $song)
     {
         //
     }
@@ -100,6 +99,6 @@ class SingersController extends Controller
      */
     public function datatables(Request $request)
     {
-        return $this->singerRepository->getDatatables($request);
+        return $this->songRepository->getDatatables($request);
     }
 }

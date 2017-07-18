@@ -19,3 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/sample-users', 'SampleUsersController@index');
+
+
+Route::get('/singers', 'SingersController@index');
+
+Route::get('/singers/search', 'SingersController@search');
+
+Route::post('/singers/edit', 'SingersController@edit');
+
+Route::post('/singers/delete', 'SingersController@delete');

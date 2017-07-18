@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8e59e4756e560aac7ce4211ac2520f2",
+    "content-hash": "dd64b07b2c702626685e144f9f9fdbd4",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -67,6 +67,36 @@
                 "webprofiler"
             ],
             "time": "2017-06-14T07:44:44+00:00"
+        },
+        {
+            "name": "cucxabeng/repogen",
+            "version": "0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cucxabeng/repogen.git",
+                "reference": "ac0503ff65307c65204708afbaf6650b26b0a992"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cucxabeng/repogen/zipball/ac0503ff65307c65204708afbaf6650b26b0a992",
+                "reference": "ac0503ff65307c65204708afbaf6650b26b0a992",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cucxabeng\\Repogen\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "haidang",
+                    "email": "cucabeng@gmail.com"
+                }
+            ],
+            "description": "Repository generator",
+            "time": "2017-07-13T10:15:30+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

@@ -171,6 +171,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Gtk\FlashMessage\FlashMessageServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Cucxabeng\Repogen\RepogenServiceProvider::class,
 
         /*
          * Application Service Providers...

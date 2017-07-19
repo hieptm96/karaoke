@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Song;
+use App\Models\Singer;
 use Illuminate\Http\Request;
+use App\Transformers\SingerTransformer;
+use Barryvdh\Debugbar\Facade as Debugbar;
 use App\Contracts\Repositories\SingerRepository;
 
 class SingersController extends Controller
@@ -33,7 +35,7 @@ class SingersController extends Controller
      */
     public function create()
     {
-        //
+        return view('singers.create');
     }
 
     /**
@@ -44,7 +46,18 @@ class SingersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->input('name');
+        $sex = $request->input('sex');
+        $language = $request->input('language');
+
+        $result = $this->singerRepository->create(['name' => $name, 'sex' => $sex,
+                    'language' => $language, 'created_by' => 1, 'updated_by' => 1]);
+
+        if ($result != null) {
+            return redirect('/singers/' . $result['id'])->with('created', true);
+        } else {
+            return view('singers.create', ['created' => false]);
+        }
     }
 
     /**
@@ -55,7 +68,17 @@ class SingersController extends Controller
      */
     public function show($id)
     {
-        //
+        // $singer = Singer::with('createdBy')->find($id);
+
+        $singer = Singer::find($id);
+
+        if ($singer != null) {
+            $singer = SingerTransformer::transformWithoutLink($singer);
+            return view('singers.show-singer', ['singer' => $singer]);
+        } else {
+            return redirect('/singers');
+        }
+
     }
 
     /**
@@ -78,7 +101,18 @@ class SingersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request->input('name');
+        $sex = $request->input('sex');
+        $language = $request->input('language');
+
+        $result = $this->singerRepository->update($id,
+                      ['name' => $name, 'sex' => $sex, 'language' => $language]);
+
+        if ($result === null) {
+            return back();
+        } else {
+            return redirect('/singers/' . $id)->with('edited', $result);
+        }
     }
 
     /**
@@ -89,7 +123,12 @@ class SingersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $success = $this->singerRepository->delete($id);
+        if ($success) {
+            return view('singers.created');
+        } else {
+            return redirect('/singers/' . $id)->with('delete', false);;
+        }
     }
 
     /*

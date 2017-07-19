@@ -11,8 +11,21 @@ class SingerTransformer extends TransformerAbstract
     {
         return [
             'id' => $singer->id,
-            'name' => $singer->name,
+            'name' => '<a href="'.route('singers.show', $singer->id).'">'.$singer->name.'</a>',
             'language' => config('ktv.languages.'.$singer->language, ''),
+            'created_by' => $singer->createdBy->name,
+            'created_at' => $singer->created_at->toDateTimeString(),
+            'updated_at' => $singer->updated_at->toDateTimeString(),
+        ];
+    }
+
+    public static function transformWithoutLink(Singer $singer)
+    {
+        return [
+            'id' => $singer->id,
+            'name' => $singer->name,
+            'sex' => $singer->sex,
+            'language' => $singer->language,
             'created_by' => $singer->createdBy->name,
             'created_at' => $singer->created_at->toDateTimeString(),
             'updated_at' => $singer->updated_at->toDateTimeString(),

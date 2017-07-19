@@ -12,19 +12,19 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
-                <button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Settings <span class="m-l-5"><i class="fa fa-cog"></i></span></button>
+                <a href="{{ route('singers.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm ca sĩ </a>
             </div>
 
-            <h4 class="page-title">Bài hát</h4>
+            <h4 class="page-title">Ca sĩ</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">KTV</a>
                 </li>
                 <li>
-                    <a href="#">Bài hát</a>
+                    <a href="#">Ca sĩ</a>
                 </li>
                 <li class="active">
-                    Danh sách bài hát
+                    Danh sách ca sĩ
                 </li>
             </ol>
         </div>

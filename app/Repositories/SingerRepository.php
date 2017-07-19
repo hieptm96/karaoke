@@ -33,6 +33,63 @@ class SingerRepository implements Contract
             ->make(true);
     }
 
+    /**
+     * Get one
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        $result = Singer::find($id);
+        return $result;
+    }
+
+    /**
+     * Create
+     * @param array $attributes
+     * @return mixed
+     */
+    public function create(array $attributes)
+    {
+        return Singer::create($attributes);
+    }
+
+
+    /**
+     * Update
+     * @param $id
+     * @param array $attributes
+     * @return mixed
+     */
+    public function update($id, array $attributes)
+    {
+        $singer = Singer::find($id);
+
+        if($singer) {
+            $edited = $singer->update($attributes);
+            return $edited;
+        }
+
+        return null;
+    }
+
+    /**
+     * Delete
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $result = Singer::find($id);
+
+        if($result) {
+            $result->delete();
+            return true;
+        }
+
+        return false;
+    }
+
     protected function getActionColumnPermissions($singers)
     {
         return [

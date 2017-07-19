@@ -46,7 +46,7 @@
                 <h4 class="m-t-0 header-title"><b>Thông tin ca sĩ</b></h4>
 
                 <form class="form-horizontal" method="post" action="{{ route('singers.store') }}" role="form"  data-parsley-validate novalidate>
-                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                  <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên <span class="text-danger">*</span>: </label>
@@ -57,7 +57,7 @@
                   <div class="form-group">
                     <label for="sex-picker" class="col-sm-4 control-label">Giới tính: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" name="language" data-style="btn-white" id="language-picker">
+                      <select class="form-control" name="sex" data-style="btn-white">
                         @foreach (config('ktv.sexes') as $key => $sex)
                             <option value="{{ $key }}">{{ $sex }}</option>
                         @endforeach
@@ -68,7 +68,7 @@
                   <div class="form-group">
                     <label for="language-picker"class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" name="sex" data-style="btn-white" id="language-picker">
+                      <select class="selectpicker" name="language" data-style="btn-white">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach
@@ -101,3 +101,5 @@
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
 
 @endpush
+
+@push('inline_scripts')

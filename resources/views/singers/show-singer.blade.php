@@ -60,7 +60,7 @@
     @elseif ( session('created') )
         <div class="alert alert-success fade in alert-dismissable">
             <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Đã thêm thành công thông tin!</strong>
+            <strong>Đã thêm thành công ca sĩ!</strong>
         </div>
     @elseif( session()->has('deleted') )
         <div class="alert alert-danger fade in alert-dismissable">
@@ -88,7 +88,7 @@
                   <div class="form-group">
                     <label for="sex-picker" class="col-sm-4 control-label">Giới tính: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $singer['language'] }}" name="language" data-style="btn-white" id="language-picker">
+                      <select class="selectpicker" value="{{ $singer['sex'] }}" name="sex" data-style="btn-white" id="language-picker">
                         @foreach (config('ktv.sexes') as $key => $sex)
                             <option value="{{ $key }}">{{ $sex }}</option>
                         @endforeach
@@ -97,9 +97,9 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="language-picker"class="col-sm-4 control-label">Ngôn ngữ: </label>
+                    <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $singer['language'] }}" name="sex" data-style="btn-white" id="language-picker">
+                      <select class="selectpicker" value="{{ $singer['language'] }}" name="language" data-style="btn-white" id="language-picker">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach

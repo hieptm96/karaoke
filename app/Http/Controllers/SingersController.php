@@ -50,6 +50,12 @@ class SingersController extends Controller
         $sex = $request->input('sex');
         $language = $request->input('language');
 
+        if (empty($name) || !$this->isValidSex($sex)
+                    || !$this->isValidLanguage($language)) {
+            return 1;
+            return redirect('/singers');
+        }
+
         $result = $this->singerRepository->create(['name' => $name, 'sex' => $sex,
                     'language' => $language, 'created_by' => 1, 'updated_by' => 1]);
 
@@ -105,6 +111,11 @@ class SingersController extends Controller
         $sex = $request->input('sex');
         $language = $request->input('language');
 
+        if (empty($name) || !$this->isValidSex($sex)
+                    || !$this->isValidLanguage($language)) {
+            return redirect('/singers');
+        }
+
         $result = $this->singerRepository->update($id,
                       ['name' => $name, 'sex' => $sex, 'language' => $language]);
 
@@ -125,7 +136,7 @@ class SingersController extends Controller
     {
         $success = $this->singerRepository->delete($id);
         if ($success) {
-            return view('singers.created');
+            return view('singers.deleted');
         } else {
             return redirect('/singers/' . $id)->with('delete', false);;
         }
@@ -140,5 +151,32 @@ class SingersController extends Controller
     public function datatables(Request $request)
     {
         return $this->singerRepository->getDatatables($request);
+    }
+
+    /*
+     * check $sex
+     *
+     * @param  $sex
+     * @return true if $sex is valid, other wise return false
+     */
+    private function isValidSex($sex)
+    {
+        $sex = (int)$sex;
+        // hard code: range of sex
+        return !empty($sex) && $sex >= 1 && $sex <= 3;
+    }
+
+
+    /*
+     * check $language
+     *
+     * @param  $sex
+     * @return true if $sex is valid, other wise return false
+     */
+    private function isValidLanguage($language)
+    {
+        $language = (int)$language;
+        // hard code: range of language
+        return $language >= 0 && $language <= 3;
     }
 }

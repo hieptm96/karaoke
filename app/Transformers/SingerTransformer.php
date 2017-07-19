@@ -12,6 +12,7 @@ class SingerTransformer extends TransformerAbstract
         return [
             'id' => $singer->id,
             'name' => '<a href="'.route('singers.show', $singer->id).'">'.$singer->name.'</a>',
+            'sex' => config('ktv.sexes.'.$singer->sex, ''),
             'language' => config('ktv.languages.'.$singer->language, ''),
             'created_by' => $singer->createdBy->name,
             'created_at' => $singer->created_at->toDateTimeString(),

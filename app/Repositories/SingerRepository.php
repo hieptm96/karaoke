@@ -6,6 +6,7 @@ use Datatables;
 use App\Models\Singer;
 use Illuminate\Http\Request;
 use App\Transformers\SingerTransformer;
+use Barryvdh\Debugbar\Facade as Debugbar;
 use App\Contracts\Repositories\SingerRepository as Contract;
 
 class SingerRepository implements Contract
@@ -14,16 +15,34 @@ class SingerRepository implements Contract
 
     public function getDatatables(Request $request)
     {
-        $singers = Singer::with('createdBy');
+        $singers = Singer::with('createdBy')->select('*');
 
         return Datatables::of($singers)
             ->filter(function ($query) use ($request) {
+                Debugbar::info($request->input('sex'));
                 if ($request->has('name')) {
                     $param = '%'.$request->name.'%';
+                    // $query->where('name', 'like', $param)
+                    //     ->orWhere('abbr', 'like', $param)
+                    //     ->orWhere('name_raw', 'like', $param);
 
-                    $query->where('name', 'like', $param)
-                        ->orWhere('abbr', 'like', $param)
-                        ->orWhere('name_raw', 'like', $param);
+                    $query->where(function ($query) use ($param) {
+                        $query->where('name', 'like', $param)
+                            ->orWhere('abbr', 'like', $param)
+                            ->orWhere('name_raw', 'like', $param);
+                    });
+                }
+                if ($request->has('createdBy')) {
+                    $name = '%'.$request->createdBy.'%';
+                    $query->whereHas('createdBy', function($q) use ($name) {
+                        $q->where('name', 'like', $name);
+                    });
+                }
+                if ($request->has('sex')) {
+                     $query->where('sex', $request->sex);
+                }
+                if ($request->has('language')) {
+                   $query->where('language', $request->language);
                 }
             })
             ->addColumn('actions', function ($singers) {

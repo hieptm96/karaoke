@@ -19,6 +19,12 @@
                 <a href="{{ route('songs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Danh mục bài hát </span> <span class="menu-arrow"></span></a>
             </li>
 
+            @role('admin')
+                <li>
+                    <a href="{{ route('ktvs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị kinh doanh </span> <span class="menu-arrow"></span></a>
+                </li>
+            @endrole
+
         </ul>
         <div class="clearfix"></div>
     </div>

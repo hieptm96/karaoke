@@ -21,9 +21,28 @@ class SongRepository implements Contract
                 if ($request->has('name')) {
                     $param = '%'.$request->name.'%';
 
-                    $query->where('name', 'like', $param)
-                        ->orWhere('abbr', 'like', $param)
-                        ->orWhere('name_raw', 'like', $param);
+                    $query->where(function ($q) use ($param) {
+                        $q->where('name', 'like', $param)
+                            ->orWhere('abbr', 'like', $param)
+                            ->orWhere('name_raw', 'like', $param);
+                    });
+                }
+                if ($request->has('singer')) {
+                    $param = '%'.$request->singer.'%';
+                    $query->whereHas('singers', function($q) use ($param) {
+                        $q->where('name', 'like', $param)
+                            ->orWhere('abbr', 'like', $param)
+                            ->orWhere('name_raw', 'like', $param);
+                    });
+                }
+                if ($request->has('createdBy')) {
+                    $name = '%'.$request->createdBy.'%';
+                    $query->whereHas('createdBy', function($q) use ($name) {
+                        $q->where('name', 'like', $name);
+                    });
+                }
+                if ($request->has('language')) {
+                   $query->where('language', $request->language);
                 }
             })
             ->addColumn('actions', function ($song) {
@@ -32,6 +51,69 @@ class SongRepository implements Contract
             ->setTransformer(new SongTransformer)
             ->make(true);
     }
+
+    /**
+     * Get one
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        $result = Song::with('singers', 'createdBy')->find($id);
+        if ($result != null) {
+            $songTransformer = new SongTransformer;
+            $result = $songTransformer->transformWithoutLink($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Create
+     * @param array $attributes
+     * @return mixed
+     */
+    public function create(array $attributes)
+    {
+        return Song::create($attributes);
+    }
+
+
+    /**
+     * Update
+     * @param $id
+     * @param array $attributes
+     * @return mixed
+     */
+    public function update($id, array $attributes)
+    {
+        $song = Song::find($id);
+
+        if($song) {
+            $edited = $song->update($attributes);
+            return $edited;
+        }
+
+        return null;
+    }
+
+    /**
+     * Delete
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $result = Song::find($id);
+
+        if($result) {
+            $result->delete();
+            return true;
+        }
+
+        return false;
+    }
+
 
     protected function getActionColumnPermissions($song)
     {

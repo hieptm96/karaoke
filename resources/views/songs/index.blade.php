@@ -38,8 +38,24 @@
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
                             <label class="sr-only" for="">Tên bài hát</label>
-                            <input type="text" class="form-control" placeholder="Tên bài hát" name="name" />
+                            <input type="text" id="name-filter" class="form-control" placeholder="Tên bài hát" name="name" />
                         </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="">Tên ca sĩ</label>
+                            <input type="text" id="singer-filter" class="form-control" placeholder="Tên ca sĩ" name="singer" />
+                        </div>
+
+                        <div class="form-group">
+                          <select class="form-control" id="language-filter" name="language" data-style="btn-white">
+                            <option value>--Chọn ngôn ngữ--</option>
+                            @foreach (config('ktv.languages') as $key => $language)
+                                <option value="{{ $key }}">{{ $language }}</option>
+                            @endforeach
+
+                          </select>
+                        </div>
+
                         <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
                     </form>
                 </div>
@@ -98,6 +114,8 @@
                 url: "{!! route('songs.datatables') !!}",
                 data: function (d) {
                     d.name = $('input[name=name]').val();
+                    d.singer = $('#singer-filter').val();
+                    d.language = $('#language-filter').val();
                 }
             },
             columns: [
@@ -115,6 +133,24 @@
         $('#search-form').on('submit', function(e) {
             datatable.draw();
             e.preventDefault();
+        });
+
+        $('#search-form').on('change', function(e) {
+            datatable.draw();
+        });
+
+        $('#name-filter').on('keyup', function(e) {
+            var name = $('#name-filter').val();
+            if (name.length == 0) {
+                datatable.draw();
+            }
+        });
+
+        $('#singer-filter').on('keyup', function(e) {
+            var createdBy = $('#singer-filter').val();
+            if (createdBy.length == 0) {
+                datatable.draw();
+            }
         });
     });
 </script>

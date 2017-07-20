@@ -49,12 +49,35 @@ class SongsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Song  $song
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Song $song)
     {
-        //
+        //return var_dump($song);
+        $id = $song->id;
+
+        $song = $this->songRepository->find($id);
+
+        // return $song;
+
+        return view('songs.show-song', ['song' => $song]);
+
+        return $song;
+        return $song['singers'];
+
+        $song = $song->with('singers');
+
+        return $song->singers;
+        return var_dump($song);
+
+        // $song = $this->songRepository->find($id);
+
+        if ($song != null) {
+            return view('songs.show-song', ['song' => $song]);
+        } else {
+            return redirect('/singers');
+        }
     }
 
     /**

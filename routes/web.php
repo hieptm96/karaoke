@@ -27,3 +27,10 @@ Route::resource('songs', 'SongsController');
 // Singers
 Route::get('singers/datatables', 'SingersController@datatables')->name('singers.datatables');
 Route::resource('singers', 'SingersController');
+
+// Ktv
+Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');
+	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');
+	Route::resource('ktvs', 'KtvsController');
+});

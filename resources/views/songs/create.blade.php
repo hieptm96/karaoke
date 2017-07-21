@@ -7,32 +7,11 @@
 @endpush
 
 @section('content')
-
-    {{-- delete singer modal --}}
-    <div id="delete-singer-modal" class="modal-demo" data="">
-        <button type="button" class="close" onclick="Custombox.close();">
-            <span>&times;</span><span class="sr-only">Close</span>
-        </button>
-        <h4 class="custom-modal-title">Xóa bài hát</h4>
-        <div class="custom-modal-text text-left">
-            <form role="form" id="delete-singer-form" method="post" action="/songs/{{ $song['id'] }}">
-                <input name="_method" value="DELETE" type="hidden">
-                <input type="hidden" value="{{ csrf_token() }}" name="_token">
-                <div class="text-right">
-                    <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
-                    <button type="button" class="btn btn-default waves-effect waves-light m-l-10" onclick="Custombox.close();">Hủy</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    @include('songs.singer-modal')
-
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
 
-            <h4 class="page-title">Bài hát</h4>
+            <h4 class="page-title">bài hát</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">KTV</a>
@@ -41,66 +20,33 @@
                     <a href="{{ route('songs.index') }}">Bài hát</a>
                 </li>
                 <li class="active">
-                    Thông tin bài hát
+                    Thêm bài hát
                 </li>
             </ol>
         </div>
     </div>
 
-    @if ( session()->has('edited') )
-        @if ( session('edited') )
-          <div class="alert alert-success fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Đã cập nhât thành công thông tin!</strong>
-          </div>
-        @else
-          <div class="alert alert-danger fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Không thể thay đổi thông tin!</strong>
-          </div>
-        @endif
-    @elseif ( session('created') )
-        <div class="alert alert-success fade in alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Đã thêm thành công bài hát!</strong>
-        </div>
-    @elseif( session()->has('deleted') )
-        <div class="alert alert-danger fade in alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Không thể xóa bài hát!</strong>
-        </div>
-    @endif
+    @include('songs.singer-modal')
 
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="card-box table-responsive">
+            <div class="card-box">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" method="post" action="/songs/{{ $song['id'] }}" role="form"  data-parsley-validate novalidate>
-                   <input name="_method" value="PUT" type="hidden">
-                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                <form class="form-horizontal" method="post" action="{{ route('songs.store') }}" role="form"  data-parsley-validate novalidate>
+                  <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" value="{{ $song['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
+                      <input type="text" name="name" value="" class="form-control" id="input-name" placeholder="Tên" required>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="singers" class="col-sm-4 control-label">Ca sĩ: </label>
                     <div class="col-sm-7">
-                      @foreach ($song['singers'] as $singer)
-                      <div class="singer">
-                          <div class="input-group span6 offset3">
-                              <input type="text" class="hidden" name="singer[]" value="{{ $singer->id }}"/>
-                              <span class="form-control" singer-data="{{ $singer->id }}">{!! $singer->name !!}</span>
-                              <a class="btn btn-warning input-group-addon btn-block delete-singer" >Xóa</a>
-                          </div>
-                          <br/>
-                      </div>
-                      @endforeach
                       <div class="input-group span6 offset3" id="add-singer">
                           <span class="form-control"></span>
                           <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#singer-modal">Thêm</a>
@@ -111,7 +57,7 @@
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $song['language'] }}" name="language" data-style="btn-white" id="language-picker">
+                      <select class="selectpicker" name="language" data-style="btn-white" id="language-picker">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach
@@ -120,37 +66,15 @@
 
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
-                    <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
-                    </div>
-                  </div>
 
                   <div class="form-group">
-                    <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
-                    <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
-                    <div class="col-sm-7">
-                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      @if ( session('created') )
-                        <a href="{{ route('songs.create') }}" class="btn btn-default waves-effect waves-light">
-                          Thêm tiếp
-                        </a>
-                      @endif
                       <button type="submit" class="btn btn-warning waves-effect waves-light">
-                        Cập nhật
+                        Thêm
                       </button>
-                      <a href="#delete-singer-modal" class="btn btn-danger" data-animation="fadein" data-plugin="custommodal"
-                        data-overlaySpeed="200" data-overlayColor="#36404a">Xóa</a>
+                      <a href="{{ route('songs.index') }}" class="btn btn-default waves-effect waves-light m-l-5">
+                        Hủy
+                      </a>
                     </div>
                   </div>
                 </form>
@@ -176,11 +100,6 @@
 
 @push('inline_scripts')
 <script>
-    $( document ).ready(function() {
-        $('select[name=language]').val('{{ $song['language'] }}');
-        $('.selectpicker').selectpicker('refresh');
-        $('form').parsley();
-    });
 
     function checkExistedSinger(id) {
         console.log(typeof id);
@@ -197,7 +116,7 @@
         var singerRow = $(this).parent().parent();
         var singerId = singerRow.find('.singer-data').text();
         var singerName = singerRow.find('.singer-name').html();
-
+        
         if (checkExistedSinger(singerId)) {
             return;
         }

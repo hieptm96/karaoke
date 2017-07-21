@@ -73,9 +73,19 @@ class SongRepository implements Contract
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes, array $singerIds)
     {
-        return Song::create($attributes);
+        $song = Song::create($attributes);
+
+        if ($song == null) {
+            return null;
+        }
+
+        if ($singerIds != null) {
+            $song->singers()->attach($singerIds);
+        }
+
+        return $song;
     }
 
 
@@ -85,13 +95,15 @@ class SongRepository implements Contract
      * @param array $attributes
      * @return mixed
      */
-    public function update($id, array $attributes)
+    public function update($id, array $attributes, array $singerIds)
     {
         $song = Song::find($id);
 
-        if($song) {
-            $edited = $song->update($attributes);
-            return $edited;
+        if ($song) {
+            $success = $song->update($attributes);
+            $song->singers()->detach();
+            $song->singers()->attach($singerIds);
+            return $song;
         }
 
         return null;

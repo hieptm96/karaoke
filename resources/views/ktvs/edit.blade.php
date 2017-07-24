@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
     <!-- Page-Title -->
     <div class="row">
@@ -33,3 +38,9 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
+
+@endpush

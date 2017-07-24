@@ -101,8 +101,7 @@ class SongRepository implements Contract
 
         if ($song) {
             $success = $song->update($attributes);
-            $song->singers()->detach();
-            $song->singers()->attach($singerIds);
+            $song->singers()->sync($singerIds);
             return $song;
         }
 

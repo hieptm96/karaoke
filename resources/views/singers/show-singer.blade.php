@@ -8,22 +8,35 @@
 
 @section('content')
 
-    {{-- delete singer modal --}}
-    <div id="delete-singer-modal" class="modal-demo" data="">
-        <button type="button" class="close" onclick="Custombox.close();">
-            <span>&times;</span><span class="sr-only">Close</span>
-        </button>
-        <h4 class="custom-modal-title">Xóa ca sĩ</h4>
-        <div class="custom-modal-text text-left">
-            <form role="form" id="delete-singer-form" method="post" action="/singers/{{ $singer['id'] }}">
-                <input name="_method" value="DELETE" type="hidden">
-                <input type="hidden" value="{{ csrf_token() }}" name="_token">
-                <div class="text-right">
-                    <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
-                    <button type="button" class="btn btn-default waves-effect waves-light m-l-10" onclick="Custombox.close();">Hủy</button>
-                </div>
-            </form>
+    {{-- delete song modal --}}
+    <div id="delete-singer-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Xóa ca sĩ</h3>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc muốn xóa ca sĩ không?</p>
+          </div>
+          <div class="modal-footer">
+              <div class="custom-modal-text text-left">
+                  <form role="form" id="delete-singer-form" method="post" action="/singers/{{ $singer['id'] }}">
+                      {{-- <input name="_method" value="DELETE" type="hidden"> --}}
+                      {{ method_field('DELETE') }}
+                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                      <div class="text-right">
+                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                          <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
         </div>
+
+      </div>
     </div>
 
     <!-- Page-Title -->
@@ -137,8 +150,7 @@
                       <button type="submit" class="btn btn-warning waves-effect waves-light">
                         Cập nhật
                       </button>
-                      <a href="#delete-singer-modal" class="btn btn-danger" data-animation="fadein" data-plugin="custommodal"
-                        data-overlaySpeed="200" data-overlayColor="#36404a">Xóa</a>
+                      <a href="delete-singer-modal" class="btn btn-danger delete-singer" target="#delete-singer-modal">Xóa</a>
                     </div>
                   </div>
                 </form>
@@ -160,6 +172,11 @@
 
 @push('inline_scripts')
 <script>
+    $(document).on('click', '.delete-singer', function(e) {
+        $('#delete-singer-modal').modal("show");
+        e.preventDefault();
+    });
+
     $( document ).ready(function() {
         $('select[name=language]').val({{ $singer['language'] }});
         $('select[name=sex]').val({{ $singer['sex'] }});

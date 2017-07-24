@@ -116,7 +116,7 @@
         var singerRow = $(this).parent().parent();
         var singerId = singerRow.find('.singer-data').text();
         var singerName = singerRow.find('.singer-name').html();
-        
+
         if (checkExistedSinger(singerId)) {
             return;
         }

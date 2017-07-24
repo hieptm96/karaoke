@@ -7,17 +7,29 @@ use League\Fractal\TransformerAbstract;
 
 class SingerTransformer extends TransformerAbstract
 {
-    public function transform(Singer $singer)
+    public function transform(array $singer)
     {
+        // return [
+        //     'id' => $singer->id,
+        //     'name' => '<a href="'.route('singers.show', $singer->id).'">'.$singer->name.'</a>',
+        //     'sex' => config('ktv.sexes.'.$singer->sex, ''),
+        //     'language' => config('ktv.languages.'.$singer->language, ''),
+        //     'created_by' => $singer->createdBy->name,
+        //     'created_at' => $singer->created_at->toDateTimeString(),
+        //     'updated_at' => $singer->updated_at->toDateTimeString(),
+        // ];
+
         return [
-            'id' => $singer->id,
-            'name' => '<a href="'.route('singers.show', $singer->id).'">'.$singer->name.'</a>',
-            'sex' => config('ktv.sexes.'.$singer->sex, ''),
-            'language' => config('ktv.languages.'.$singer->language, ''),
-            'created_by' => $singer->createdBy->name,
-            'created_at' => $singer->created_at->toDateTimeString(),
-            'updated_at' => $singer->updated_at->toDateTimeString(),
+            'id' => $singer['id'],
+            'name' => '<a href="'.route('singers.show', $singer['id']).'">'.$singer['name'].'</a>',
+            'sex' => config('ktv.sexes.'.$singer['sex'], ''),
+            'language' => config('ktv.languages.'.$singer['language'], ''),
+            'created_by' => $singer['created_by']['name'],
+            'created_at' =>  $singer['created_at'],
+            'updated_at' =>  $singer['updated_at'],
+            'actions' => $this->generateActions($singer),
         ];
+
     }
 
     public static function transformWithoutLink(Singer $singer)
@@ -32,4 +44,14 @@ class SingerTransformer extends TransformerAbstract
             'updated_at' => $singer->updated_at->toDateTimeString(),
         ];
     }
+
+    private function generateActions($singer)
+    {
+        $actions = '<a class="btn btn-warning" href="' . route('singers.show', $singer['id']) . '">Sửa</a>';
+        $actions .= ' <a href="#delete-singer-modal" class="btn btn-danger delete-singer"
+                target="#properties">Xóa</a>';
+
+        return $actions;
+    }
+
 }

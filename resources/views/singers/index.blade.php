@@ -7,6 +7,39 @@
 @endpush
 
 @section('content')
+    {{-- delete song modal --}}
+    <div id="delete-singer-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Xóa ca sĩ</h3>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc muốn xóa ca sĩ không?</p>
+          </div>
+          <div class="modal-footer">
+              <div class="custom-modal-text text-left">
+                  <form role="form" id="delete-singer-form" method="post" action="">
+                      {{-- <input name="_method" value="DELETE" type="hidden"> --}}
+                      {{ method_field('DELETE') }}
+                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                      <div class="text-right">
+                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                          <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
@@ -89,6 +122,7 @@
                         <th width="10%">Người tạo</th>
                         <th width="10%">Ngày tạo</th>
                         <th width="10%">Ngày cập nhật</th>
+                        <th width="12%">#</th>
                     </tr>
                     </thead>
 
@@ -111,8 +145,12 @@
 
 @push('inline_scripts')
 <script>
-    $( document ).ready(function() {
-
+    $(document).on('click', '.delete-singer', function(e) {
+        $('#delete-singer-modal').modal("show");
+        e.preventDefault();
+        var song_id = $(this).parent().parent().find('.singer-data').text();
+        var action = '/singers/' + song_id;
+        $('#delete-singer-form').attr('action', action);
     });
 
     $(function () {
@@ -129,6 +167,11 @@
                     d.createdBy = $('#created-by-filter').val();
                 }
             },
+            "columnDefs": [ {
+                "targets": 0,
+                "data": null,
+                'className': "singer-data",
+            } ],
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
@@ -136,7 +179,8 @@
                 {data: 'language', name: 'language'},
                 {data: 'created_by', name: 'created_by'},
                 {data: 'created_at', name: 'created_at'},
-                {data: 'updated_at', name: 'updated_at'}
+                {data: 'updated_at', name: 'updated_at'},
+                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
             order: [[2, 'asc']]
         });

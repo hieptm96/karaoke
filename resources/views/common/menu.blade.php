@@ -25,6 +25,13 @@
                 </li>
             @endrole
 
+            <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect"><i class="ti-home"></i> <span> Thống kê </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{ route('statistics.import') }}">Import dữ liệu</a></li>
+                </ul>
+            </li>
+
         </ul>
         <div class="clearfix"></div>
     </div>

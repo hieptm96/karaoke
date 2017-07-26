@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Ktv;
+use App\Models\Song;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,7 +20,17 @@ class ImportedDataUsage extends Model
         'date',
     ];
 
-    protected $table = 'imported_data_usage';
+    protected $table = 'imported_data_usages';
 
     public $timestamps = false;
+
+    public function song()
+    {
+        return $this->belongsTo(Song::class, 'song_file_name', 'file_name');
+    }
+
+    public function ktv()
+    {
+        return $this->belongsTo(Ktv::class, 'ktv_id', 'id');
+    }
 }

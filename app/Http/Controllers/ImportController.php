@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Response;
+use Datatables;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use App\Models\ImportedDataUsage;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Transformers\SongUsageTransformer;
 
-class StatisticsController extends Controller
+class ImportController extends Controller
 {
 
     private static $excelFileExtension = array('xls', 'xlsx');
@@ -20,12 +23,13 @@ class StatisticsController extends Controller
         'times'
     );
 
-    public function showImportDataUsagePage()
+    public function index()
     {
-        return view('statistics.import-data-usage');
+        return view('statistics.import.index');
     }
 
-    public function importDataUsage(Request $request)
+
+    public function importDataUsages(Request $request)
     {
 
         if($request->hasFile('data-usage')){
@@ -34,7 +38,6 @@ class StatisticsController extends Controller
             $result = ['alert-type' => 'success', 'message' => 'File đã được ghi nhân vào hệ thống'];
 
             if ($this->isExcelFile($file)) {
-
                 // // Move Uploaded File
                 // $destinationPath = 'uploads';
                 ///$pathFile = $file->move($destinationPath, $file->getClientOriginalName());
@@ -46,9 +49,7 @@ class StatisticsController extends Controller
                     $datas = Excel::load($filePath, function($reader) {
                         $rows = $reader->get(static::$dataFields)->toArray();
 
-                        foreach ($rows as $row) {
-                            ImportedDataUsage::create($row);
-                        }
+                        ImportedDataUsage::insert($rows);
                     })->get();
                 } else {
                     $result['alert-type'] = 'danger';

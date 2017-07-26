@@ -19,7 +19,7 @@ class SongsTableSeeder extends Seeder
             $song = \App\Models\Song::create([
                 'name' => $faker->name,
                 'language' => $faker->randomElement([1, 2, 3]),
-                'file_name' => 100000 + 1,
+                'file_name' => 100000 + $i,
                 'created_by' => 1,
                 'updated_by' => 1,
             ]);

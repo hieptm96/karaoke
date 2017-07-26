@@ -13,7 +13,7 @@ class CreateImportedDataUsageTable extends Migration
      */
      public function up()
      {
-         Schema::create('imported_data_usage', function (Blueprint $table) {
+         Schema::create('imported_data_usages', function (Blueprint $table) {
              $table->increments('id');
              $table->unsignedInteger('imported_file_id')->default(0);
              $table->unsignedInteger('ktv_id');
@@ -31,6 +31,6 @@ class CreateImportedDataUsageTable extends Migration
       */
      public function down()
      {
-         Schema::dropIfExists('imported_data_usage');
+         Schema::dropIfExists('imported_data_usages');
      }
 }

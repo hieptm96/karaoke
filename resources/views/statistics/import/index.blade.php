@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-sm-12">
 
-            <h4 class="page-title">Bài hát</h4>
+            <h4 class="page-title">Thống kê dữ liệu</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">KTV</a>
@@ -33,7 +33,7 @@
                                 {{ csrf_field()  }}
                                 <div class="form-group">
                                     <label class="control-label">Chọn file dữ liệu(.xls, .xlsx)</label>
-                                    <input type="file" name="data-usage" class="" required data-buttonbefore="true" accept=".xls,.xlsx">
+                                    <input type="file" name="data-usage" class="filestyle" required data-buttonbefore="true" accept=".xls,.xlsx">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" id="upload-file-btn" class="ladda-button btn btn-primary" data-style="expand-left">

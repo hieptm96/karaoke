@@ -28,6 +28,11 @@ Route::resource('songs', 'SongsController');
 Route::get('singers/datatables', 'SingersController@datatables')->name('singers.datatables');
 Route::resource('singers', 'SingersController');
 
+// Ktv reports
+Route::get('ktvreports/datatables', 'KtvReportsController@datatables')->name('ktvreports.datatables');
+Route::post('ktvreports/export', 'KtvReportsController@exportExcel')->name('ktvreports.exportExcel');
+Route::resource('ktvreports', 'KtvReportsController');
+
 // Ktv
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');

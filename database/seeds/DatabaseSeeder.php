@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KtvsTableSeeder::class);
 
         $this->call(ProvincesTableSeeder::class);
+
+        $this->call(DataUsageSeeder::class);
     }
 }

@@ -39,3 +39,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');
 	Route::resource('ktvs', 'KtvsController');
 });
+
+// Statistics
+Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
+Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');

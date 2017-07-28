@@ -22,43 +22,37 @@
     <div class="form-group">
         <label for="name" class="col-sm-4 control-label pull-left">Tên*</label>
         <div class="col-sm-7">
-            <input type="text" required="" parsley-type="text" name="name" class="form-control" id="name" placeholder="Tên" value="{{ isset($ktv) ? old('name', $ktv->name) : old('name') }}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="representative" class="col-sm-4 control-label pull-left">Người đại diện*</label>
-        <div class="col-sm-7">
-            <input type="text" required="" parsley-type="text" name="representative" class="form-control" id="representative" placeholder="Người đại diện" value="{{ isset($ktv) ? old('representative', $ktv->representative) : old('representative') }}">
+            <input type="text" required="" parsley-type="text" name="name" class="form-control" id="name" placeholder="Tên" value="{{ isset($content_owner) ? old('name', $content_owner->name) : old('name') }}">
         </div>
     </div>
     <div class="form-group">
         <label for="phone" class="col-sm-4 control-label pull-left">Số điện thoại*</label>
         <div class="col-sm-7">
-            <input type="text" required="" parsley-type="text" name="phone" class="form-control" id="phone" placeholder="Số điện thoại" value="{{ isset($ktv) ? old('phone', $ktv->phone) : old('phone') }}">
+            <input type="text" required="" parsley-type="text" name="phone" class="form-control" id="phone" placeholder="Số điện thoại" value="{{ isset($content_owner) ? old('phone', $content_owner->phone) : old('phone') }}">
         </div>
     </div>
     <div class="form-group">
         <label for="email" class="col-sm-4 control-label pull-left">Email*</label>
         <div class="col-sm-7">
-            <input type="email" required="" parsley-type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ isset($ktv) ? old('email', $ktv->user->email) : old('email') }}">
+            <input type="email" required="" parsley-type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ isset($content_owner) ? old('email', $content_owner->user->email) : old('email') }}">
         </div>
     </div>
     <div class="form-group">
         <label for="address" class="col-sm-4 control-label pull-left">Địa chỉ liên lạc*</label>
         <div class="col-sm-7">
-            <input type="text" required="" parsley-type="address" name="address" class="form-control" id="address" placeholder="Địa chỉ liên lạc" value="{{ isset($ktv) ? old('address', $ktv->address) : old('address') }}">
+            <input type="text" required="" parsley-type="address" name="address" class="form-control" id="address" placeholder="Địa chỉ liên lạc" value="{{ isset($content_owner) ? old('address', $content_owner->address) : old('address') }}">
         </div>
     </div>
     <div class="form-group">
         <label for="province" class="col-sm-4 control-label pull-left">Tỉnh*</label>
         <div class="col-sm-7">
-            {{--<select name="province" id="province" class="form-control" ng-init="province = {{ isset($ktv) ? $ktv->province_id : 0 }}" ng-model="province" ng-options="province.id as province.name for province in provinces track by province.id" ng-change="get_districts()">--}}
+            {{--<select name="province" id="province" class="form-control" ng-init="province = {{ isset($content_owner) ? $content_owner->province_id : 0 }}" ng-model="province" ng-options="province.id as province.name for province in provinces track by province.id" ng-change="get_districts()">--}}
                 {{--<option value="">-- Chọn tỉnh --</option>--}}
             {{--</select>--}}
             <select name="province_id" id="province" class="form-control" onchange="angular.element(this).scope().get_districts()">
                 <option value="">-- Chọn tỉnh --</option>
                 @foreach ($provinces as $province)
-                    <option value="{{ $province->id }}" {{ isset($ktv) && ($ktv->province_id == $province->id) ? "selected" : "" }}>{{ $province->name }}</option>
+                    <option value="{{ $province->id }}" {{ isset($content_owner) && ($content_owner->province_id == $province->id) ? "selected" : "" }}>{{ $province->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -66,7 +60,7 @@
     <div class="form-group">
         <label for="district" class="col-sm-4 control-label pull-left">Quận/Huyện*</label>
         <div class="col-sm-7">
-            @if (isset($ktv))
+            @if (isset($content_owner))
                 @push('inline_scripts')
                 <script>
                     var districts = {!! isset($districts) ? $districts : null !!};
@@ -75,8 +69,14 @@
             @endif
             <select name="district_id" id="district" class="form-control">
                 <option ng-if="districts.length ==0" value="">-- Chọn Quận/Huyện --</option>
-                <option ng-repeat="district in districts track by $index" value="<% district.id %>" ng-selected="district.id == {{ isset($ktv) ? $ktv->district_id : '0'}}"><% district.name %></option>
+                <option ng-repeat="district in districts track by $index" value="<% district.id %>" ng-selected="district.id == {{ isset($content_owner) ? $content_owner->district_id : '0'}}"><% district.name %></option>
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="code" class="col-sm-4 control-label pull-left">Mã số thuế*</label>
+        <div class="col-sm-7">
+            <input type="text" required="" parsley-type="text" name="code" class="form-control" id="code" placeholder="Mã số thuế" value="{{ isset($content_owner) ? old('code', $content_owner->code) : old('code') }}">
         </div>
     </div>
     <div class="form-group">
@@ -89,7 +89,7 @@
     <div class="form-group">
         <div class="col-sm-offset-4 col-sm-8">
             <button type="submit" class="btn btn-primary waves-effect waves-light">
-                @if (isset($ktv))
+                @if (isset($content_owner))
                     Cập nhật
                 @else
                     Tạo

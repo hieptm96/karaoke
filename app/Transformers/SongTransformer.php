@@ -18,6 +18,7 @@ class SongTransformer extends TransformerAbstract
             'created_by' => $song['created_by']['name'],
             'created_at' =>  $song['created_at'],
             'updated_at' =>  $song['updated_at'],
+            'contentOwners' => $song['content_owners'],
             'actions' => $this->generateActions($song),
         ];
     }
@@ -59,9 +60,10 @@ class SongTransformer extends TransformerAbstract
 
     private function generateActions($song)
     {
-        $actions = '<a class="btn btn-warning" href="' . route('songs.show', $song['id']) . '">Sửa</a>';
-        $actions .= ' <a href="#delete-song-modal" class="btn btn-danger delete-song"
-                target="#properties">Xóa</a>';
+        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.show', $song['id'])
+                    . '"><i class="fa fa-edit"></i> Sửa</a>';
+        $actions .= ' <a href="#delete-song-modal" class="btn btn-default delete-song btn-xs waves-effect waves-light"
+                target="#properties"><i class="fa fa-trash"></i> Xóa</a>';
 
         return $actions;
     }

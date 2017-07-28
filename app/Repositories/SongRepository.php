@@ -14,7 +14,8 @@ class SongRepository implements Contract
 
     public function getDatatables(Request $request)
     {
-        $songs = Song::with('singers', 'createdBy');
+        
+        $songs = Song::with('singers', 'createdBy', 'contentOwners');
 
         return Datatables::of($songs)
             ->filter(function ($query) use ($request) {

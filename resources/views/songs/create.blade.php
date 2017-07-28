@@ -10,6 +10,9 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
+            <div class="btn-group pull-right m-t-15">
+                <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+            </div>
 
             <h4 class="page-title">bài hát</h4>
             <ol class="breadcrumb">
@@ -27,6 +30,8 @@
     </div>
 
     @include('songs.singer-modal')
+
+    @include('songs.owner-modal')
 
 
     <div class="row">
@@ -67,9 +72,61 @@
                     </div>
                   </div>
 
+                  <hr />
+
+                  <div class="form-group">
+                    <label for="singers" class="col-sm-4 control-label">Đơn vị sở hữu nội dung: </label>
+
+                    <div class="col-sm-6">
+                        <br />
+
+                        <div class="">
+                          <label for="singers" class="">Ca sĩ: </label>
+                          <div class="">
+                            <div class="input-group" id="add-singer">
+                                <span class="form-control"></span>
+                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="">
+                          <label for="singers" class="">Nhạc sĩ: </label>
+                          <div class="">
+                            <div class="input-group" id="add-singer">
+                                <span class="form-control"></span>
+                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="">
+                          <label for="singers" class="">Lời: </label>
+                          <div class="">
+                            <div class="input-group" id="add-singer">
+                                <span class="form-control"></span>
+                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="">
+                          <label for="singers" class="">Quay phim: </label>
+                          <div class="">
+                            <div class="input-group" id="add-singer">
+                                <span class="form-control"></span>
+                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      <button type="submit" class="btn btn-warning waves-effect waves-light">
+                      <button type="submit" class="btn btn-primary waves-effect waves-light">
                         Thêm
                       </button>
                       <a href="{{ route('songs.index') }}" class="btn btn-default waves-effect waves-light m-l-5">
@@ -127,7 +184,7 @@
         + '<div class="input-group span6 offset3">'
         +    '<input class="singer-id hidden" name="singer[]" value="' + singerId + '"></name>'
         +    '<span class="form-control" singer-data=' + singerId + '>' + singerName + '</span>'
-        +    '<a class="btn btn-warning input-group-addon btn-block delete-singer" >Xóa</a>'
+        +    '<a class="btn btn-primary input-group-addon btn-block delete-singer" >Xóa</a>'
         + '</div>'
         + '<br/>'
         + '</div>'

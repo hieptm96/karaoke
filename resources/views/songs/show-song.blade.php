@@ -108,7 +108,7 @@
                           <div class="input-group span6 offset3">
                               <input type="text" class="hidden" name="singer[]" value="{{ $singer->id }}"/>
                               <span class="form-control" singer-data="{{ $singer->id }}">{!! $singer->name !!}</span>
-                              <a class="btn btn-warning input-group-addon btn-block delete-singer" >Xóa</a>
+                              <a class="btn btn-primary input-group-addon btn-block delete-singer" >Xóa</a>
                           </div>
                           <br/>
                       </div>
@@ -154,14 +154,13 @@
                   <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                       @if ( session('created') )
-                        <a href="{{ route('songs.create') }}" class="btn btn-default waves-effect waves-light">
+                        <a href="{{ route('songs.create') }}" class="btn btn-info waves-effect waves-light">
                           Thêm tiếp
                         </a>
                       @endif
-                      <button type="submit" class="btn btn-warning waves-effect waves-light">
+                      <button type="submit" class="btn btn-primary waves-effect waves-light">
                         Cập nhật
                       </button>
-                      <a href="delete-song-modal" class="btn btn-danger delete-song" target="#delete-song-modal">Xóa</a>
                     </div>
                   </div>
                 </form>
@@ -222,7 +221,7 @@
         + '<div class="input-group span6 offset3">'
         +    '<input class="singer-id hidden" name="singer[]" value="' + singerId + '"></name>'
         +    '<span class="form-control" singer-data=' + singerId + '>' + singerName + '</span>'
-        +    '<a class="btn btn-warning input-group-addon btn-block delete-singer" >Xóa</a>'
+        +    '<a class="btn btn-primary input-group-addon btn-block delete-singer" >Xóa</a>'
         + '</div>'
         + '<br/>'
         + '</div>'

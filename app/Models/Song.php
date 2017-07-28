@@ -37,4 +37,9 @@ class Song extends ModelTracking
     {
         return $this->belongsToMany(Singer::class)->withTimestamps();
     }
+
+    public function contentOwners()
+    {
+        return $this->belongsToMany(ContentOwner::class)->withTimestamps();
+    }
 }

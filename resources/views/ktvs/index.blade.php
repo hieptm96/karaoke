@@ -45,7 +45,7 @@
                                 <input type="text" id="name-search" class="form-control" placeholder="Tên đơn vị kinh doanh" name="name" />
                                 <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
                                 <input type="text" id="email-search" class="form-control" placeholder="Email" name="email" />
-                                <select name="province" id="province-search" class="form-control" ng-model="province" ng-change="get_districts(province)">
+                                <select name="province" id="province" class="form-control" ng-model="province" ng-change="get_districts(province)">
                                     <option value="">-- Chọn tỉnh -- </option>
                                     @foreach ($provinces as $province)
                                         <option value="{{ $province->id }}">{{ $province->name }}</option>
@@ -121,7 +121,7 @@
                     d.name = $('#name-search').val();
                     d.phone = $('#phone-search').val();
                     d.email = $('#email-search').val();
-                    d.province = $('#province-search').val();
+                    d.province = $('#province').val();
                     d.district = $('#district-search').val();
                 }
             },
@@ -151,7 +151,7 @@
             datatable.draw();
             e.preventDefault();
         });
-        $('#province-search').on('change', function(e) {
+        $('#province').on('change', function(e) {
             datatable.draw();
             e.preventDefault();
         });

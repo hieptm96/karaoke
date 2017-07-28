@@ -8,22 +8,23 @@ use App\Models\User;
 use App\Models\District;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Requests\KtvRequest;
 use App\Contracts\Repositories\KtvRepository;
 
 class KtvsController extends Controller
 {
-    protected $songRepository;
+    protected $ktvRepository;
 
     public function __construct(KtvRepository $ktvRepository)
     {
         $this->ktvRepository = $ktvRepository;
+
+        view()->share('provinces', Province::all());
     }
 
     public function index()
     {
-        $provinces = Province::all();
-
-        return view('ktvs.index', compact('provinces'));
+        return view('ktvs.index');
     }
 
     public function show($id)
@@ -35,12 +36,10 @@ class KtvsController extends Controller
 
     public function create()
     {
-        $provinces = Province::all();
-
-        return view('ktvs.create', compact('provinces'));
+        return view('ktvs.create');
     }
 
-    public function store(Request $request)
+    public function store(KtvRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -68,13 +67,13 @@ class KtvsController extends Controller
     public function edit($id)
     {
         $ktv = Ktv::findOrFail($id);
-        $provinces = Province::all();
+
         $districts = District::where('province_id', $ktv->province_id)->get();
 
-        return view('ktvs.edit', compact('ktv', 'provinces', 'districts'));
+        return view('ktvs.edit', compact('ktv', 'districts'));
     }
 
-    public function update(Request $request, $id)
+    public function update(KtvRequest $request, $id)
     {
         $ktv = Ktv::findOrFail($id);
         $ktv->update([

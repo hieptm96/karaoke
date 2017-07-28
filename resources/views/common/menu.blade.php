@@ -23,6 +23,15 @@
                 <a href="{{ route('ktvreports.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Báo cáo </span> <span class="menu-arrow"></span></a>
             </li>
 
+                <a href="{{ route('singers.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Danh mục ca sĩ </span> <span class="menu-arrow"></span></a>
+            </li>
+
+            @role('admin')
+                <li>
+                    <a href="{{ route('ktvs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị kinh doanh </span> <span class="menu-arrow"></span></a>
+                </li>
+            @endrole
+
         </ul>
         <div class="clearfix"></div>
     </div>

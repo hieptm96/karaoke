@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class SampleUsersController extends Controller
 {
-    public function index() 
+    public function index()
     {
-    	$sample_users = User::all();
+    	$sample_users = User::all()->take(8);
     	return Response::json($sample_users);
     }
 }

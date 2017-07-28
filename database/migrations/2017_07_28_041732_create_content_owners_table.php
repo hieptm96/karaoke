@@ -23,8 +23,6 @@ class CreateContentOwnersTable extends Migration
             $table->unsignedInteger('province_id');
             $table->string('code');
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();

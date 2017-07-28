@@ -10,7 +10,7 @@ class District extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'name', 'province_id',
     ];
 
     protected $dates = ['deleted_at'];

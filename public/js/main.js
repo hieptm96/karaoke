@@ -2,43 +2,44 @@ var ktv_app = angular.module('ktv-form', [], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
-ktv_app.controller('ktv-ctl', ['$scope', '$http', 'districts', function($scope, $http, districts) {
-    $scope.districts = [];
+ktv_app.controller('ktv-ctl', ['$scope', '$http', 'ktv_factory', function($scope, $http, ktv_factory) {
+    // get districts
+    $scope.provinces = (typeof provinces !== 'undefined') ? provinces : [];
+    $scope.districts = (typeof districts !== 'undefined') ? districts : [];
     $scope.get_districts = function() {
-//            districts.get($scope.province).then(function(data) {
-//                if (data) {
-//                    $scope.districts = data;
-//                    console.log($scope.districts);
-//                }
-//            });
-        $http({
-            url: url,
-            method: "GET",
-            responseType: 'text',
-            params: {
-                _token: '{{ csrf_token() }}',
-                province_id: $scope.province,
+        var province_id = $('#province').val();
+        // ktv_factory.get_districts($scope.province, url).then(function(data) {
+        ktv_factory.get_districts(province_id, url).then(function(data) {
+            if (data) {
+                $scope.districts = data;
             }
-        }).then(function(response) {
-            $scope.districts = response.data.data;
-        })
-    }
+        });
+    };
 }]);
+
 // Factory ajax
-ktv_app.factory('districts', ['$http', function($http) {
+ktv_app.factory('ktv_factory', ['$http', function($http) {
     return {
-        get: function(province_id) {
-            $http({
-                url: "{{ route('ktvs.getdistricts') }}",
+        get_districts: function(province_id, url) {
+            return $http({
+                url: url,
                 method: "GET",
                 responseType: 'text',
-                data: {
-                    _token: '{{ csrf_token() }}',
+                params: {
                     province_id: province_id,
                 }
             }).then(function(response) {
                 return response.data.data;
             })
-        }
+        },
     };
 }]);
+
+$(document).ready(function() {
+    $(document).on('click', '.ktv-delete', function(e) {
+        if (!confirm('Bạn chắc chắn muốn xóa?')) return;
+        e.preventDefault();
+        $('#ktv-delete-form').attr('action', '/admin/ktvs/' + $(this).attr('data-id'));
+        $('#ktv-delete-form').submit();
+    });
+});

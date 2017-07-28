@@ -15,12 +15,12 @@ class ProvincesTableSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             $province = \App\Models\Province::create([
-                'name' => $faker->name,
+                'name' => $faker->unique->city,
             ]);
 
             for ($j = 0; $j < 5; $j++) {
                 $district = \App\Models\District::create([
-                    'name' => $faker->name,
+                    'name' => $faker->unique->address,
                     'province_id' => $province->id,
                 ]);
             }

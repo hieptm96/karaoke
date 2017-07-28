@@ -2,37 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Ktv;
 use App\Models\User;
 use App\Models\District;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Requests\KtvRequest;
 use App\Contracts\Repositories\KtvRepository;
 
 class KtvsController extends Controller
 {
-    protected $songRepository;
+    protected $ktvRepository;
 
     public function __construct(KtvRepository $ktvRepository)
     {
         $this->ktvRepository = $ktvRepository;
+
+        view()->share('provinces', Province::all());
     }
 
     public function index()
     {
-        $provinces = Province::all();
-        return view('ktvs.index', compact('provinces'));
+        return view('ktvs.index');
+    }
+
+    public function show($id)
+    {
+        $ktv = Ktv::findOrFail($id);
+
+        return response()->json(['data' => $ktv, 'msg' => "Success"], 200);
     }
 
     public function create()
     {
-        $provinces = Province::all();
-        return view('ktvs.create', compact('provinces'));
+        return view('ktvs.create');
     }
 
-    public function store(Request $request)
+    public function store(KtvRequest $request)
     {
-        $user = User::forceCreate([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt('123456')
@@ -43,40 +52,66 @@ class KtvsController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'address' => $request->address,
-            'province_id' => $request->province,
-            'district_id' => $request->district,
-            'user_id' => $user->id
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
+            'user_id' => $user->id,
+            'created_by' => Auth::id(),
+            'updated_by' => Auth::id()
         ]);
+
         flash()->success('Success!', 'Tạo đơn vị kinh doanh thành công.');
 
-        return redirect()->route('ktvs.index');
-    }
-
-    public function show(Song $song)
-    {
-        //
+        return redirect()->route('ktvs.edit', ['id' => $ktv->id]);
     }
 
     public function edit($id)
     {
         $ktv = Ktv::findOrFail($id);
+
+        $districts = District::where('province_id', $ktv->province_id)->get();
+
+        return view('ktvs.edit', compact('ktv', 'districts'));
+    }
+
+    public function update(KtvRequest $request, $id)
+    {
+        $ktv = Ktv::findOrFail($id);
+        $ktv->update([
+            'name' => $request->name,
+            'representative' => $request->representative,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address,
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
+            'updated_by' => Auth::id()
+        ]);
+        $ktv->user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt('123456')
+        ]);
+
+        flash()->success('Success!', 'Chỉnh sửa đơn vị kinh doanh thành công.');
+
+        return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        $ktv = Ktv::findOrFail($id);
+        $ktv->user->delete();
         $provinces = Province::all();
-        return view('ktvs.edit', compact('ktv', 'provinces'));
-    }
 
-    public function update(Request $request, Song $song)
-    {
-        //
-    }
+        flash()->success('Success!', 'Xóa đơn vị kinh doanh thành công.');
 
-    public function destroy(Song $song)
-    {
-        //
+        return view('ktvs.index', compact('provinces'));
     }
 
     public function getDistricts(Request $request)
     {
         $districts = District::where('province_id', $request->province_id)->get();
+
         return response()->json(['data' => $districts, 'msg' => "Success"], 200);
     }
 

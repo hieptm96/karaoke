@@ -31,7 +31,9 @@ class KtvsTableSeeder extends Seeder
                 'address' => $faker->address,
                 'province_id' => 1,
                 'district_id' => 1,
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'created_by' => 1,
+                'updated_by' => 1
             ]);
         }
     }

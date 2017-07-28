@@ -17,8 +17,10 @@ class Ktv extends Model
         'address',
         'district_id',
         'province_id',
-        'user_id',
+        'user_id'
     ];
+
+    protected $guarded = ['created_by', 'updated_by'];
 
     protected $dates = ['deleted_at'];
 

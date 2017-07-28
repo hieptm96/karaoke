@@ -14,7 +14,7 @@ class KtvRepository implements Contract
 
     public function getDatatables(Request $request)
     {
-        $ktvs = Ktv::join('users', 'ktvs.user_id', '=', 'users.id');
+        $ktvs = Ktv::select(['id', 'name', 'representative', 'phone', 'email', 'address', 'province_id', 'district_id', 'created_at', 'updated_at']);
 
         return Datatables::of($ktvs)
              ->filter(function ($query) use ($request) {
@@ -26,7 +26,7 @@ class KtvRepository implements Contract
                      $query->where('phone', 'like', '%'.$request->phone.'%');
                  }
                  if ($request->has('email')) {
-                     $query->where('users.email', 'like', '%'.$request->email.'%');
+                     $query->where('email', 'like', '%'.$request->email.'%');
                  }
 
                  if ($request->has('province')) {
@@ -37,19 +37,7 @@ class KtvRepository implements Contract
                      $query->where('district_id', $request->district);
                  }
              })
-//            ->filter(function ($query) {
-//                if (request()->has('name')) {
-//                    $query->where('name', 'like', "%{request('name')}%");
-//                }
-//
-//                if ($request->has('province')) {
-//                    $query->where('province_id', $request->province);
-//                }
-//            })
-//             ->addColumn('actions', function ($song) {
-//                 return $this->generateActionColumn($song);
-//             })
-             ->setTransformer(new KtvTransformer)
+            ->setTransformer(new KtvTransformer)
             ->make(true);
     }
 

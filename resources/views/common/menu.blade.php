@@ -19,18 +19,18 @@
                 <a href="{{ route('songs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Danh mục bài hát </span> <span class="menu-arrow"></span></a>
             </li>
 
+            <li>
+                <a href="{{ route('ktvreports.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Báo cáo </span> <span class="menu-arrow"></span></a>
+            </li>
+
+                <a href="{{ route('singers.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Danh mục ca sĩ </span> <span class="menu-arrow"></span></a>
+            </li>
+
             @role('admin')
                 <li>
                     <a href="{{ route('ktvs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị kinh doanh </span> <span class="menu-arrow"></span></a>
                 </li>
             @endrole
-
-            <li class="has_sub">
-                <a href="javascript:void(0);" class="waves-effect"><i class="ti-home"></i> <span> Thống kê </span> <span class="menu-arrow"></span></a>
-                <ul class="list-unstyled">
-                    <li><a href="{{ route('statistics.import') }}">Import dữ liệu</a></li>
-                </ul>
-            </li>
 
         </ul>
         <div class="clearfix"></div>

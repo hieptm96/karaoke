@@ -172,6 +172,7 @@ return [
         Gtk\FlashMessage\FlashMessageServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Cucxabeng\Repogen\RepogenServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...

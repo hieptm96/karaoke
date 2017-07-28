@@ -30,6 +30,10 @@
                 <li>
                     <a href="{{ route('ktvs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị kinh doanh </span> <span class="menu-arrow"></span></a>
                 </li>
+
+                <li>
+                    <a href="{{ route('contentowners.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị sở hữu bản q </span> <span class="menu-arrow"></span></a>
+                </li>
             @endrole
 
         </ul>

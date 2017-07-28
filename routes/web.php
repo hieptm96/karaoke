@@ -33,13 +33,20 @@ Route::get('ktvreports/datatables', 'KtvReportsController@datatables')->name('kt
 Route::post('ktvreports/export', 'KtvReportsController@exportExcel')->name('ktvreports.exportExcel');
 Route::resource('ktvreports', 'KtvReportsController');
 
-// Ktv
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+    // Ktv
 	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');
 	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');
 	Route::resource('ktvs', 'KtvsController');
+
+	// Content Owner
+    Route::get('/contentowners/datatables', 'ContentOwnersController@datatables')->name('contentowners.datatables');
+    Route::get('/contentowners/get-districts', 'ContentOwnersController@getDistricts')->name('contentowners.getdistricts');
+    Route::resource('contentowners', 'ContentOwnersController');
 });
 
 // Statistics
 Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
 Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
+
+

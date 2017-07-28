@@ -55,4 +55,9 @@ class Singer extends Model
     {
         return $this->belongsTo('App\Models\User', 'updated_by', 'id');
     }
+
+    public function songs()
+    {
+        return $this->hasMany(Song::class)->withTimestamps();
+    }
 }

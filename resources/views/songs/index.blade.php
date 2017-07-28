@@ -4,15 +4,47 @@
     <!-- DataTables -->
     <link href="/vendor/ubold/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
+    <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/vendor/ubold/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
 @endpush
 
 @section('content')
+    {{-- delete song modal --}}
+    <div id="delete-song-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Xóa bài hát</h3>
+          </div>
+          <div class="modal-body">
+            <p>Bạn có chắc muốn xóa bài hát không?</p>
+          </div>
+          <div class="modal-footer">
+              <div class="custom-modal-text text-left">
+                  <form role="form" id="delete-song-form" method="post" action="">
+                      <input name="_method" value="DELETE" type="hidden">
+                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                      <div class="text-right">
+                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                          <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Page-Title -->
     <div class="row">
+
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
-                <button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Settings <span class="m-l-5"><i class="fa fa-cog"></i></span></button>
+                <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm bài hát </a>
             </div>
 
             <h4 class="page-title">Bài hát</h4>
@@ -38,8 +70,24 @@
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
                             <label class="sr-only" for="">Tên bài hát</label>
-                            <input type="text" class="form-control" placeholder="Tên bài hát" name="name" />
+                            <input type="text" id="name-filter" class="form-control" placeholder="Tên bài hát" name="name" />
                         </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="">Tên ca sĩ</label>
+                            <input type="text" id="singer-filter" class="form-control" placeholder="Tên ca sĩ" name="singer" />
+                        </div>
+
+                        <div class="form-group">
+                          <select class="form-control" id="language-filter" name="language" data-style="btn-white">
+                            <option value>--Chọn ngôn ngữ--</option>
+                            @foreach (config('ktv.languages') as $key => $language)
+                                <option value="{{ $key }}">{{ $language }}</option>
+                            @endforeach
+
+                          </select>
+                        </div>
+
                         <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
                     </form>
                 </div>
@@ -66,6 +114,7 @@
                         <th width="10%">Người tạo</th>
                         <th width="10%">Ngày tạo</th>
                         <th width="10%">Ngày cập nhật</th>
+                        <th width="12%">#</th>
                     </tr>
                     </thead>
 
@@ -84,11 +133,24 @@
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.bootstrap.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
+<!-- Modal-Effect -->
+<script src="/vendor/ubold/assets/plugins/custombox/js/custombox.min.js"></script>
+<script src="/vendor/ubold/assets/plugins/custombox/js/legacy.min.js"></script>
 
 @endpush
 
 @push('inline_scripts')
 <script>
+    $(document).on('click', '.delete-song', function(e) {
+        $('#delete-song-modal').modal("show");
+        e.preventDefault();
+        var song_id = $(this).parent().parent().find('.singer-data').text();
+        var action = '/songs/' + song_id;
+        $('#delete-song-form').attr('action', action);
+    });
+
     $(function () {
         var datatable = $("#datatable").DataTable({
             searching: false,
@@ -98,8 +160,15 @@
                 url: "{!! route('songs.datatables') !!}",
                 data: function (d) {
                     d.name = $('input[name=name]').val();
+                    d.singer = $('#singer-filter').val();
+                    d.language = $('#language-filter').val();
                 }
             },
+            "columnDefs": [ {
+                "targets": 0,
+                "data": null,
+                'className': "singer-data",
+            } ],
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
@@ -107,7 +176,8 @@
                 {data: 'language', name: 'language'},
                 {data: 'created_by', name: 'created_by'},
                 {data: 'created_at', name: 'created_at'},
-                {data: 'updated_at', name: 'updated_at'}
+                {data: 'updated_at', name: 'updated_at'},
+                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
             order: [[2, 'asc']]
         });
@@ -115,6 +185,24 @@
         $('#search-form').on('submit', function(e) {
             datatable.draw();
             e.preventDefault();
+        });
+
+        $('#search-form').on('change', function(e) {
+            datatable.draw();
+        });
+
+        $('#name-filter').on('keyup', function(e) {
+            var name = $('#name-filter').val();
+            if (name.length == 0) {
+                datatable.draw();
+            }
+        });
+
+        $('#singer-filter').on('keyup', function(e) {
+            var createdBy = $('#singer-filter').val();
+            if (createdBy.length == 0) {
+                datatable.draw();
+            }
         });
     });
 </script>

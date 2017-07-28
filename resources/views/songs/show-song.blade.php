@@ -293,6 +293,58 @@
         });
 
     });
+
+    var url = '{{ route('contentowners.getdistricts') }}';
+    $(function () {
+        var datatable = $("#datatable").DataTable({
+            searching: false,
+            serverSide: true,
+            processing: true,
+            ajax: {
+                url: "{!! route('contentowners.datatables') !!}",
+                data: function (d) {
+                    d.name = $('#name-search').val();
+                    d.phone = $('#phone-search').val();
+                    d.email = $('#email-search').val();
+                    d.province = $('#province').val();
+                    d.district = $('#district-search').val();
+                }
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'phone', name: 'phone'},
+                {data: 'email', name: 'mail'},
+                {data: 'address', name: 'address'},
+                {data: 'province', name: 'province'},
+                {data: 'district', name: 'district'},
+                {data: 'code', name: 'code'},
+                {data: 'actions', name: 'actions', orderable: false, searchable: false},
+            ],
+            order: [[2, 'asc']]
+        });
+
+        $('#name-search').on('keyup', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#phone-search').on('keyup', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#email-search').on('keyup', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#province').on('change', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#district-search').on('change', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+    });
 </script>
 
 @endpush

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use App\Contracts\Repositories\SongRepository;
 
@@ -13,6 +14,8 @@ class SongsController extends Controller
     public function __construct(SongRepository $songRepository)
     {
         $this->songRepository = $songRepository;
+
+        view()->share('provinces', Province::all());
     }
 
     /**
@@ -51,9 +54,7 @@ class SongsController extends Controller
         $name = $request->name;
         $language = $request->language;
 
-        $result = $this->songRepository->create(
-            ['name' => $name, 'language' => $language, 'created_by' => 1, 'updated_by' => 1],
-            $singers);
+        $result = $this->songRepository->create($request);
 
         if ($result != null) {
             return redirect('/songs/' . $result['id'])->with('created', true);

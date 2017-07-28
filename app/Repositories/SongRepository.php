@@ -14,7 +14,7 @@ class SongRepository implements Contract
 
     public function getDatatables(Request $request)
     {
-        
+
         $songs = Song::with('singers', 'createdBy', 'contentOwners');
 
         return Datatables::of($songs)
@@ -74,19 +74,58 @@ class SongRepository implements Contract
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes, array $singerIds)
+    public function create(Request $request)
     {
+        $name = $request->name;
+        $language = $request->language;
+
+        $attributes =['name' => $name, 'language' => $language, 'created_by' => 1, 'updated_by' => 1];
+
         $song = Song::create($attributes);
+
+        $singerIds = $request->singer;
+        if ($singerIds == null) {
+            $singerIds = [];
+        }
 
         if ($song == null) {
             return null;
         }
 
         if ($singerIds != null) {
-            $song->singers()->attach($singerIds);
+            $song->singers()->sync($singerIds);
         }
 
         return $song;
+    }
+
+    private static $percentType =
+        ['musican' => '40', 'title' => '30', 'singer' => 20, 'film' => 10];
+
+    private function getOwner($request)
+    {
+        $owners = [];
+        $singerOwner = $request['singer-owner'];
+
+        if (!empty($request['singer-owner'])) {
+            $owners[ $request['singer-owner'] ] = ['type' => 'singer'];
+        }
+
+        if (!empty($request['musican-owner'])) {
+            $owners[ $request['musican-owner'] ] = ['type' => 'musican'];
+        }
+
+        if (!empty($request['singer-owner'])) {
+            $owners[ $request['title-owner'] ] = ['type' => 'title'];
+        }
+
+        if (!empty($request['singer-owner'])) {
+            $owners[ $request['film-owner'] ] = ['type' => 'film'];
+        }
+
+        $musicanOwner = $request['musican-owner'];
+        $titleOwner = $request['title-owner'];
+        $filmOwner = $request['film-owner'];
     }
 
 

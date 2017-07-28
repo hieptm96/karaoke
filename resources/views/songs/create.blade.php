@@ -83,9 +83,10 @@
                         <div class="">
                           <label for="singers" class="">Ca sĩ: </label>
                           <div class="">
-                            <div class="input-group" id="add-singer">
-                                <span class="form-control"></span>
-                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            <div class="input-group" id="singer-owner">
+                                <input type="text" class="hidden" name="singer-owner"></name>
+                                <span class="name form-control"></span>
+                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
@@ -93,9 +94,10 @@
                         <div class="">
                           <label for="singers" class="">Nhạc sĩ: </label>
                           <div class="">
-                            <div class="input-group" id="add-singer">
-                                <span class="form-control"></span>
-                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            <div class="input-group" id="musician-owner">
+                                <input type="text" class="hidden" name="musician-owner"></name>
+                                <span class="name form-control"></span>
+                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
@@ -103,9 +105,10 @@
                         <div class="">
                           <label for="singers" class="">Lời: </label>
                           <div class="">
-                            <div class="input-group" id="add-singer">
-                                <span class="form-control"></span>
-                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            <div class="input-group" id="title-owner">
+                                <input type="text" class="hidden" name="title-owner"></name>
+                                <span class="name form-control"></span>
+                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
@@ -113,9 +116,10 @@
                         <div class="">
                           <label for="singers" class="">Quay phim: </label>
                           <div class="">
-                            <div class="input-group" id="add-singer">
-                                <span class="form-control"></span>
-                                <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            <div class="input-group" id="film-owner">
+                                <input type="text" class="hidden" name="film-owner"></name>
+                                <span class="name form-control"></span>
+                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
@@ -149,9 +153,9 @@
 <script src="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
-<!-- Modal-Effect -->
-<script src="/vendor/ubold/assets/plugins/custombox/js/custombox.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/custombox/js/legacy.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="/js/main.js"></script>
 
 @endpush
 
@@ -257,6 +261,96 @@
         });
 
     });
+
+    // owners
+    var url = '{{ route('contentowners.getdistricts') }}';
+    var owner;
+    $(function () {
+        var datatable = $("#content-owner-datatable").DataTable({
+            searching: false,
+            serverSide: true,
+            processing: true,
+            ajax: {
+                url: "{!! route('contentowners.datatables') !!}",
+                data: function (d) {
+                    d.name = $('#name-search').val();
+                    d.phone = $('#phone-search').val();
+                    d.email = $('#email-search').val();
+                    d.province = $('#province').val();
+                    d.district = $('#district-search').val();
+                }
+            },
+            "columnDefs": [ {
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<a class='btn btn-primary select-owner' data-dismiss='modal'>Chọn</button>",
+            }, {
+                "targets": 0,
+                "data": null,
+                'className': "owner-data",
+            }, {
+                "targets": 1,
+                "data": null,
+                'className': "owner-name",
+            } ],
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'phone', name: 'phone'},
+                {data: 'email', name: 'mail'},
+                {data: 'address', name: 'address'},
+                {data: 'province', name: 'province'},
+                {data: 'district', name: 'district'},
+                {data: 'code', name: 'code'},
+                {name: 'select', orderable: false, searchable: false},
+            ],
+            order: [[2, 'asc']]
+        });
+
+        $('#name-search').on('keyup', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#phone-search').on('keyup', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#email-search').on('keyup', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#province').on('change', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+        $('#district-search').on('change', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+    });
+
+    function changeOwnerValue(ownerId, ownerName) {
+        owner.find(".hidden").val(ownerId);
+        owner.find('.name').text(ownerName);
+        owner.find('.select-owner-btn').text("Sửa");
+    }
+
+    // select owner event
+    $(document).on('click', '.select-owner', function() {
+        var ownerRow = $(this).parent().parent();
+        var ownerId = ownerRow.find('.owner-data').text();
+        var ownerName = ownerRow.find('.owner-name').html();
+
+        console.log(owner);
+        changeOwnerValue(ownerId, ownerName);
+    });
+
+    // select owner event
+    $(document).on('click', '.select-owner-btn', function() {
+        owner = $(this).parent();
+    });
+
+
 </script>
 
 @endpush

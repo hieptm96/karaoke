@@ -31,6 +31,7 @@ Route::resource('singers', 'SingersController');
 // Ktv reports
 Route::get('ktvreports/datatables', 'KtvReportsController@datatables')->name('ktvreports.datatables');
 Route::post('ktvreports/export', 'KtvReportsController@exportExcel')->name('ktvreports.exportExcel');
+Route::get('/ktvreports/get-districts', 'KtvReportsController@getDistricts')->name('ktvreports.getdistricts');
 Route::resource('ktvreports', 'KtvReportsController');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
@@ -43,6 +44,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
     Route::get('/contentowners/datatables', 'ContentOwnersController@datatables')->name('contentowners.datatables');
     Route::get('/contentowners/get-districts', 'ContentOwnersController@getDistricts')->name('contentowners.getdistricts');
     Route::resource('contentowners', 'ContentOwnersController');
+
+    // Config
+    Route::resource('configs', 'ConfigsController', ['only' => ['index', 'update']]);
 });
 
 // Statistics

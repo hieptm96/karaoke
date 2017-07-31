@@ -43,7 +43,17 @@
     <div class="row">
         <div class="col-sm-12">
 
-            <h4 class="page-title">Bài hát</h4>
+            @if ( session('created') )
+                <div class="btn-group pull-right m-t-15">
+                    <a href="{{ route('singers.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm tiếp </a>
+                </div>
+            @else
+                <div class="btn-group pull-right m-t-15">
+                    <a href="{{ route('singers.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+                </div>
+            @endif
+
+            <h4 class="page-title">Ca sĩ</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">KTV</a>
@@ -58,27 +68,10 @@
         </div>
     </div>
 
-    @if ( session()->has('edited') )
-        @if ( session('edited') )
-          <div class="alert alert-success fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Đã cập nhât thành công thông tin!</strong>
-          </div>
-        @else
-          <div class="alert alert-danger fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Không thể thay đổi thông tin!</strong>
-          </div>
-        @endif
-    @elseif ( session('created') )
-        <div class="alert alert-success fade in alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Đã thêm thành công ca sĩ!</strong>
-        </div>
-    @elseif( session()->has('deleted') )
-        <div class="alert alert-danger fade in alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Không thể xóa ca sĩ!</strong>
+    @if (session()->has('flash_message'))
+        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{!! session('flash_message.message') !!}</strong>
         </div>
     @endif
 
@@ -142,15 +135,9 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      @if ( session('created') )
-                        <a href="{{ route('singers.create') }}" class="btn btn-default waves-effect waves-light">
-                          Thêm tiếp
-                        </a>
-                      @endif
-                      <button type="submit" class="btn btn-warning waves-effect waves-light">
+                      <button type="submit" class="btn btn-primary waves-effect waves-light">
                         Cập nhật
                       </button>
-                      <a href="delete-singer-modal" class="btn btn-danger delete-singer" target="#delete-singer-modal">Xóa</a>
                     </div>
                   </div>
                 </form>

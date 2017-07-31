@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Singer extends Model
+class Singer extends ModelTracking
 {
     use SoftDeletes;
 
@@ -38,22 +38,6 @@ class Singer extends Model
             $model->abbr = str_abbr($model->name);
             $model->name_raw = Str::ascii($model->name);
         });
-    }
-
-    /**
-     * Get the user that created the singer.
-     */
-    public function createdBy()
-    {
-        return $this->belongsTo('App\Models\User', 'created_by', 'id');
-    }
-
-    /**
-     * Get the user that updated the singer last.
-     */
-    public function updatedBy()
-    {
-        return $this->belongsTo('App\Models\User', 'updated_by', 'id');
     }
 
     public function songs()

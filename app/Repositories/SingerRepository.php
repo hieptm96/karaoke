@@ -59,8 +59,6 @@ class SingerRepository implements Contract
      */
     public function find($id)
     {
-        $result = Singer::find($id);
-        return $result;
     }
 
     /**
@@ -70,7 +68,6 @@ class SingerRepository implements Contract
      */
     public function create(array $attributes)
     {
-        return Singer::create($attributes);
     }
 
 
@@ -82,14 +79,7 @@ class SingerRepository implements Contract
      */
     public function update($id, array $attributes)
     {
-        $singer = Singer::find($id);
 
-        if($singer) {
-            $edited = $singer->update($attributes);
-            return $edited;
-        }
-
-        return null;
     }
 
     /**
@@ -99,14 +89,6 @@ class SingerRepository implements Contract
      */
     public function delete($id)
     {
-        $result = Singer::find($id);
-
-        if($result) {
-            $result->delete();
-            return true;
-        }
-
-        return false;
     }
 
     protected function getActionColumnPermissions($singers)

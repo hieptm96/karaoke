@@ -55,7 +55,7 @@ class SongsController extends Controller
             return redirect()->route('songs.show', ['id' => $result->id ])
                     ->with('created', true);
         } else {
-            flash()->success('Error!', 'Không thể thêm bài hát.');
+            flash()->warning('Error!', 'Không thể thêm bài hát.');
             return redirect()->route('show.create');
         }
     }

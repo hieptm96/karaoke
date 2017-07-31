@@ -8,41 +8,19 @@
 
 @section('content')
 
-    {{-- delete song modal --}}
-    <div id="delete-song-modal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3 class="modal-title">Xóa bài hát</h3>
-          </div>
-          <div class="modal-body">
-            <p>Bạn có chắc muốn xóa bài hát không?</p>
-          </div>
-          <div class="modal-footer">
-              <div class="custom-modal-text text-left">
-                  <form role="form" id="delete-song-form" method="post" action="/songs/{{ $song['id'] }}">
-                      <input name="_method" value="DELETE" type="hidden">
-                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
-                      <div class="text-right">
-                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
-                          <button type="button" class="btn btn-default waves-effect waves-light m-l-10" onclick="Custombox.close();">Hủy</button>
-                      </div>
-                  </form>
-              </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
     @include('songs.singer-modal')
+
+    @include('songs.owner-modal')
 
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
+
+            @if ( session('created') )
+                <div class="btn-group pull-right m-t-15">
+                    <a href="{{ route('songs.create') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Thêm tiếp    </button></a>
+                </div>
+            @endif
 
             <h4 class="page-title">Bài hát</h4>
             <ol class="breadcrumb">
@@ -59,27 +37,10 @@
         </div>
     </div>
 
-    @if ( session()->has('edited') )
-        @if ( session('edited') )
-          <div class="alert alert-success fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Đã cập nhât thành công thông tin!</strong>
-          </div>
-        @else
-          <div class="alert alert-danger fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Không thể thay đổi thông tin!</strong>
-          </div>
-        @endif
-    @elseif ( session('created') )
-        <div class="alert alert-success fade in alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Đã thêm thành công bài hát!</strong>
-        </div>
-    @elseif( session()->has('deleted') )
-        <div class="alert alert-danger fade in alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-            <strong>Không thể xóa bài hát!</strong>
+    @if (session()->has('flash_message'))
+        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{!! session('flash_message.message') !!}</strong>
         </div>
     @endif
 
@@ -89,7 +50,7 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" method="post" action="/songs/{{ $song['id'] }}" role="form"  data-parsley-validate novalidate>
+                <form class="form-horizontal" id="song-filer-form" method="post" action="/songs/{{ $song['id'] }}" role="form"  data-parsley-validate novalidate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
@@ -123,7 +84,7 @@
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $song['language'] }}" name="language" data-style="btn-white" id="language-picker">
+                      <select class="selectpicker" value="{{ $song['language'] }}" name="language" data-style="btn-white" id="song-language-filter">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach
@@ -132,6 +93,64 @@
 
                     </div>
                   </div>
+
+
+                  <hr />
+
+                  <div class="form-group">
+                    <label for="singers" class="col-sm-4 control-label">Đơn vị sở hữu nội dung: </label>
+
+                    <div class="col-sm-6">
+                        <br />
+
+                        <div class="">
+                          <label for="singers" class="">Nhạc sĩ: </label>
+                          <div class="">
+                            <div class="input-group owner" id="musican-owner">
+                                <input type="text" class="hidden" name="musican-owner" value="{{ $song['contentOwners']['musican']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['musican']['name'] or '' }}</span>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="">
+                          <label for="singers" class="">Lời: </label>
+                          <div class="">
+                            <div class="input-group owner" id="title-owner">
+                                <input type="text" class="hidden" name="title-owner" value="{{ $song['contentOwners']['title']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['title']['name'] or '' }}</span>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="">
+                          <label for="singers" class="">Ca sĩ: </label>
+                          <div class="">
+                            <div class="input-group owner" id="singer-owner">
+                                <input type="text" class="hidden" name="singer-owner" value="{{ $song['contentOwners']['singer']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['singer']['name'] or '' }}</span>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="">
+                          <label for="singers" class="">Quay phim: </label>
+                          <div class="">
+                            <div class="input-group owner" id="film-owner">
+                                <input type="text" class="hidden" name="film-owner" value="{{ $song['contentOwners']['film']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['film']['name'] or '' }}</span>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
@@ -153,11 +172,6 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      @if ( session('created') )
-                        <a href="{{ route('songs.create') }}" class="btn btn-info waves-effect waves-light">
-                          Thêm tiếp
-                        </a>
-                      @endif
                       <button type="submit" class="btn btn-primary waves-effect waves-light">
                         Cập nhật
                       </button>
@@ -183,17 +197,36 @@
 
 @push('inline_scripts')
 <script>
+    var deleteAndEditAction = '<a class="btn btn-primary owner-btn delete-owner input-group-addon btn-block" >Xóa</a>'
+    + '<a class="btn btn-default owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Sửa</a>';
+    var selectAction = '<a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>';
+
+    function checkAction() {
+        $('.owner').each(function(owner) {
+            var val = $(this).find('.hidden').val();
+            console.log('val: ' + val);
+            if(val != '') {
+                $(this).find('.owner-btn').remove();
+                $(this).append(deleteAndEditAction);
+            } else {
+                $(this).find('.owner-btn').remove();
+                $(this).append(selectAction);
+            }
+        })
+    }
+
     $( document ).ready(function() {
-        $('select[name=language]').val('{{ $song['language'] }}');
+        $('#song-language-filter').val('{{ $song['language'] }}');
         $('.selectpicker').selectpicker('refresh');
         $('form').parsley();
+
+        checkAction();
     });
 
     $(document).on('click', '.delete-song', function(e) {
         $('#delete-song-modal').modal("show");
         e.preventDefault();
     });
-
 
     function checkExistedSinger(id) {
         console.log(typeof id);
@@ -219,7 +252,7 @@
         var newRow =
         '<div class="singer">'
         + '<div class="input-group span6 offset3">'
-        +    '<input class="singer-id hidden" name="singer[]" value="' + singerId + '"></name>'
+        +    '<input class="singer-id hidden" name="singer[]" value="' + singerId + '">'
         +    '<span class="form-control" singer-data=' + singerId + '>' + singerName + '</span>'
         +    '<a class="btn btn-primary input-group-addon btn-block delete-singer" >Xóa</a>'
         + '</div>'
@@ -294,9 +327,11 @@
 
     });
 
+    // owners
     var url = '{{ route('contentowners.getdistricts') }}';
+    var owner;
     $(function () {
-        var datatable = $("#datatable").DataTable({
+        var datatable = $("#content-owner-datatable").DataTable({
             searching: false,
             serverSide: true,
             processing: true,
@@ -310,6 +345,19 @@
                     d.district = $('#district-search').val();
                 }
             },
+            "columnDefs": [ {
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<a class='btn btn-primary select-owner' data-dismiss='modal'>Chọn</button>",
+            }, {
+                "targets": 0,
+                "data": null,
+                'className': "owner-data",
+            }, {
+                "targets": 1,
+                "data": null,
+                'className': "owner-name",
+            } ],
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
@@ -319,7 +367,7 @@
                 {data: 'province', name: 'province'},
                 {data: 'district', name: 'district'},
                 {data: 'code', name: 'code'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                {name: 'select', orderable: false, searchable: false},
             ],
             order: [[2, 'asc']]
         });
@@ -345,6 +393,38 @@
             e.preventDefault();
         });
     });
+
+    function changeOwnerValue(ownerId, ownerName) {
+        owner.find(".hidden").val(ownerId);
+        owner.find('.name').text(ownerName);
+
+        checkAction();
+    }
+
+    // select owner event
+    $(document).on('click', '.select-owner', function() {
+        var ownerRow = $(this).parent().parent();
+        var ownerId = ownerRow.find('.owner-data').text();
+        var ownerName = ownerRow.find('.owner-name').html();
+
+        changeOwnerValue(ownerId, ownerName);
+    });
+
+    // delete owner event
+    $(document).on('click', '.delete-owner', function() {
+        var ownerRow = $(this).parent();
+        ownerRow.find(".hidden").val('');
+        ownerRow.find('.name').text('');
+
+        ownerRow.find('.owner-btn').remove();
+        ownerRow.append(selectAction);
+    });
+
+    // select owner event
+    $(document).on('click', '.select-owner-btn', function() {
+        owner = $(this).parent();
+    });
+
 </script>
 
 @endpush

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Response;
 use App\Models\Song;
 use App\Models\Province;
 use Illuminate\Http\Request;
@@ -46,20 +47,15 @@ class SongsController extends Controller
      */
     public function store(Request $request)
     {
-        $singers = $request->singer;
-        if ($singers == null) {
-            $singers = [];
-        }
-
-        $name = $request->name;
-        $language = $request->language;
-
         $result = $this->songRepository->create($request);
 
         if ($result != null) {
-            return redirect('/songs/' . $result['id'])->with('created', true);
+            flash()->success('Success!', 'Đã thêm thành công bài hát.');
+            return redirect()->route('songs.show', ['id' => $result->id ])
+                    ->with('created', true);
         } else {
-            return view('songs.create', ['created' => false]);
+            flash()->success('Error!', 'Không thể thêm bài hát.');
+            return redirect()->route('show.create');
         }
     }
 
@@ -74,9 +70,9 @@ class SongsController extends Controller
         $song = $this->songRepository->find($id);
 
         if ($song != null) {
-            return view('songs.show-song', ['song' => $song]);
+            return view('songs.show', ['song' => $song]);
         } else {
-            return redirect('/songs');
+            return redirect()->route('songs.index');
         }
     }
 
@@ -98,25 +94,13 @@ class SongsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        $singers = $request->singer;
-        if ($singers == null) {
-            $singers = [];
-        }
+        $result = $this->songRepository->update($id, $request);
 
-        $name = $request->name;
-        $language = $request->language;
+        flash()->success('Success!', 'Đã sửa thành công bài hát.');
 
-        $result = $this->songRepository->update($id,
-                    ['name' => $name, 'language' => $language]
-                    , $singers);
-
-        if ($result === null) {
-            return back();
-        } else {
-            return redirect('/songs/' . $id)->with('edited', $result);
-        }
+        return redirect()->route('songs.show', ['id' => $id]);
     }
 
     /**
@@ -128,11 +112,10 @@ class SongsController extends Controller
     public function destroy($id)
     {
         $success = $this->songRepository->delete($id);
-        if ($success) {
-            return view('songs.deleted');
-        } else {
-            return redirect('/songs/' . $id)->with('delete', false);;
-        }
+
+        flash()->success('Success!', 'Xóa đơn bài hát thành công.');
+
+        return redirect()->route('songs.index');
     }
 
     /*

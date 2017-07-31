@@ -14,9 +14,9 @@ class SongsTableSeeder extends Seeder
         $faker = Faker\Factory::create('vi_VN');
 
         $singerIds = \App\Models\Singer::pluck('id')->toArray();
-        $contentOwners = \App\Models\ContentOwner::pluck('id')->toArray();
+        // $contentOwners = \App\Models\ContentOwner::pluck('id')->toArray();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $song = \App\Models\Song::create([
                 'name' => $faker->name,
                 'language' => $faker->randomElement([1, 2, 3]),
@@ -26,12 +26,6 @@ class SongsTableSeeder extends Seeder
             ]);
 
             $song->singers()->sync($faker->randomElements($singerIds, rand(1, 3)));
-        
         }
-    }
-
-    private function generateContentOwners($contentOwners)
-    {
-        //$faker->randomElements($singerIds, rand(0, 4))
     }
 }

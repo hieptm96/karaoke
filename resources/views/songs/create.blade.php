@@ -81,23 +81,12 @@
                         <br />
 
                         <div class="">
-                          <label for="singers" class="">Ca sĩ: </label>
-                          <div class="">
-                            <div class="input-group" id="singer-owner">
-                                <input type="text" class="hidden" name="singer-owner"></name>
-                                <span class="name form-control"></span>
-                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="">
                           <label for="singers" class="">Nhạc sĩ: </label>
                           <div class="">
-                            <div class="input-group" id="musician-owner">
-                                <input type="text" class="hidden" name="musician-owner"></name>
+                            <div class="input-group owner" id="musican-owner">
+                                <input type="text" class="hidden" name="musican-owner"></name>
                                 <span class="name form-control"></span>
-                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
@@ -105,21 +94,33 @@
                         <div class="">
                           <label for="singers" class="">Lời: </label>
                           <div class="">
-                            <div class="input-group" id="title-owner">
+                            <div class="input-group owner" id="title-owner">
                                 <input type="text" class="hidden" name="title-owner"></name>
                                 <span class="name form-control"></span>
-                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
 
                         <div class="">
+                          <label for="singers" class="">Ca sĩ: </label>
+                          <div class="">
+                            <div class="input-group owner" id="singer-owner">
+                                <input type="text" class="hidden" name="singer-owner"></name>
+                                <span class="name form-control"></span>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="">
                           <label for="singers" class="">Quay phim: </label>
                           <div class="">
-                            <div class="input-group" id="film-owner">
+                            <div class="input-group owner" id="film-owner">
                                 <input type="text" class="hidden" name="film-owner"></name>
                                 <span class="name form-control"></span>
-                                <a class="btn btn-primary select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
+                                <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
@@ -130,7 +131,7 @@
 
                   <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      <button type="submit" class="btn btn-primary waves-effect waves-light">
+                      <button type="submit" class="btn btn-primary waves-effect waves-light submit-btn">
                         Thêm
                       </button>
                       <a href="{{ route('songs.index') }}" class="btn btn-default waves-effect waves-light m-l-5">
@@ -161,6 +162,24 @@
 
 @push('inline_scripts')
 <script>
+
+    var deleteAndEditAction = '<a class="btn btn-primary owner-btn delete-owner input-group-addon btn-block" >Xóa</a>'
+    + '<a class="btn btn-default owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Sửa</a>';
+    var selectAction = '<a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>';
+
+    function checkAction() {
+        $('.owner').each(function(owner) {
+            var val = $(this).find('.hidden').val();
+            console.log('val: ' + val);
+            if(val != '') {
+                $(this).find('.owner-btn').remove();
+                $(this).append(deleteAndEditAction);
+            } else {
+                $(this).find('.owner-btn').remove();
+                $(this).append(selectAction);
+            }
+        })
+    }
 
     function checkExistedSinger(id) {
         console.log(typeof id);
@@ -332,7 +351,9 @@
     function changeOwnerValue(ownerId, ownerName) {
         owner.find(".hidden").val(ownerId);
         owner.find('.name').text(ownerName);
-        owner.find('.select-owner-btn').text("Sửa");
+
+        checkAction();
+        console.log(12);
     }
 
     // select owner event
@@ -341,15 +362,23 @@
         var ownerId = ownerRow.find('.owner-data').text();
         var ownerName = ownerRow.find('.owner-name').html();
 
-        console.log(owner);
         changeOwnerValue(ownerId, ownerName);
+    });
+
+    // delete owner event
+    $(document).on('click', '.delete-owner', function() {
+        var ownerRow = $(this).parent();
+        ownerRow.find(".hidden").val('');
+        ownerRow.find('.name').text('');
+
+        ownerRow.find('.owner-btn').remove();
+        ownerRow.append(selectAction);
     });
 
     // select owner event
     $(document).on('click', '.select-owner-btn', function() {
         owner = $(this).parent();
     });
-
 
 </script>
 

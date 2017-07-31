@@ -40,6 +40,8 @@ class Song extends ModelTracking
 
     public function contentOwners()
     {
-        return $this->belongsToMany(ContentOwner::class)->withTimestamps();
+        return $this->belongsToMany(ContentOwner::class)
+                    ->withPivot('type', 'percentage')
+                    ->withTimestamps();
     }
 }

@@ -28,7 +28,7 @@
                       <input name="_method" value="DELETE" type="hidden">
                       <input type="hidden" value="{{ csrf_token() }}" name="_token">
                       <div class="text-right">
-                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Xóa</button>
                           <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
                       </div>
                   </form>
@@ -41,6 +41,8 @@
 
     <!-- Page-Title -->
     <div class="row">
+
+        {{ Session::has('deleted') }}
 
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
@@ -61,6 +63,13 @@
             </ol>
         </div>
     </div>
+
+    @if (session()->has('flash_message'))
+        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{!! session('flash_message.message') !!}</strong>
+        </div>
+    @endif
 
     <div class="row">
     <div class="col-md-12">

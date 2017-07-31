@@ -15,6 +15,7 @@ class Song extends ModelTracking
         'name_raw',
         'abbr',
         'word_num',
+        'has_fee',
         'singer_id_1',
         'singer_id_2',
         'language',

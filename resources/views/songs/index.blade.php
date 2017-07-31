@@ -114,6 +114,7 @@
                         <th width="2%">Mã</th>
                         <th>Tên</th>
                         <th>Ca sỹ</th>
+                        <th>Thu phí</th>
                         <th width="10%">Language</th>
                         <th width="10%">Người tạo</th>
                         <th width="10%">Ngày tạo</th>
@@ -175,6 +176,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'singers', name: 'singers', orderable: false, searchable: false},
+                {data: 'has_fee', name: 'has_fee', searchable: false},
                 {data: 'language', name: 'language'},
                 {data: 'created_by', name: 'created_by'},
                 {data: 'created_at', name: 'created_at'},

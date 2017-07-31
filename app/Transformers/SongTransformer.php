@@ -19,6 +19,7 @@ class SongTransformer extends TransformerAbstract
             'created_at' =>  $song['created_at'],
             'updated_at' =>  $song['updated_at'],
             'actions' => $this->generateActions($song),
+            'has_fee' => $song['has_fee'] ? 'Có': 'Không' ,
         ];
     }
 
@@ -33,6 +34,7 @@ class SongTransformer extends TransformerAbstract
             'created_at' => $song->created_at->toDateTimeString(),
             'updated_at' => $song->updated_at->toDateTimeString(),
             'contentOwners' => $this->getContentOwners($song),
+            'has_fee' => $song['has_fee'],
         ];
     }
 

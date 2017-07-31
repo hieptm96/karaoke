@@ -93,6 +93,24 @@
                     </div>
                   </div>
 
+                  <div class="form-group">
+					<label class="col-sm-4 control-label">Bài hát có thu phí hay không</label>
+					<div class="col-sm-6">
+
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio1" value="1" name="has_fee" @if($song['has_fee']) checked @endif>
+                            <label for="inlineRadio1"> Có </label>
+                        </div>
+
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" id="inlineRadio1" value="0" name="has_fee" @if(!$song['has_fee']) checked @endif>
+                            <label for="inlineRadio1"> Không </label>
+
+                        </div>
+
+
+					</div>
+				</div>
 
                   <hr />
 

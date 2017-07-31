@@ -18,9 +18,14 @@
 
             @if ( session('created') )
                 <div class="btn-group pull-right m-t-15">
-                    <a href="{{ route('songs.create') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Thêm tiếp    </button></a>
+                    <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm tiếp </a>
+                </div>
+            @else
+                <div class="btn-group pull-right m-t-15">
+                    <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
                 </div>
             @endif
+
 
             <h4 class="page-title">Bài hát</h4>
             <ol class="breadcrumb">
@@ -37,13 +42,7 @@
         </div>
     </div>
 
-    @if (session()->has('flash_message'))
-        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>{!! session('flash_message.message') !!}</strong>
-        </div>
-    @endif
-
+    @include('flash-message::default')
 
     <div class="row">
         <div class="col-sm-12">
@@ -415,6 +414,8 @@
         var ownerRow = $(this).parent();
         ownerRow.find(".hidden").val('');
         ownerRow.find('.name').text('');
+
+        console.log('val: ' + ownerRow.find(".hidden").val());
 
         ownerRow.find('.owner-btn').remove();
         ownerRow.append(selectAction);

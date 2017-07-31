@@ -64,12 +64,7 @@
         </div>
     </div>
 
-    @if (session()->has('flash_message'))
-        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>{!! session('flash_message.message') !!}</strong>
-        </div>
-    @endif
+    @include('flash-message::default')
 
     <div class="row">
     <div class="col-md-12">
@@ -153,8 +148,6 @@
 @push('inline_scripts')
 <script>
     $(document).on('click', '.delete-song', function(e) {
-        $('#delete-song-modal').modal("show");
-        e.preventDefault();
         var song_id = $(this).parent().parent().find('.singer-data').text();
         var action = '/songs/' + song_id;
         $('#delete-song-form').attr('action', action);

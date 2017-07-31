@@ -160,6 +160,8 @@ class SongRepository implements Contract
     {
         $song = Song::findOrFail($id);
 
+        $success = true;
+
         $song->update($request->toArray());
 
         $singerIds = $request->singer;
@@ -174,7 +176,7 @@ class SongRepository implements Contract
         $song->contentOwners()->detach();
         $song->contentOwners()->attach($owners);
 
-        return $song;
+        return $success;
     }
 
     /**

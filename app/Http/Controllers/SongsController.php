@@ -6,6 +6,7 @@ use Response;
 use App\Models\Song;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Requests\SongRequest;
 use App\Contracts\Repositories\SongRepository;
 
 class SongsController extends Controller
@@ -42,10 +43,10 @@ class SongsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SongRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SongRequest $request)
     {
         $result = $this->songRepository->create($request);
 
@@ -79,10 +80,10 @@ class SongsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Song  $song
+     * @param  \App\Models\SongRequest  $song
      * @return \Illuminate\Http\Response
      */
-    public function edit(Song $song)
+    public function edit(SongRequest $song)
     {
         //
     }
@@ -90,15 +91,19 @@ class SongsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SongRequest  $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, SongRequest $request)
     {
-        $result = $this->songRepository->update($id, $request);
+        $success = $this->songRepository->update($id, $request);
 
-        flash()->success('Success!', 'Đã sửa thành công bài hát.');
+        if ($success) {
+            flash()->success('Success!', 'Đã sửa thành công bài hát.');
+        } else {
+            flash()->warning('Error!', 'Đã có lỗi xảy ra.');
+        }
 
         return redirect()->route('songs.show', ['id' => $id]);
     }
@@ -113,7 +118,11 @@ class SongsController extends Controller
     {
         $success = $this->songRepository->delete($id);
 
-        flash()->success('Success!', 'Xóa đơn bài hát thành công.');
+        if ($success) {
+            flash()->success('Success!', 'Đã xóa bài hát.');
+        } else {
+            flash()->warning('Error!', 'Đã có lỗi xảy ra.');
+        }
 
         return redirect()->route('songs.index');
     }

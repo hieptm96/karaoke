@@ -20,6 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/sample-users', 'SampleUsersController@index');
 
+// Profile
+Route::resource('profiles', 'ProfilesController', ['only' => ['index', 'update']]);
+
 // Songs
 Route::get('songs/datatables', 'SongsController@datatables')->name('songs.datatables');
 Route::resource('songs', 'SongsController');

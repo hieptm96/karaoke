@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Response;
 use App\Models\Song;
+use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Requests\SongRequest;
 use App\Contracts\Repositories\SongRepository;
 
 class SongsController extends Controller
@@ -13,6 +16,8 @@ class SongsController extends Controller
     public function __construct(SongRepository $songRepository)
     {
         $this->songRepository = $songRepository;
+
+        view()->share('provinces', Province::all());
     }
 
     /**
@@ -38,27 +43,20 @@ class SongsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SongRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SongRequest $request)
     {
-        $singers = $request->singer;
-        if ($singers == null) {
-            $singers = [];
-        }
-
-        $name = $request->name;
-        $language = $request->language;
-
-        $result = $this->songRepository->create(
-            ['name' => $name, 'language' => $language, 'created_by' => 1, 'updated_by' => 1],
-            $singers);
+        $result = $this->songRepository->create($request);
 
         if ($result != null) {
-            return redirect('/songs/' . $result['id'])->with('created', true);
+            flash()->success('Success!', 'Đã thêm thành công bài hát.');
+            return redirect()->route('songs.show', ['id' => $result->id ])
+                    ->with('created', true);
         } else {
-            return view('songs.create', ['created' => false]);
+            flash()->warning('Error!', 'Không thể thêm bài hát.');
+            return redirect()->route('show.create');
         }
     }
 
@@ -73,19 +71,19 @@ class SongsController extends Controller
         $song = $this->songRepository->find($id);
 
         if ($song != null) {
-            return view('songs.show-song', ['song' => $song]);
+            return view('songs.show', ['song' => $song]);
         } else {
-            return redirect('/songs');
+            return redirect()->route('songs.index');
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Song  $song
+     * @param  \App\Models\SongRequest  $song
      * @return \Illuminate\Http\Response
      */
-    public function edit(Song $song)
+    public function edit(SongRequest $song)
     {
         //
     }
@@ -93,29 +91,21 @@ class SongsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SongRequest  $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, SongRequest $request)
     {
-        $singers = $request->singer;
-        if ($singers == null) {
-            $singers = [];
-        }
+        $success = $this->songRepository->update($id, $request);
 
-        $name = $request->name;
-        $language = $request->language;
-
-        $result = $this->songRepository->update($id,
-                    ['name' => $name, 'language' => $language]
-                    , $singers);
-
-        if ($result === null) {
-            return back();
+        if ($success) {
+            flash()->success('Success!', 'Đã sửa thành công bài hát.');
         } else {
-            return redirect('/songs/' . $id)->with('edited', $result);
+            flash()->warning('Error!', 'Đã có lỗi xảy ra.');
         }
+
+        return redirect()->route('songs.show', ['id' => $id]);
     }
 
     /**
@@ -127,11 +117,14 @@ class SongsController extends Controller
     public function destroy($id)
     {
         $success = $this->songRepository->delete($id);
+
         if ($success) {
-            return view('songs.deleted');
+            flash()->success('Success!', 'Đã xóa bài hát.');
         } else {
-            return redirect('/songs/' . $id)->with('delete', false);;
+            flash()->warning('Error!', 'Đã có lỗi xảy ra.');
         }
+
+        return redirect()->route('songs.index');
     }
 
     /*

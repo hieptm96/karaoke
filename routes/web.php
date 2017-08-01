@@ -55,5 +55,3 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 // Statistics
 Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
 Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
-
-

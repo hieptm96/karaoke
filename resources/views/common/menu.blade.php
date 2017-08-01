@@ -19,11 +19,10 @@
                 <a href="{{ route('songs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Danh mục bài hát </span> <span class="menu-arrow"></span></a>
             </li>
 
-<<<<<<< HEAD
-=======
             <li>
                 <a href="{{ route('ktvreports.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Báo cáo </span> <span class="menu-arrow"></span></a>
             </li>
+
             <li>
                 <a href="{{ route('singers.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Danh mục ca sĩ </span> <span class="menu-arrow"></span></a>
             </li>

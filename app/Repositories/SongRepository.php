@@ -14,7 +14,8 @@ class SongRepository implements Contract
 
     public function getDatatables(Request $request)
     {
-        $songs = Song::with('singers', 'createdBy');
+
+        $songs = Song::with('singers', 'createdBy', 'contentOwners');
 
         return Datatables::of($songs)
             ->filter(function ($query) use ($request) {
@@ -59,7 +60,8 @@ class SongRepository implements Contract
      */
     public function find($id)
     {
-        $result = Song::with('singers', 'createdBy')->find($id);
+        $result = Song::with('singers', 'createdBy', 'contentOwners')->find($id);
+        //return $result;
         if ($result != null) {
             $songTransformer = new SongTransformer;
             $result = $songTransformer->transformWithoutLink($result);
@@ -73,21 +75,80 @@ class SongRepository implements Contract
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes, array $singerIds)
+    public function create(Request $request)
     {
-        $song = Song::create($attributes);
+        $song = Song::create($request->toArray());
 
         if ($song == null) {
             return null;
         }
 
+        $singerIds = $request->singer;
         if ($singerIds != null) {
-            $song->singers()->attach($singerIds);
+            $song->singers()->sync($singerIds);
         }
+
+        $owners = $this->getOwners($request);
+        $song->contentOwners()->sync($owners);
 
         return $song;
     }
 
+    private static $percentType =
+        ['musican' => 33, 'title' => 28, 'singer' => 15, 'film' => 24];
+
+    private static function getDefaultPercentage($ownerType)
+    {
+        return static::$percentType[$ownerType];
+    }
+
+    public function getOwners($request)
+    {
+        $owners = [];
+
+        if (!empty($request['singer-owner'])) {
+            $defaultPercentage = static::getDefaultPercentage('singer');
+            $owners[] = ['content_owner_id' => $request['singer-owner'],
+                    'type' => 'singer', 'percentage' => $defaultPercentage];
+        }
+
+        if (!empty($request['musican-owner'])) {
+            $defaultPercentage = static::getDefaultPercentage('musican');
+            $owners[] = ['content_owner_id' => $request['musican-owner'],
+                    'type' => 'musican', 'percentage' => $defaultPercentage];
+        }
+
+        if (!empty($request['title-owner'])) {
+            $defaultPercentage = static::getDefaultPercentage('title');
+            $owners[] = ['content_owner_id' => $request['title-owner'],
+                    'type' => 'title', 'percentage' => $defaultPercentage];
+        }
+
+        if (!empty($request['film-owner'])) {
+            $defaultPercentage = static::getDefaultPercentage('film');
+            $owners[] = ['content_owner_id' => $request['film-owner'],
+                    'type' => 'film', 'percentage' => $defaultPercentage];
+        }
+
+        $nOwners = count($owners);
+        $getMaximumOwners = 4;
+        if ($nOwners == $getMaximumOwners) {
+            return $owners;
+        }
+
+        $sumPercent = 0;
+
+        foreach ($owners as $key => $owner) {
+            $sumPercent += $owner['percentage'];
+        }
+
+        foreach ($owners as $key => &$owner) {
+            $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
+            $owner['percentage'] = round($realPercent);
+        }
+
+        return $owners;
+    }
 
     /**
      * Update
@@ -95,17 +156,27 @@ class SongRepository implements Contract
      * @param array $attributes
      * @return mixed
      */
-    public function update($id, array $attributes, array $singerIds)
+    public function update($id, Request $request)
     {
-        $song = Song::find($id);
+        $song = Song::findOrFail($id);
 
-        if ($song) {
-            $success = $song->update($attributes);
+        $success = true;
+
+        $song->update($request->toArray());
+
+        $singerIds = $request->singer;
+
+        if ($singerIds != null) {
             $song->singers()->sync($singerIds);
-            return $song;
+        } else {
+            $song->singers()->detach();
         }
 
-        return null;
+        $owners = $this->getOwners($request);
+        $song->contentOwners()->detach();
+        $song->contentOwners()->attach($owners);
+
+        return $success;
     }
 
     /**
@@ -115,14 +186,11 @@ class SongRepository implements Contract
      */
     public function delete($id)
     {
-        $result = Song::find($id);
+        $song = Song::findOrFail($id);
 
-        if($result) {
-            $result->delete();
-            return true;
-        }
+        $success = $song->delete();
 
-        return false;
+        return $success;
     }
 
 

@@ -15,6 +15,7 @@ class Song extends ModelTracking
         'name_raw',
         'abbr',
         'word_num',
+        'has_fee',
         'singer_id_1',
         'singer_id_2',
         'language',
@@ -36,5 +37,12 @@ class Song extends ModelTracking
     public function singers()
     {
         return $this->belongsToMany(Singer::class)->withTimestamps();
+    }
+
+    public function contentOwners()
+    {
+        return $this->belongsToMany(ContentOwner::class)
+                    ->withPivot('type', 'percentage')
+                    ->withTimestamps();
     }
 }

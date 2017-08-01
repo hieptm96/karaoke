@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <form class="form-inline" role="form" id="search-form">
+                        <form class="form-inline" role="form" id="singer-filter-form">
                             <div class="form-group">
                                 <input type="text" id="name-filter" class="form-control" placeholder="Tên ca sĩ" name="name" />
                             </div>

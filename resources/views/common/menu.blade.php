@@ -33,7 +33,11 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('contentowners.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị sở hữu bản q </span> <span class="menu-arrow"></span></a>
+                    <a href="{{ route('contentowners.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Đơn vị sở hữu bản quyền </span> <span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="{{ route('configs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Cấu hình </span> <span class="menu-arrow"></span></a>
                 </li>
             @endrole
 

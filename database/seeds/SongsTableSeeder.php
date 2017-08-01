@@ -14,6 +14,7 @@ class SongsTableSeeder extends Seeder
         $faker = Faker\Factory::create('vi_VN');
 
         $singerIds = \App\Models\Singer::pluck('id')->toArray();
+        // $contentOwners = \App\Models\ContentOwner::pluck('id')->toArray();
 
         for ($i = 0; $i < 100; $i++) {
             $song = \App\Models\Song::create([

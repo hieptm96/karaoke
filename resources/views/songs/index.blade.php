@@ -28,7 +28,7 @@
                       <input name="_method" value="DELETE" type="hidden">
                       <input type="hidden" value="{{ csrf_token() }}" name="_token">
                       <div class="text-right">
-                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Xóa</button>
                           <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
                       </div>
                   </form>
@@ -41,6 +41,8 @@
 
     <!-- Page-Title -->
     <div class="row">
+
+        {{ Session::has('deleted') }}
 
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
@@ -61,6 +63,8 @@
             </ol>
         </div>
     </div>
+
+    @include('flash-message::default')
 
     <div class="row">
     <div class="col-md-12">
@@ -110,6 +114,7 @@
                         <th width="2%">Mã</th>
                         <th>Tên</th>
                         <th>Ca sỹ</th>
+                        <th>Thu phí</th>
                         <th width="10%">Language</th>
                         <th width="10%">Người tạo</th>
                         <th width="10%">Ngày tạo</th>
@@ -144,8 +149,6 @@
 @push('inline_scripts')
 <script>
     $(document).on('click', '.delete-song', function(e) {
-        $('#delete-song-modal').modal("show");
-        e.preventDefault();
         var song_id = $(this).parent().parent().find('.singer-data').text();
         var action = '/songs/' + song_id;
         $('#delete-song-form').attr('action', action);
@@ -173,6 +176,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'singers', name: 'singers', orderable: false, searchable: false},
+                {data: 'has_fee', name: 'has_fee', searchable: false},
                 {data: 'language', name: 'language'},
                 {data: 'created_by', name: 'created_by'},
                 {data: 'created_at', name: 'created_at'},

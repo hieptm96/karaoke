@@ -23,6 +23,7 @@ class CreateSongsTable extends Migration
             $table->tinyInteger('language')->default(0);
             $table->tinyInteger('is_new_song')->default(0);
             $table->tinyInteger('freq')->default(0);
+            $table->boolean('has_fee')->default(1);
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();

@@ -19,6 +19,7 @@ class SongTransformer extends TransformerAbstract
             'created_at' =>  $song['created_at'],
             'updated_at' =>  $song['updated_at'],
             'actions' => $this->generateActions($song),
+            'has_fee' => $song['has_fee'] ? 'Có': 'Không' ,
         ];
     }
 
@@ -32,7 +33,22 @@ class SongTransformer extends TransformerAbstract
             'created_by' => $song->createdBy->name,
             'created_at' => $song->created_at->toDateTimeString(),
             'updated_at' => $song->updated_at->toDateTimeString(),
+            'contentOwners' => $this->getContentOwners($song),
+            'has_fee' => $song['has_fee'],
         ];
+    }
+
+    protected function getContentOwners($song)
+    {
+        $owners = [];
+
+        foreach ($song['contentOwners'] as $owner) {
+            // $owners[] = [ $owner['pivot']['type'] =>
+            //                 ['id' => $owner['id'], 'name' => $owner['name']] ];
+            $owners[$owner['pivot']['type']] = ['id' => $owner['id'], 'name' => $owner['name']];
+        }
+
+        return $owners;
     }
 
     protected function getSingerUrls($song)
@@ -59,9 +75,10 @@ class SongTransformer extends TransformerAbstract
 
     private function generateActions($song)
     {
-        $actions = '<a class="btn btn-warning" href="' . route('songs.show', $song['id']) . '">Sửa</a>';
-        $actions .= ' <a href="#delete-song-modal" class="btn btn-danger delete-song"
-                target="#properties">Xóa</a>';
+        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.show', $song['id'])
+                    . '"><i class="fa fa-edit"></i> Sửa</a>';
+        $actions .= ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>';
+
 
         return $actions;
     }

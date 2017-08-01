@@ -74,7 +74,7 @@
                         <thead>
                         <tr>
                             <th width="2%">Mã</th>
-                            <th>Tên</th>
+                            <th width="10%">Tên</th>
                             <th>Người đại diện</th>
                             <th>Điện thoại</th>
                             <th width="10%">Email</th>
@@ -109,7 +109,7 @@
 
 @push('inline_scripts')
 <script>
-    var url = '{{ route('ktvs.getdistricts') }}';
+    var url = '{{ route('ktvreports.getdistricts') }}';
     $(function () {
         var datatable = $("#datatable").DataTable({
             searching: false,
@@ -130,10 +130,10 @@
                 {data: 'name', name: 'name'},
                 {data: 'representative', name: 'representative'},
                 {data: 'phone', name: 'phone'},
-                {data: 'email', name: 'mail'},
+                {data: 'email', name: 'email'},
                 {data: 'address', name: 'address'},
-                {data: 'province', name: 'province'},
-                {data: 'district', name: 'district'},
+                {data: 'province', name: 'province_id'},
+                {data: 'district', name: 'district_id'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
             order: [[2, 'asc']]

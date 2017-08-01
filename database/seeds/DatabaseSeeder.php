@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ProvincesTableSeeder::class);
 
-        // $this->call(DataUsageSeeder::class);
+        $this->call(DataUsageSeeder::class);
+
+        $this->call(ContentOwnersTableSeeder::class);
+
+        $this->call(ConfigsTableSeeder::class);
     }
 }

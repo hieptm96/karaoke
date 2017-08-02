@@ -88,7 +88,7 @@ class SongRepository implements Contract
             $song->singers()->sync($singerIds);
         }
 
-        $owners = $this->getOwners($request);
+        $owners = $this->getOwners($request, $song->file_name);
         $song->contentOwners()->sync($owners);
 
         return $song;
@@ -97,37 +97,41 @@ class SongRepository implements Contract
     private static $percentType =
         ['musican' => 33, 'title' => 28, 'singer' => 15, 'film' => 24];
 
-    private static function getDefaultPercentage($ownerType)
+    public static function getDefaultPercentage($ownerType)
     {
         return static::$percentType[$ownerType];
     }
 
-    public function getOwners($request)
+    public function getOwners($request, $songFileName)
     {
         $owners = [];
 
         if (!empty($request['singer-owner'])) {
             $defaultPercentage = static::getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['singer-owner'],
-                    'type' => 'singer', 'percentage' => $defaultPercentage];
+                    'type' => 'singer', 'percentage' => $defaultPercentage,
+                    'song_file_name' => $songFileName];
         }
 
         if (!empty($request['musican-owner'])) {
             $defaultPercentage = static::getDefaultPercentage('musican');
             $owners[] = ['content_owner_id' => $request['musican-owner'],
-                    'type' => 'musican', 'percentage' => $defaultPercentage];
+                    'type' => 'musican', 'percentage' => $defaultPercentage,
+                    'song_file_name' => $songFileName];
         }
 
         if (!empty($request['title-owner'])) {
             $defaultPercentage = static::getDefaultPercentage('title');
             $owners[] = ['content_owner_id' => $request['title-owner'],
-                    'type' => 'title', 'percentage' => $defaultPercentage];
+                    'type' => 'title', 'percentage' => $defaultPercentage,
+                    'song_file_name' => $songFileName];
         }
 
         if (!empty($request['film-owner'])) {
             $defaultPercentage = static::getDefaultPercentage('film');
             $owners[] = ['content_owner_id' => $request['film-owner'],
-                    'type' => 'film', 'percentage' => $defaultPercentage];
+                    'type' => 'film', 'percentage' => $defaultPercentage,
+                    'song_file_name' => $songFileName];
         }
 
         $nOwners = count($owners);

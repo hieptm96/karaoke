@@ -59,3 +59,6 @@ Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages'
 // Songs
 Route::get('/contentowner/datatables/{id}', 'ContentOwnerSongController@datatables')->name('contentowner.datatables');
 Route::get('/contentowner/{id}', 'ContentOwnerSongController@index');
+
+Route::get('/contentowners/report', 'ContentOwnerReportController@index');
+Route::get('/contentowners/report/datatables', 'ContentOwnerReportController@datatables')->name('contentOwnerReport.datatables');

@@ -39,15 +39,10 @@ class Song extends ModelTracking
         return $this->belongsToMany(Singer::class)->withTimestamps();
     }
 
-    public function contentOwnerSongs()
-    {
-        return $this->hasMany(ContentOwnerSong::class);
-    }
-
     public function contentOwners()
     {
         return $this->belongsToMany(ContentOwner::class)
-                    ->withPivot('type', 'percentage')
+                    ->withPivot('type', 'song_file_name', 'percentage')
                     ->withTimestamps();
     }
 }

@@ -26,6 +26,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ContentOwnersTableSeeder::class);
         $this->call(ContentOwnerSongTableSeeder::class);
 
-        // $this->call(DataUsageSeeder::class);
+        $this->call(DataUsageSeeder::class);
+
+        $this->call(ContentOwnersTableSeeder::class);
+
+        $this->call(ConfigsTableSeeder::class);
     }
 }

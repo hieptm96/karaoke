@@ -10,6 +10,10 @@
     <div class="row">
         <div class="col-sm-12">
 
+            <div class="btn-group pull-right m-t-15">
+                <a href="{{ route('singers.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+            </div>
+
             <h4 class="page-title">Ca sĩ</h4>
             <ol class="breadcrumb">
                 <li>
@@ -25,20 +29,12 @@
         </div>
     </div>
 
-    {{-- @if ( !empty($edited) )
-        @if ( $edited === true )
-          <div class="alert alert-success fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Đã thêm thành công ca sĩ!</strong>
-          </div>
-        @else
-          <div class="alert alert-danger fade in alert-dismissable">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-              <strong>Không thể thêm ca sĩ!</strong>
-          </div>
-        @endif
-    @endif --}}
-
+    @if (session()->has('flash_message'))
+        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{!! session('flash_message.message') !!}</strong>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-sm-12">
@@ -80,7 +76,7 @@
 
                   <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      <button type="submit" class="btn btn-warning waves-effect waves-light">
+                      <button type="submit" class="btn btn-primary waves-effect waves-light">
                         Thêm
                       </button>
                       <a href="{{ route('singers.index') }}" class="btn btn-default waves-effect waves-light m-l-5">

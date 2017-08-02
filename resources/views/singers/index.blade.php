@@ -23,11 +23,11 @@
           <div class="modal-footer">
               <div class="custom-modal-text text-left">
                   <form role="form" id="delete-singer-form" method="post" action="">
-                      {{-- <input name="_method" value="DELETE" type="hidden"> --}}
-                      {{ method_field('DELETE') }}
+                      <input name="_method" value="DELETE" type="hidden">
+                      {{-- {{ method_field('DELETE') }} --}}
                       <input type="hidden" value="{{ csrf_token() }}" name="_token">
                       <div class="text-right">
-                          <button type="submit" class="btn btn-danger waves-effect waves-light">Xóa</button>
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Xóa</button>
                           <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
                       </div>
                   </form>
@@ -61,6 +61,13 @@
             </ol>
         </div>
     </div>
+
+    @if (session()->has('flash_message'))
+        <div class="alert alert-{{ session('flash_message.level') }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>{!! session('flash_message.message') !!}</strong>
+        </div>
+    @endif
 
     <div class="row">
     <div class="col-md-12">
@@ -146,10 +153,9 @@
 @push('inline_scripts')
 <script>
     $(document).on('click', '.delete-singer', function(e) {
-        $('#delete-singer-modal').modal("show");
-        e.preventDefault();
-        var song_id = $(this).parent().parent().find('.singer-data').text();
-        var action = '/singers/' + song_id;
+        var singer_id = $(this).parent().parent().find('.singer-data').text();
+        var action = '/singers/' + singer_id;
+        console.log('action: ' + action);
         $('#delete-singer-form').attr('action', action);
     });
 

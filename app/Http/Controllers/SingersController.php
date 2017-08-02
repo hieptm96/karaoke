@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Singer;
 use Illuminate\Http\Request;
+use App\Http\Requests\SingerRequest;
 use App\Transformers\SingerTransformer;
 use Barryvdh\Debugbar\Facade as Debugbar;
 use App\Contracts\Repositories\SingerRepository;
@@ -41,28 +42,21 @@ class SingersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SingerRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SingerRequest $request)
     {
-        $name = $request->input('name');
-        $sex = $request->input('sex');
-        $language = $request->input('language');
 
-        if (empty($name) || !$this->isValidSex($sex)
-                    || !$this->isValidLanguage($language)) {
-            return 1;
-            return redirect('/singers');
-        }
+        $singer = Singer::create($request->toArray());
 
-        $result = $this->singerRepository->create(['name' => $name, 'sex' => $sex,
-                    'language' => $language, 'created_by' => 1, 'updated_by' => 1]);
-
-        if ($result != null) {
-            return redirect('/singers/' . $result['id'])->with('created', true);
+        if ($singer != null) {
+            flash()->success('Success!', 'Đã thêm thành công ca sĩ.');
+            return redirect()->route('singers.show', ['id' => $singer->id ])
+                    ->with('created', true);
         } else {
-            return view('singers.create', ['created' => false]);
+            flash()->success('Error!', 'Không thể thêm ca sĩ.');
+            return redirect()->route('show.create');
         }
     }
 
@@ -74,17 +68,10 @@ class SingersController extends Controller
      */
     public function show($id)
     {
-        // $singer = Singer::with('createdBy')->find($id);
+        $singer = Singer::findOrFail($id);
+        $singer = SingerTransformer::transformWithoutLink($singer);
 
-        $singer = Singer::find($id);
-
-        if ($singer != null) {
-            $singer = SingerTransformer::transformWithoutLink($singer);
-            return view('singers.show-singer', ['singer' => $singer]);
-        } else {
-            return redirect('/singers');
-        }
-
+        return view('singers.show', ['singer' => $singer]);
     }
 
     /**
@@ -101,29 +88,22 @@ class SingersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SongRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SingerRequest $request, $id)
     {
-        $name = $request->input('name');
-        $sex = $request->input('sex');
-        $language = $request->input('language');
+        $singer = Singer::findOrFail($id);
+        $success = $singer->update($request->toArray());
 
-        if (empty($name) || !$this->isValidSex($sex)
-                    || !$this->isValidLanguage($language)) {
-            return redirect('/singers');
-        }
-
-        $result = $this->singerRepository->update($id,
-                      ['name' => $name, 'sex' => $sex, 'language' => $language]);
-
-        if ($result === null) {
-            return back();
+        if ($success) {
+            flash()->success('Success!', 'Đã sửa thành công ca sĩ.');
         } else {
-            return redirect('/singers/' . $id)->with('edited', $result);
+            flash()->success('Success!', 'Đã có lỗi xảy ra.');
         }
+
+        return redirect()->route('singers.show', ['id' => $id]);
     }
 
     /**
@@ -134,12 +114,16 @@ class SingersController extends Controller
      */
     public function destroy($id)
     {
-        $success = $this->singerRepository->delete($id);
+        $singer = Singer::findOrFail($id);
+        $success = $singer->delete();
+
         if ($success) {
-            return view('singers.deleted');
+            flash()->success('Success!', 'Xóa ca sĩ thành công.');
         } else {
-            return redirect('/singers/' . $id)->with('delete', false);;
+            flash()->error('Error!', 'Không thể xóa ca sĩ.');
         }
+
+        return redirect()->route('singers.index');
     }
 
     /*
@@ -151,32 +135,5 @@ class SingersController extends Controller
     public function datatables(Request $request)
     {
         return $this->singerRepository->getDatatables($request);
-    }
-
-    /*
-     * check $sex
-     *
-     * @param  $sex
-     * @return true if $sex is valid, other wise return false
-     */
-    private function isValidSex($sex)
-    {
-        $sex = (int)$sex;
-        // hard code: range of sex
-        return !empty($sex) && $sex >= 1 && $sex <= 3;
-    }
-
-
-    /*
-     * check $language
-     *
-     * @param  $sex
-     * @return true if $sex is valid, other wise return false
-     */
-    private function isValidLanguage($language)
-    {
-        $language = (int)$language;
-        // hard code: range of language
-        return $language >= 0 && $language <= 3;
     }
 }

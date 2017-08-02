@@ -304,11 +304,14 @@
     // owners
     var url = '{{ route('contentowners.getdistricts') }}';
     var owner;
+    var contentOwnerDatatable;
     $(function () {
-        var datatable = $("#content-owner-datatable").DataTable({
+        contentOwnerDatatable = $("#content-owner-datatable").dataTable({
             searching: false,
             serverSide: true,
             processing: true,
+            scrollY: '250px',
+            scrollCollapse: false,
             ajax: {
                 url: "{!! route('contentowners.datatables') !!}",
                 data: function (d) {
@@ -336,10 +339,10 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'phone', name: 'phone'},
-                {data: 'email', name: 'mail'},
+                {data: 'email', name: 'email'},
                 {data: 'address', name: 'address'},
-                {data: 'province', name: 'province'},
-                {data: 'district', name: 'district'},
+                {data: 'province', name: 'province_id'},
+                {data: 'district', name: 'district_id'},
                 {data: 'code', name: 'code'},
                 {name: 'select', orderable: false, searchable: false},
             ],
@@ -349,6 +352,7 @@
         $('#name-search').on('keyup', function(e) {
             datatable.draw();
             e.preventDefault();
+            datatable.draw();
         });
         $('#phone-search').on('keyup', function(e) {
             datatable.draw();
@@ -366,6 +370,10 @@
             datatable.draw();
             e.preventDefault();
         });
+
+        $('.modal').on('shown.bs.modal', function() {
+            // console.log('1');
+        })
     });
 
     function changeOwnerValue(ownerId, ownerName) {
@@ -373,7 +381,6 @@
         owner.find('.name').text(ownerName);
 
         checkAction();
-        console.log(12);
     }
 
     // select owner event
@@ -384,6 +391,15 @@
 
         changeOwnerValue(ownerId, ownerName);
     });
+
+    $(document).on('shown.bs.modal', '#owner-modal', function() {
+        console.log('1');
+        contentOwnerDatatable.fnAdjustColumnSizing();
+    });
+
+    $('#modal-content').on('shown', function() {
+        $("#txtname").focus();
+    })
 
     // delete owner event
     $(document).on('click', '.delete-owner', function() {

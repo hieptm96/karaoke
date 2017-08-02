@@ -4,10 +4,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Chon đơn vị sở hữu nội dung</h4>
+                <h4 class="modal-title" id="myModalLabel">Chọn đơn vị sở hữu nội dung</h4>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" >
                 <div ng-app="ktv-form" ng-controller="ktv-ctl">
                     <div class="row">
 
@@ -37,24 +37,22 @@
                     </div>
 
 
+                    {{-- <div class="row" style="height:500px;overflow:auto"> --}}
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                                <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
-                                <p class="text-muted font-13 m-b-30">
-                                </p>
 
-                                <table id="content-owner-datatable" class="table table-striped table-bordered">
+                                <table id="content-owner-datatable"" class="table table-striped table-bordered data-table">
                                     <thead>
                                     <tr>
                                         <th width="2%">Mã</th>
-                                        <th width="20%">Tên</th>
-                                        <th width="10%">Điện thoại</th>
-                                        <th width="20%">Email</th>
+                                        <th width="15%">Tên</th>
+                                        <th width="15%">Điện thoại</th>
+                                        <th width="15%">Email</th>
                                         <th width="20%">Địa chỉ</th>
-                                        <th width="20%">Tỉnh</th>
-                                        <th width="20%">Quận/Huyện</th>
-                                        <th width="9%">Mã số thuế</th>
+                                        <th width="15%">Tỉnh</th>
+                                        <th width="15%">Quận/Huyện</th>
+                                        <th width="12%">Mã số thuế</th>
                                         <th width="9%">#</th>
                                     </tr>
                                     </thead>

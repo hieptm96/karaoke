@@ -56,7 +56,6 @@
                                     <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
                                 </select>
 
-                                <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
                             </form>
                         </div>
                     </div>

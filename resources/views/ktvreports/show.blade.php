@@ -64,6 +64,7 @@
                         <th>Tên bài hát</th>
                         <th>Số lần sử dụng</th>
                         <th>Ngày tháng</th>
+                        <th>Trạng thái</th>
                     </tr>
                     </thead>
 
@@ -112,6 +113,7 @@
                 {data: 'song_name', name: 'song_name'},
                 {data: 'times', name: 'times'},
                 {data: 'date', name: 'date'},
+                {data: 'action', name: 'action', orderable: false},
             ],
             order: [[0, 'asc']]
         });

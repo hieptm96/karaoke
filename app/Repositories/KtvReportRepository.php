@@ -16,8 +16,10 @@ class KtvReportRepository implements Contract
     {
         // $ktv_report = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.province_id, ktvs.district_id, ktvs.phone'))->groupBy('ktv_id')->get();
         $ktv_report = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
+            ->join('songs', 'imported_data_usages.song_file_name', '=', 'songs.file_name')
+            ->where('songs.has_fee', 1)
             ->groupBy('ktv_id')
-            ->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.name as ktv_name, ktvs.province_id, ktvs.district_id, ktvs.phone'));
+            ->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.name as ktv_name, ktvs.fee_status as fee_status, ktvs.province_id, ktvs.district_id, ktvs.phone'));
 
         return Datatables::of($ktv_report)
             ->filter(function ($query) use ($request) {
@@ -71,6 +73,9 @@ class KtvReportRepository implements Contract
             })
             ->editColumn('song_name', function($ktv_report) {
                 return $ktv_report->song->name;
+            })
+            ->addColumn('action', function($ktv_report) {
+                return ($ktv_report->song->has_fee == 1) ? '<span class="label label-success">Có phí</span>' : '<span class="label label-primary">Không có phí</span>';
             })
             ->make(true);
     }

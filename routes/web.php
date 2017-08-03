@@ -36,6 +36,7 @@ Route::get('ktvreports/datatables', 'KtvReportsController@datatables')->name('kt
 Route::get('ktvreports/detail-datatables', 'KtvReportsController@detailDatatables')->name('ktvreports.detailDatatables');
 Route::post('ktvreports/export', 'KtvReportsController@exportExcel')->name('ktvreports.exportExcel');
 Route::get('/ktvreports/get-districts', 'KtvReportsController@getDistricts')->name('ktvreports.getdistricts');
+Route::get('/ktvreports/fee', 'KtvReportsController@fee')->name('ktvreports.fee');
 Route::resource('ktvreports', 'KtvReportsController');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {

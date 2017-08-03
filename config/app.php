@@ -186,6 +186,7 @@ return [
 
         // Laravel excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
 
     ],
 

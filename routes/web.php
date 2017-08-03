@@ -51,8 +51,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 
     // Config
     Route::resource('configs', 'ConfigsController', ['only' => ['index', 'update']]);
+
+
 });
+
+//Permissions
+Route::get('permissions/sync', 'PermissionsController@sync')->name('permissions.sync');
+Route::resource('permissions', 'PermissionsController');
 
 // Statistics
 Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
 Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
+

@@ -39,6 +39,10 @@
                 <li>
                     <a href="{{ route('configs.index') }}" class="waves-effect"><i class="ti-home"></i> <span> Cấu hình </span> <span class="menu-arrow"></span></a>
                 </li>
+
+                <li>
+                    <a href="{{ route('ktvreports.fee') }}" class="waves-effect"><i class="ti-home"></i> <span> Thu chi đơn vị kinh doanh </span> <span class="menu-arrow"></span></a>
+                </li>
             @endrole
 
             <li>

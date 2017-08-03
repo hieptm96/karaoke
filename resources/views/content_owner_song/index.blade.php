@@ -71,7 +71,7 @@
         <div class="card-box">
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="form-inline" role="form" id="search-form">
+                    <form class="form-inline" method="get" role="form" id="search-form">
                         <div class="form-group">
                             <label class="sr-only" for="">Tên bài hát</label>
                             <input type="text" id="name-filter" class="form-control" placeholder="Tên bài hát" name="name" />
@@ -140,7 +140,7 @@
 
 @endpush
 
-@push('inline_scripts')
+@push('inline_scripts1')
 <script>
     $(function () {
         var datatable = $("#datatable").DataTable({

@@ -16,6 +16,8 @@ class ContentOwnerReportTransformer extends TransformerAbstract
              'district' => $this->getDistrict($contentOwner['district_id']),
              'phone' => $contentOwner['phone'],
              'total_money' => $this->getTotalMoney($contentOwner['total_money']),
+             'actions' => '<a href="' . route('contentowner-reports.show', ['id' => $contentOwner['id']])
+                . '" class="btn btn-xs btn-primary waves-effect waves-light contentowner-detail"><i class="fa fa-edit"></i> Chi tiết</a>'
          ];
     }
 

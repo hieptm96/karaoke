@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use DB;
 use Excel;
 use Debugbar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Transformers\ContentOwnerReportTransformer;
+use App\Transformers\ContentOwnerDetailReportTransformer;
 use App\Contracts\Repositories\ContentOwnerReportRepository;
 
 class ContentOwnerReportController extends Controller
@@ -32,37 +34,61 @@ class ContentOwnerReportController extends Controller
 
     public function exportExcel()
     {
-//        $ktv_reports = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
-//            ->groupBy('ktv_id')
-//            ->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.name as ktv_name, ktvs.province_id, ktvs.district_id, ktvs.phone'));
-        $config = json_decode(\App\Models\Config::orderBy('updated_at', 'desc')->first()->config, true);
-        $ktv_reports = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
-            ->join('provinces', 'ktvs.province_id', '=', 'provinces.id')
-            ->join('districts', 'ktvs.district_id', '=', 'districts.id')
-            ->groupBy('ktv_id')
-            ->select(DB::raw('imported_data_usages.id, ktvs.name as ktv_name, provinces.name as province, districts.name as district, ktvs.phone, sum(imported_data_usages.times) as total_times, (sum(imported_data_usages.times) * ?) as total_money'))
-            ->setBindings([intval($config['price'])]);
-
-        if (request()->has('name')) {
-            $ktv_reports->where('ktvs.name', 'like', '%' . request('name') . '%');
+        $startDate = null;
+        $stopDate = null;
+        if ($request->has('date')) {
+            $date = $request->date;
+            $dates = explode(':', $date, 2);
+            $startDate = $dates[0];
+            $stopDate = $dates[1];
+        } else {
+            $startDate = (new Carbon('first day of this month'))
+                            ->toDateString();
+            $stopDate = (new Carbon('last day of this month'))
+                            ->toDateString();
         }
 
-        if(request()->has('phone')) {
-            $ktv_reports->where('phone', 'like', '%' . request('phone') . '%');
+        $query =
+            DB::table('content_owners')
+            ->selectRaw('id, name, SUM(money) total_money, phone, province_id, district_id')
+            ->join(DB::raw('(
+                select content_owner_id, t.song_file_name,
+                    SUM(times) * percentage / 100 AS money, SUM(times), percentage
+                    FROM
+                    (select content_owner_id, song_id, song_file_name,
+                    SUM(percentage) AS percentage
+                    FROM content_owner_song c
+                    GROUP BY content_owner_id, song_id) AS t
+                    JOIN imported_data_usages i
+                    ON t.song_file_name = i.song_file_name
+                    WHERE date between ? and ?
+                    GROUP BY i.song_file_name, content_owner_id
+                    ORDER BY content_owner_id, song_file_name
+                ) AS t2'
+            ), 'id', '=', 't2.content_owner_id')
+            ->groupBy('id')
+            ->setBindings([$startDate, $stopDate]);
+
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%'.$request->name.'%');
         }
 
-        if(request()->has('province')) {
-            $ktv_reports->where('province_id', request('province'));
+        if ($request->has('phone')) {
+            $query->where('phone', 'like', '%'.$request->phone.'%');
         }
 
-        if(request()->has('district')) {
-            $ktv_reports->where('district_id', request('district'));
+        if ($request->has('province')) {
+            $query->where('province_id', $request->province);
         }
 
-        $ktv_reports = $ktv_reports->get();
+        if ($request->has('district')) {
+            $query->where('district_id', $request->district);
+        }
+
+        $contentOwnerReports = $query->get();
 
         Excel::create('ktv_report', function ($excel) use($ktv_reports) {
-            $excel->setTitle('Ktv song report');
+            $excel->setTitle('Báo cáo tiền của các đơn vị sở hữu nội dung');
             $excel->sheet('Sheet 1',function ($sheet) use ($ktv_reports) {
                 $sheet->setStyle(array(
                     'font' => array(
@@ -72,7 +98,8 @@ class ContentOwnerReportController extends Controller
                 ));
 
 //                $sheet->fromArray($ktv_reports);
-                $sheet->loadView('ktvreports.export', ['ktv_reports' => $ktv_reports]);
+                $sheet->loadView('content_owner_report.export',
+                                    ['contentOwnerReports' => $contentOwnerReports]);
             });
         })->store('xlsx', 'exports');
         return [
@@ -88,6 +115,11 @@ class ContentOwnerReportController extends Controller
         return response()->json(['data' => $districts, 'msg' => "Success"], 200);
     }
 
+    public function show(Request $request, $id)
+    {
+        return view('content_owner_report.show', ['id' => $id]);
+    }
+
     /*
      * API for datatable
      *
@@ -97,5 +129,16 @@ class ContentOwnerReportController extends Controller
     public function datatables(Request $request)
     {
         return $this->contentOwnerReportRepository->getDatatables($request);
+    }
+
+    /*
+     * API for datatable
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mix
+     */
+    public function detailDatatables(Request $request, $id)
+    {
+        return $this->contentOwnerReportRepository->getDetailDatatables($request, $id);
     }
 }

@@ -8,7 +8,8 @@ use Carbon\Carbon;
 use App\Models\ContentOwner;
 use Illuminate\Http\Request;
 use App\Transformers\ContentOwnerReportTransformer;
-use App\Contracts\Repositories\ContentOwnerReportRepository as Contract;
+use App\Transformers\ContentOwnerDetailReportTransformer;
+use App\Contracts\Repositories\ContentOwnerReportRepository AS Contract;
 
 class ContentOwnerReportRepository implements Contract
 {
@@ -30,44 +31,23 @@ class ContentOwnerReportRepository implements Contract
                             ->toDateString();
         }
 
-        // ngu nguoi
-        // $contentOwnerReport = DB::select('select co.id, co.name, sum(money) total_money,
-        //                 phone, province_id, district_id
-        //                 from (
-        //                 	select content_owner_id, t.song_file_name,
-        //                 	sum(times) * percentage / 100 as money, sum(times), percentage
-        //                 	from
-        //                 	(select content_owner_id, song_id, song_file_name,
-        //                 	sum(percentage) as percentage
-        //                 	from content_owner_song c
-        //                 	group by content_owner_id, song_id) as t
-        //                 	join imported_data_usages i
-        //                 	on t.song_file_name = i.song_file_name
-        //                 	group by i.song_file_name, content_owner_id
-        //                 	order by content_owner_id, song_file_name
-        //                 ) t2
-        //                 join content_owners co
-        //                 on t2.content_owner_id = co.id
-        //                 group by co.id;');
-
-        // ngu tap 2
         $contentOwnerReport =
             DB::table('content_owners')
-            ->selectRaw('id, name, sum(money) total_money, phone, province_id, district_id')
+            ->selectRaw('id, name, SUM(money) total_money, phone, province_id, district_id')
             ->join(DB::raw('(
             	select content_owner_id, t.song_file_name,
-                	sum(times) * percentage / 100 as money, sum(times), percentage
-                	from
+                	SUM(times) * percentage / 100 AS money, SUM(times), percentage
+                	FROM
                 	(select content_owner_id, song_id, song_file_name,
-                	sum(percentage) as percentage
-                	from content_owner_song c
-                	group by content_owner_id, song_id) as t
-                	join imported_data_usages i
-                	on t.song_file_name = i.song_file_name
-                    where date between ? and ?
-                	group by i.song_file_name, content_owner_id
-                	order by content_owner_id, song_file_name
-                ) as t2'
+                	SUM(percentage) AS percentage
+                	FROM content_owner_song c
+                	GROUP BY content_owner_id, song_id) AS t
+                	JOIN imported_data_usages i
+                	ON t.song_file_name = i.song_file_name
+                    WHERE date between ? and ?
+                	GROUP BY i.song_file_name, content_owner_id
+                	ORDER BY content_owner_id, song_file_name
+                ) AS t2'
             ), 'id', '=', 't2.content_owner_id')
             ->groupBy('id')
             ->setBindings([$startDate, $stopDate]);
@@ -76,7 +56,7 @@ class ContentOwnerReportRepository implements Contract
 
         return Datatables::of($contentOwnerReport)
             ->filter(function ($query) use ($request) {
-                if ($request->has('name')) {
+                 if ($request->has('name')) {
                      $param = '%'.$request->name.'%';
                     $query->where('name', 'like', $param);
                  }
@@ -96,6 +76,63 @@ class ContentOwnerReportRepository implements Contract
             })
             ->setTransformer(new ContentOwnerReportTransformer)
             ->make(true);
+    }
+
+    public function getDetailDatatables(Request $request, $id)
+    {
+        $startDate = $request->from;
+        $stopDate = $request->to;
+
+        $details =
+            DB::table('imported_data_usages AS i')
+            ->selectRaw('s.name, i.id, i.song_file_name, owner_types, SUM(times) AS total_times,
+                        SUM(times) * percentage / 100 AS discount, percentage')
+            ->join('songs AS s', 'i.song_file_name', '=', 's.file_name')
+            ->join(DB::raw('(select song_id, song_file_name,
+                    GROUP_CONCAT(type SEPARATOR ";") owner_types,
+                    SUM(percentage) AS percentage
+                    FROM content_owner_song AS c
+                    WHERE content_owner_id = ?
+                    GROUP BY song_id) AS t'
+            ), 'i.song_file_name', '=', 't.song_file_name')
+            ->whereBetween('i.date', ['?', '?'])
+            ->groupBy('i.song_file_name')
+            ->setBindings([$id, $startDate, $stopDate]);
+
+        return Datatables::of($details)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('owner-types')) {
+                    $ownerTypes = $request['owner-types'];
+                    $ownerTypes = array_filter($ownerTypes);
+                    if (count($ownerTypes) > 0) {
+                        $havingRawQuery = $this->createHavingOwnerTypes($ownerTypes);
+                        $havingRawQuery = '1';
+                        $query->havingRaw($havingRawQuery);
+                    }
+                }
+            })
+            ->addColumn('actions', function ($contentOwnerReport) {
+                return $this->generateActionColumn($contentOwnerReport);
+            })
+            ->setTransformer(new ContentOwnerDetailReportTransformer)
+            ->make(true);
+    }
+
+    private function createHavingOwnerTypes($ownerTypes)
+    {
+        $havingRawQuery = '';
+        $nRealOwnerTypes = 0;
+
+        foreach ($ownerTypes as $ownerType) {
+            if ($nRealOwnerTypes == 0) {
+                $havingRawQuery .= "INSTR(owner_types, '{$ownerType}') > 0";
+                $nRealOwnerTypes++;
+            } else {
+                $havingRawQuery .= " AND INSTR(owner_types, '{$ownerType}') > 0";
+            }
+        }
+
+        return $havingRawQuery;
     }
 
     protected function getActionColumnPermissions($song)

@@ -55,7 +55,6 @@
                                     <option     value="">-- Chọn Quận/Huyện --</option>
                                     <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
                                 </select>
-
                             </form>
                         </div>
                     </div>

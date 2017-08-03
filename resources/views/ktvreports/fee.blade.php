@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @push('styles')
-    <!-- DataTables -->
-    <link href="/vendor/ubold/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/vendor/ubold/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="/css/custom.css" rel="stylesheet" type="text/css"/>
+<!-- DataTables -->
+<link href="/vendor/ubold/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+<link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/vendor/ubold/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<link href="/css/custom.css" rel="stylesheet" type="text/css"/>
 
 @endpush
 
@@ -26,39 +26,35 @@
     </div>
 
     <div class="row" ng-app="ktv-form" ng-controller="ktv-ctl">
-    <div class="col-md-12">
-        <div class="card-box">
-            <div class="row">
-                <div class="col-sm-12">
-                    <form class="form-inline" role="form" id="search-form">
-                        <div class="form-group">
-                            <label class="sr-only" for="">Tên đơn vị kinh doanh</label>
-                            <input type="text" id="name-search" class="form-control" placeholder="Tên đơn vị kinh doanh" name="name" />
-                        </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="">Số điện thoại</label>
-                            <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
-                        </div>
-                        <select name="province" id="province" class="form-control fix-select" ng-model="province" ng-change="get_districts()">
-                            <option value="">-- Chọn tỉnh -- </option>
-                            @foreach ($provinces as $province)
-                                <option value="{{ $province->id }}">{{ $province->name }}</option>
-                            @endforeach
-                        </select>
-                        <select name="district" id="district-search" class="form-control fix-select">
-                            <option     value="">-- Chọn Quận/Huyện --</option>
-                            <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
-                        </select>
-                        <div class="form-group m-l-10">
-                            <label class="sr-only" for="date-search">Thời gian</label>
-                            <input id="date-search" class="form-control input-daterange-datepicker" type="text" name="date" value="" placeholder="Chọn thời gian" style="width: 200px;">
-                        </div>
-                        <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
-                    </form>
+        <div class="col-md-12">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="form-inline" role="form" id="search-form">
+                            <div class="form-group">
+                                <label class="sr-only" for="">Tên đơn vị kinh doanh</label>
+                                <input type="text" id="name-search" class="form-control" placeholder="Tên đơn vị kinh doanh" name="name" />
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="">Số điện thoại</label>
+                                <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
+                            </div>
+                            <select name="province" id="province" class="form-control fix-select" ng-model="province" ng-change="get_districts()">
+                                <option value="">-- Chọn tỉnh -- </option>
+                                @foreach ($provinces as $province)
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                @endforeach
+                            </select>
+                            <select name="district" id="district-search" class="form-control fix-select">
+                                <option     value="">-- Chọn Quận/Huyện --</option>
+                                <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
+                            </select>
+                            <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -85,6 +81,8 @@
                         <th width="10%">Số điện thoại</th>
                         <th width="10%">Số lần sử dụng bài hát</th>
                         <th>Tổng tiền</th>
+                        <th width="10%">Thanh toán</th>
+                        <th width="7%">#</th>
                         <th width="7%">#</th>
                     </tr>
                     </thead>
@@ -138,9 +136,11 @@
                 {data: 'phone', name: 'phone'},
                 {data: 'times', name: 'times'},
                 {data: 'total_money', name: 'total_money'},
+                {data: 'fee_status', name: 'fee_status'},
+                {data: 'fee_actions', name: 'fee_actions', orderable: false, searchable: false},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
-            order: [[1, 'asc']]
+            order: [[7, 'asc']]
         });
 
         $('#name-search').on('keyup', function(e) {
@@ -158,6 +158,27 @@
         $('#district-search').on('change', function(e) {
             datatable.draw();
             e.preventDefault();
+        });
+
+        $(document).on('click', '.ktv-fee-confirm', function(e) {
+//            e.preventDefault();
+            $.ajax({
+                url: "{{ route('ktvreports.store') }}",
+                type: "POST",
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    "ktv_id": $(this).attr('data-id'),
+                },
+                success: function (response) {
+                    if (response.status == true) {
+                        datatable.draw();
+                    }
+//                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         });
 
         $('#export-report').on('click', function (e) {

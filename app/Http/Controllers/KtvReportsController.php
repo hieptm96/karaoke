@@ -31,11 +31,30 @@ class KtvReportsController extends Controller
         return view('ktvreports.index', compact('provinces'));
     }
 
+    public function fee()
+    {
+        $provinces = \App\Models\Province::all();
+
+        return view('ktvreports.fee', compact('provinces'));
+    }
+
     public function show($id)
     {
         $ktv = \App\Models\Ktv::findOrFail($id);
 
         return view('ktvreports.show', compact('ktv'));
+    }
+
+    public function store(Request $request)
+    {
+        if ($request->ktv_id) {
+            $ktv = \App\Models\Ktv::findOrFail($request->ktv_id);
+
+            $ktv->fee_status = 'yes';
+            $ktv->save();
+
+            return response()->json(['status' => true, 'msg' => "Success"], 200);
+        }
     }
 
     public function exportExcel()

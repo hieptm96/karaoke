@@ -37,7 +37,7 @@ class SingerTransformer extends TransformerAbstract
 
     private function generateActions($singer)
     {
-        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('singers.show', $singer['id'])
+        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('singers.edit', $singer['id'])
                     . '"><i class="fa fa-edit"></i> Sửa</a>';
         $actions .= ' <a class="btn btn-default delete-singer btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-singer-modal"><i class="fa fa-trash"></i> Xóa</a>';
 

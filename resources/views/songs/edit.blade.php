@@ -7,14 +7,27 @@
 @endpush
 
 @section('content')
+
+    @include('songs.singer-modal')
+
+    @include('songs.owner-modal')
+
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <div class="btn-group pull-right m-t-15">
-                <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
-            </div>
 
-            <h4 class="page-title">bài hát</h4>
+            @if ( session('created') )
+                <div class="btn-group pull-right m-t-15">
+                    <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm tiếp </a>
+                </div>
+            @else
+                <div class="btn-group pull-right m-t-15">
+                    <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+                </div>
+            @endif
+
+
+            <h4 class="page-title">Bài hát</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">KTV</a>
@@ -23,38 +36,43 @@
                     <a href="{{ route('songs.index') }}">Bài hát</a>
                 </li>
                 <li class="active">
-                    Thêm bài hát
+                    Sửa Thông tin bài hát
                 </li>
             </ol>
         </div>
     </div>
 
-    @include('songs.singer-modal')
-
-    @include('songs.owner-modal')
-
-
     @include('flash-message::default')
-
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="card-box">
+            <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" method="post" action="{{ route('songs.store') }}" role="form"  data-parsley-validate novalidate>
-                  <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                <form class="form-horizontal" id="song-filer-form" method="post" action="/songs/{{ $song['id'] }}" role="form"  data-parsley-validate novalidate>
+                   <input name="_method" value="PUT" type="hidden">
+                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên: </label>
+                    <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" value="" class="form-control" id="input-name" placeholder="Tên" required>
+                      <input type="text" name="name" value="{{ $song['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="singers" class="col-sm-4 control-label">Ca sĩ: </label>
                     <div class="col-sm-7">
+                      @foreach ($song['singers'] as $singer)
+                      <div class="singer">
+                          <div class="input-group span6 offset3">
+                              <input type="text" class="hidden" name="singer[]" value="{{ $singer->id }}"/>
+                              <span class="form-control" singer-data="{{ $singer->id }}">{!! $singer->name !!}</span>
+                              <a class="btn btn-primary input-group-addon btn-block delete-singer" >Xóa</a>
+                          </div>
+                          <br/>
+                      </div>
+                      @endforeach
                       <div class="input-group span6 offset3" id="add-singer">
                           <span class="form-control"></span>
                           <a class="btn btn-default input-group-addon btn-block" data-toggle="modal" data-target="#singer-modal">Thêm</a>
@@ -63,9 +81,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
+                    <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ*: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" name="language" data-style="btn-white" id="language-picker">
+                      <select class="selectpicker" value="{{ $song['language'] }}" name="language" data-style="btn-white" id="song-language-filter">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach
@@ -76,21 +94,23 @@
                   </div>
 
                   <div class="form-group">
-					<label class="col-sm-4 control-label">Bài hát có thu phí hay không</label>
+					<label class="col-sm-4 control-label">Bài hát có thu phí hay không*:</label>
 					<div class="col-sm-6">
 
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="1" name="has_fee" checked>
+                            <input type="radio" id="inlineRadio1" value="1" name="has_fee" @if($song['has_fee']) checked @endif>
                             <label for="inlineRadio1"> Có </label>
                         </div>
 
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="0" name="has_fee">
+                            <input type="radio" id="inlineRadio1" value="0" name="has_fee" @if(!$song['has_fee']) checked @endif>
                             <label for="inlineRadio1"> Không </label>
 
                         </div>
+
+
 					</div>
-				  </div>
+				</div>
 
                   <hr />
 
@@ -104,8 +124,8 @@
                           <label for="singers" class="">Nhạc sĩ: </label>
                           <div class="">
                             <div class="input-group owner" id="musican-owner">
-                                <input type="text" class="hidden" name="musican-owner"></name>
-                                <span class="name form-control"></span>
+                                <input type="text" class="hidden" name="musican-owner" value="{{ $song['contentOwners']['musican']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['musican']['name'] or '' }}</span>
                                 <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
@@ -115,8 +135,8 @@
                           <label for="singers" class="">Lời: </label>
                           <div class="">
                             <div class="input-group owner" id="title-owner">
-                                <input type="text" class="hidden" name="title-owner"></name>
-                                <span class="name form-control"></span>
+                                <input type="text" class="hidden" name="title-owner" value="{{ $song['contentOwners']['title']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['title']['name'] or '' }}</span>
                                 <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
@@ -126,8 +146,8 @@
                           <label for="singers" class="">Ca sĩ: </label>
                           <div class="">
                             <div class="input-group owner" id="singer-owner">
-                                <input type="text" class="hidden" name="singer-owner"></name>
-                                <span class="name form-control"></span>
+                                <input type="text" class="hidden" name="singer-owner" value="{{ $song['contentOwners']['singer']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['singer']['name'] or '' }}</span>
                                 <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
@@ -138,25 +158,40 @@
                           <label for="singers" class="">Quay phim: </label>
                           <div class="">
                             <div class="input-group owner" id="film-owner">
-                                <input type="text" class="hidden" name="film-owner"></name>
-                                <span class="name form-control"></span>
+                                <input type="text" class="hidden" name="film-owner" value="{{ $song['contentOwners']['film']['id'] or '' }}">
+                                <span class="name form-control">{{ $song['contentOwners']['film']['name'] or '' }}</span>
                                 <a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>
                             </div>
                           </div>
                         </div>
+                    </div>
+                  </div>
 
 
+                  <div class="form-group">
+                    <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
+                    <div class="col-sm-7">
+                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
                     </div>
                   </div>
 
                   <div class="form-group">
+                    <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
+                    <div class="col-sm-7">
+                      <input type="text" value="{{ $song['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
+                    <div class="col-sm-7">
+                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
-                      <button type="submit" class="btn btn-primary waves-effect waves-light submit-btn">
-                        Thêm
+                      <button type="submit" class="btn btn-primary waves-effect waves-light">
+                        Cập nhật
                       </button>
-                      <a href="{{ route('songs.index') }}" class="btn btn-default waves-effect waves-light m-l-5">
-                        Hủy
-                      </a>
                     </div>
                   </div>
                 </form>
@@ -175,14 +210,10 @@
 <script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script src="/js/main.js"></script>
-
 @endpush
 
 @push('inline_scripts')
 <script>
-
     var deleteAndEditAction = '<a class="btn btn-primary owner-btn delete-owner input-group-addon btn-block" >Xóa</a>'
     + '<a class="btn btn-default owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Sửa</a>';
     var selectAction = '<a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>';
@@ -200,6 +231,19 @@
             }
         })
     }
+
+    $( document ).ready(function() {
+        $('#song-language-filter').val('{{ $song['language'] }}');
+        $('.selectpicker').selectpicker('refresh');
+        $('form').parsley();
+
+        checkAction();
+    });
+
+    $(document).on('click', '.delete-song', function(e) {
+        $('#delete-song-modal').modal("show");
+        e.preventDefault();
+    });
 
     function checkExistedSinger(id) {
         console.log(typeof id);
@@ -225,14 +269,13 @@
         var newRow =
         '<div class="singer">'
         + '<div class="input-group span6 offset3">'
-        +    '<input class="singer-id hidden" name="singer[]" value="' + singerId + '"></name>'
+        +    '<input class="singer-id hidden" name="singer[]" value="' + singerId + '">'
         +    '<span class="form-control" singer-data=' + singerId + '>' + singerName + '</span>'
         +    '<a class="btn btn-primary input-group-addon btn-block delete-singer" >Xóa</a>'
         + '</div>'
         + '<br/>'
         + '</div>'
 
-        console.log(newRow);
         addSinger.before(newRow);
     });
 
@@ -276,12 +319,12 @@
             order: [[2, 'asc']]
         });
 
-        $('#singer-filter-form').on('submit', function(e) {
+        $('#search-form').on('submit', function(e) {
             datatable.draw();
             e.preventDefault();
         });
 
-        $('#singer-filter-form').on('change', function(e) {
+        $('#search-form').on('change', function(e) {
             datatable.draw();
         });
 
@@ -292,13 +335,21 @@
             }
         });
 
+        $('#created-by-filter').on('keyup', function(e) {
+            var createdBy = $('#created-by-filter').val();
+            if (createdBy.length == 0) {
+                datatable.draw();
+            }
+        });
+
     });
 
     // owners
     var url = '{{ route('contentowners.getdistricts') }}';
     var owner;
+    var contentOwnerDatatable;
     $(function () {
-        var datatable = $("#content-owner-datatable").DataTable({
+        contentOwnerDatatable = $("#content-owner-datatable").dataTable({
             searching: false,
             serverSide: true,
             processing: true,
@@ -342,23 +393,23 @@
         });
 
         $('#name-search').on('keyup', function(e) {
-            datatable.draw();
+            contentOwnerDatatable.draw();
             e.preventDefault();
         });
         $('#phone-search').on('keyup', function(e) {
-            datatable.draw();
+            contentOwnerDatatable.draw();
             e.preventDefault();
         });
         $('#email-search').on('keyup', function(e) {
-            datatable.draw();
+            contentOwnerDatatable.draw();
             e.preventDefault();
         });
         $('#province').on('change', function(e) {
-            datatable.draw();
+            contentOwnerDatatable.draw();
             e.preventDefault();
         });
         $('#district-search').on('change', function(e) {
-            datatable.draw();
+            contentOwnerDatatable.draw();
             e.preventDefault();
         });
 
@@ -384,8 +435,8 @@
     });
 
     $(document).on('shown.bs.modal', '#owner-modal', function() {
-        var datatable = $("#content-owner-datatable").dataTable();
-        datatable.fnAdjustColumnSizing();
+        console.log('1');
+        contentOwnerDatatable.fnAdjustColumnSizing();
     });
 
     $('#modal-content').on('shown', function() {

@@ -6,6 +6,7 @@
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/vendor/ubold/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="/vendor/ubold/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet" type="text/css"/>
 
 @endpush
 
@@ -18,29 +19,37 @@
                 <li>
                     <a href="#">Đơn vị sở hữu bản quyền</a>
                 </li>
-                <li>
-                    <a href="{{ route('contentowner-reports.index') }}">Thống kê</a>
-                </li>
                 <li class="active">
-                    {{ Request::get('id') }}
+                    Thống kê
                 </li>
             </ol>
         </div>
     </div>
 
+    <div class="row" ng-app="ktv-form" ng-controller="ktv-ctl">
     <div class="col-md-12">
         <div class="card-box">
             <div class="row">
                 <div class="col-sm-12">
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
-                            <label class="sr-only" for="">Tên bài hát</label>
-                            <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
+                            <label class="sr-only" for="">Tên đơn vị kinh doanh</label>
+                            <input type="text" id="name-search" class="form-control" placeholder="Tên đơn vị kinh doanh" name="name" />
                         </div>
                         <div class="form-group">
-                            <label class="sr-only" for="">Tên file</label>
-                            <input type="text" id="file-name-search" class="form-control" placeholder="Tên file" name="file_name" />
+                            <label class="sr-only" for="">Số điện thoại</label>
+                            <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
                         </div>
+                        <select name="province" id="province" class="form-control fix-select" ng-model="province" ng-change="get_districts()">
+                            <option value="">-- Chọn tỉnh -- </option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province->id }}">{{ $province->name }}</option>
+                            @endforeach
+                        </select>
+                        <select name="district" id="district-search" class="form-control fix-select">
+                            <option     value="">-- Chọn Quận/Huyện --</option>
+                            <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
+                        </select>
                         <div class="form-group m-l-10">
                             <label class="sr-only" for="date-search">Thời gian</label>
                             <input id="date-search" class="form-control input-daterange-datepicker" type="text" name="date" value="" placeholder="Chọn thời gian" style="width: 200px;">
@@ -51,12 +60,18 @@
             </div>
         </div>
     </div>
+    </div>
 
 
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
+
+                <div class="btn-group pull-right m-t-15">
+                    <button id="export-report" type="submit" class="btn btn-default waves-effect waves-light">Export <i class="fa fa-file-excel-o"></i><span class="m-l-5"></span></button>
+                </div>
+
 
                 <p class="text-muted font-13 m-b-30">
                 </p>
@@ -65,14 +80,15 @@
                     <thead>
                     <tr>
                         <th width="2%">Mã</th>
-                        <th width="20%">Bài hát</th>
-                        <th width="10%">Tên file</th>
-                        <th width="10%">Có thu phí</th>
-                        <th width="10%">Số lần sử dụng</th>
+                        <th width="20%">Họ và tên</th>
+                        <th width="20%">Số điện thoại</th>
+                        <th width="20%">Tỉnh/Thành</th>
+                        <th width="20%">Quận/Huyện</th>
                         <th width="20%">Tổng tiền</th>
-                        <th width="20%">Tiền hưởng</th>
+                        <th width="10%">#</th>
                     </tr>
                     </thead>
+
 
                     <tbody>
                     </tbody>
@@ -93,36 +109,40 @@
 <script src="/vendor/ubold/assets/plugins/moment/moment.js"></script>
 <script src="/vendor/ubold/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 
+<script src="/js/main.js"></script>
+
 @endpush
 
 @push('inline_scripts')
 <script>
+    var url = '{{ route('ktvs.getdistricts') }}';
     $(function () {
+
 
         var datatable = $("#datatable").DataTable({
             searching: false,
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{!! route('contentOwnerDetailReport.datatables', ['id' => $id]) !!}",
+                url: "{!! route('contentOwnerReport.datatables') !!}",
                 data: function (d) {
                     d.name = $('#name-search').val();
-                    d.file_name = $('#file-name-search').val();
+                    d.phone = $('#phone-search').val();
+                    d.province = $('#province').val();
+                    d.district = $('#district-search').val();
                     d.date = $('#date-search').val();
-                    d.from = '{{ Request::get('from') }}';
-                    d.to = '{{ Request::get('to') }}';
                 }
             },
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
-                {data: 'song_file_name', name: 'song_file_name'},
-                {data: 'has_fee', name: 'has_fee'},
-                {data: 'total_times', name: 'total_times'},
-                {data: 'total_money', name: 'total_mony'},
-                {data: 'discount', name: 'discount'}
+                {data: 'phone', name: 'phone'},
+                {data: 'province', name: 'province_id'},
+                {data: 'district', name: 'district_id'},
+                {data: 'total_money', name: 'total_money'},
+                {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
-            order: [[6, 'desc']]
+            order: [[0, 'asc']]
         });
 
         $('#search-form').on('submit', function(e) {
@@ -146,6 +166,27 @@
             if (createdBy.length == 0) {
                 datatable.draw();
             }
+        });
+
+        $('#export-report').on('click', function (e) {
+            $.ajax({
+                url: "{{ route('contentOwnerReport.exportExcel') }}",
+                type: "POST",
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    "name": $('input[name=name]').val(),
+                    "phone": $('#phone-search').val(),
+                    "province": $('#province').val(),
+                    "district": $('#district-search').val(),
+                    "date": $('#date-search').val()
+                },
+                success: function (res) {
+                    location.href = res.path;
+                },
+                error: function () {
+
+                }
+            });
         });
 
         $('#date-search').daterangepicker({
@@ -196,6 +237,8 @@
             $(this).val('');
             datatable.draw();
         });
+
+
     });
 </script>
 

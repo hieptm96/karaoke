@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use DB;
 use Excel;
 use Debugbar;
+use Datatables;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Transformers\ContentOwnerReportTransformer;
+use App\Transformers\SongReportTransformer;
 use App\Transformers\ContentOwnerDetailReportTransformer;
 use App\Contracts\Repositories\ContentOwnerReportRepository;
 
@@ -27,9 +28,7 @@ class SongReportController extends Controller
      */
     public function index()
     {
-        $provinces = \App\Models\Province::all();
-
-        return view('content_owner_report.index', compact('provinces'));
+        return view('song_reports.index');
     }
 
     public function exportExcel(Request $request)
@@ -113,16 +112,9 @@ class SongReportController extends Controller
         ];
     }
 
-    public function getDistricts(Request $request)
-    {
-        $districts = \App\Models\District::where('province_id', $request->province_id)->get();
-
-        return response()->json(['data' => $districts, 'msg' => "Success"], 200);
-    }
-
     public function show(Request $request, $id)
     {
-        return view('content_owner_report.show', ['id' => $id]);
+        return view('song_reports.show', ['id' => $id]);
     }
 
     /*
@@ -133,6 +125,41 @@ class SongReportController extends Controller
      */
     public function datatables(Request $request)
     {
+        $startDate = null;
+        $stopDate = null;
+        if ($request->has('date')) {
+            $dates = explode(':', $request->date, 2);
+            $startDate = $dates[0];
+            $stopDate = $dates[1];
+        } else {
+            $startDate = (new Carbon('first day of this month'))->format('Y-m-d');
+            $stopDate = (new Carbon('last day of this month'))->format('Y-m-d');
+        }
+
+        $query = DB::table('songs AS s')
+                    ->selectRaw('id, file_name, name, has_fee, total_times,
+                            (CASE WHEN has_fee <> 0 THEN total_times ELSE 0 END) AS total_money')
+                    ->join(DB::raw('(SELECT  song_file_name, sum(times) AS total_times
+                            	FROM imported_data_usages i
+                                WHERE date BETWEEN ? AND ?
+                            	GROUP BY song_file_name) AS t'
+                    ), 's.file_name', '=' , 't.song_file_name')
+                    ->setBindings([$startDate, $stopDate]);
+                    // ->get();
+        // dd($query);
+        return Datatables::of($query)
+            ->filter(function ($query) use ($request) {
+                 if ($request->has('name')) {
+                     $param = '%'.$request->name.'%';
+                    $query->where('name', 'like', $param);
+                 }
+                 if ($request->has('file_name')) {
+                     $query->where('file_name', 'like', '%'.$request->file_name.'%');
+                 }
+            })
+            ->setTransformer(new SongReportTransformer)
+            ->make(true);
+
         return $this->contentOwnerReportRepository->getDatatables($request);
     }
 

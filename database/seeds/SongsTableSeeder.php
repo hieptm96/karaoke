@@ -24,6 +24,7 @@ class SongsTableSeeder extends Seeder
                 'name' => $faker->name,
                 'language' => $faker->randomElement([1, 2, 3]),
                 'file_name' => 100000 + $i,
+                'has_fee' => rand(0, 3),
                 'created_by' => 1,
                 'updated_by' => 1,
             ]);

@@ -32,42 +32,48 @@ class ContentOwnerReportController extends Controller
         return view('content_owner_report.index', compact('provinces'));
     }
 
-    public function exportExcel()
+    public function exportExcel(Request $request)
     {
         $startDate = null;
         $stopDate = null;
         if ($request->has('date')) {
-            $date = $request->date;
-            $dates = explode(':', $date, 2);
+            $dates = explode(':', $request->date, 2);
             $startDate = $dates[0];
             $stopDate = $dates[1];
         } else {
-            $startDate = (new Carbon('first day of this month'))
-                            ->toDateString();
-            $stopDate = (new Carbon('last day of this month'))
-                            ->toDateString();
+            $startDate = (new Carbon('first day of this month'))->format('Y-m-d');
+            $stopDate = (new Carbon('last day of this month'))->format('Y-m-d');
         }
 
+        $config = json_decode(\App\Models\Config::orderBy('updated_at', 'desc')->first()->config, true);
+
         $query =
-            DB::table('content_owners')
-            ->selectRaw('id, name, SUM(money) total_money, phone, province_id, district_id')
+            DB::table('content_owners as co')
+            ->selectRaw('co.id AS id, co.name AS name, SUM(money) * ? AS total_money,
+             phone, p.name AS province, d.name AS district, has_fee')
             ->join(DB::raw('(
-                select content_owner_id, t.song_file_name,
-                    SUM(times) * percentage / 100 AS money, SUM(times), percentage
-                    FROM
-                    (select content_owner_id, song_id, song_file_name,
-                    SUM(percentage) AS percentage
-                    FROM content_owner_song c
-                    GROUP BY content_owner_id, song_id) AS t
-                    JOIN imported_data_usages i
-                    ON t.song_file_name = i.song_file_name
+            	select content_owner_id, t.song_file_name,
+                	SUM(times) * percentage / 100 AS money, SUM(times), percentage
+                	FROM
+                	(select content_owner_id, song_id, song_file_name,
+                	SUM(percentage) AS percentage
+                	FROM content_owner_song c
+                	GROUP BY content_owner_id, song_id) AS t
+                	JOIN imported_data_usages i
+                	ON t.song_file_name = i.song_file_name
                     WHERE date between ? and ?
-                    GROUP BY i.song_file_name, content_owner_id
-                    ORDER BY content_owner_id, song_file_name
+                	GROUP BY i.song_file_name, content_owner_id
+                	ORDER BY content_owner_id, song_file_name
                 ) AS t2'
             ), 'id', '=', 't2.content_owner_id')
-            ->groupBy('id')
-            ->setBindings([$startDate, $stopDate]);
+            ->join('songs AS s', function($join) {
+                $join->on('t2.song_file_name', '=', 's.file_name');
+                $join->on('s.has_fee', '<>', DB::raw('?'));
+            })
+            ->join('provinces AS p', 'co.province_id', '=', 'p.id')
+            ->join('districts AS d', 'co.district_id', '=', 'd.id')
+            ->groupBy('co.id')
+            ->setBindings([intval($config['price']), $startDate, $stopDate, 0]);
 
         if ($request->has('name')) {
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -87,9 +93,9 @@ class ContentOwnerReportController extends Controller
 
         $contentOwnerReports = $query->get();
 
-        Excel::create('ktv_report', function ($excel) use($ktv_reports) {
+        Excel::create('contentowner_report', function ($excel) use($contentOwnerReports) {
             $excel->setTitle('Báo cáo tiền của các đơn vị sở hữu nội dung');
-            $excel->sheet('Sheet 1',function ($sheet) use ($ktv_reports) {
+            $excel->sheet('Sheet 1',function ($sheet) use ($contentOwnerReports) {
                 $sheet->setStyle(array(
                     'font' => array(
                         'name' => 'Times New Roman',
@@ -97,14 +103,13 @@ class ContentOwnerReportController extends Controller
                     )
                 ));
 
-//                $sheet->fromArray($ktv_reports);
                 $sheet->loadView('content_owner_report.export',
-                                    ['contentOwnerReports' => $contentOwnerReports]);
+                                    ['content_owners' => $contentOwnerReports]);
             });
         })->store('xlsx', 'exports');
         return [
             'success' => true,
-            'path' => 'http://'.request()->getHttpHost().'/exports/ktv_report.xlsx'
+            'path' => 'http://'.request()->getHttpHost().'/exports/contentowner_report.xlsx'
         ];
     }
 
@@ -137,8 +142,8 @@ class ContentOwnerReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return mix
      */
-    public function detailDatatables(Request $request, $id)
+    public function detailDatatables(Request $request)
     {
-        return $this->contentOwnerReportRepository->getDetailDatatables($request, $id);
+        return $this->contentOwnerReportRepository->getDetailDatatables($request);
     }
 }

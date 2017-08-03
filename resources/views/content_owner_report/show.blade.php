@@ -13,13 +13,16 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Báo cáo số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
+            <h4 class="page-title">Thống kê số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#">Đơn vị bản quyền</a>
+                    <a href="#">Đơn vị sở hữu bản quyền</a>
+                </li>
+                <li>
+                    <a href="{{ route('contentowner-reports.index') }}">Thống kê</a>
                 </li>
                 <li class="active">
-                    Báo cáo
+                    {{ Request::get('id') }}
                 </li>
             </ol>
         </div>
@@ -63,8 +66,9 @@
                     <tr>
                         <th width="2%">Mã</th>
                         <th width="20%">Bài hát</th>
-                        <th width="20%">Tên file</th>
-                        <th width="20%">Số lần sử dụng</th>
+                        <th width="10%">Tên file</th>
+                        <th width="10%">Có thu phí</th>
+                        <th width="10%">Số lần sử dụng</th>
                         <th width="20%">Tổng tiền</th>
                         <th width="20%">Tiền hưởng</th>
                     </tr>
@@ -113,11 +117,12 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'song_file_name', name: 'song_file_name'},
+                {data: 'has_fee', name: 'has_fee'},
                 {data: 'total_times', name: 'total_times'},
-                {data: 'total_money', name: 'total_times'},
+                {data: 'total_money', name: 'total_mony'},
                 {data: 'discount', name: 'discount'}
             ],
-            order: [[0, 'asc']]
+            order: [[6, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {

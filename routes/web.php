@@ -62,5 +62,5 @@ Route::get('/contentowner/{id}', 'ContentOwnerSongController@index');
 
 Route::get('/contentowner-reports/datatables', 'ContentOwnerReportController@datatables')->name('contentOwnerReport.datatables');
 Route::get('/contentowner-reports/{id}/datatables', 'ContentOwnerReportController@detailDatatables')->name('contentOwnerDetailReport.datatables');
-Route::post('contentowner-reports/export', 'ContentOwnerReportController@exportExcel')->name('contentOwnerReport.exportExcel');
+Route::post('/contentowner-reports/export', 'ContentOwnerReportController@exportExcel')->name('contentOwnerReport.exportExcel');
 Route::resource('/contentowner-reports', 'ContentOwnerReportController');

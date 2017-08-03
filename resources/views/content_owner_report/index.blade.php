@@ -14,10 +14,10 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Báo cáo số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
+            <h4 class="page-title">Thống kê số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#">Đơn vị kinh doanh</a>
+                    <a href="#">Đơn vị sở hữu bản quyền</a>
                 </li>
                 <li class="active">
                     Thống kê

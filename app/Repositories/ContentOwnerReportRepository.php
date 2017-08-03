@@ -20,20 +20,17 @@ class ContentOwnerReportRepository implements Contract
         $startDate = null;
         $stopDate = null;
         if ($request->has('date')) {
-            $date = $request->date;
-            $dates = explode(':', $date, 2);
+            $dates = explode(':', $request->date, 2);
             $startDate = $dates[0];
             $stopDate = $dates[1];
         } else {
-            $startDate = (new Carbon('first day of this month'))
-                            ->toDateString();
-            $stopDate = (new Carbon('last day of this month'))
-                            ->toDateString();
+            $startDate = (new Carbon('first day of this month'))->format('Y-m-d');
+            $stopDate = (new Carbon('last day of this month'))->format('Y-m-d');
         }
 
         $contentOwnerReport =
-            DB::table('content_owners')
-            ->selectRaw('id, name, SUM(money) total_money, phone, province_id, district_id')
+            DB::table('content_owners as co')
+            ->selectRaw('co.id AS id, co.name AS name, SUM(money) total_money, phone, province_id, district_id')
             ->join(DB::raw('(
             	select content_owner_id, t.song_file_name,
                 	SUM(times) * percentage / 100 AS money, SUM(times), percentage
@@ -49,8 +46,12 @@ class ContentOwnerReportRepository implements Contract
                 	ORDER BY content_owner_id, song_file_name
                 ) AS t2'
             ), 'id', '=', 't2.content_owner_id')
-            ->groupBy('id')
-            ->setBindings([$startDate, $stopDate]);
+            ->join('songs AS s', function($join) {
+                $join->on('t2.song_file_name', '=', 's.file_name');
+                $join->on('s.has_fee', '<>', DB::raw('?'));
+            })
+            ->groupBy('co.id')
+            ->setBindings([$startDate, $stopDate, 0]);
 
         // dd($contentOwnerReport);
 
@@ -78,16 +79,31 @@ class ContentOwnerReportRepository implements Contract
             ->make(true);
     }
 
-    public function getDetailDatatables(Request $request, $id)
+    public function getDetailDatatables(Request $request)
     {
-        $startDate = $request->from;
-        $stopDate = $request->to;
+        if ($request->has('date')) {
+            $dates = explode(':', $request->date, 2);
+            $startDate = $dates[0];
+            $stopDate = $dates[1];
+        } else {
+            $startDate = $request->from;
+            $stopDate = $request->to;
+
+            if (empty($startDate) || empty($stopDate)) {
+                $startDate = (new Carbon('first day of this month'))->format('Y-m-d');
+                $stopDate = (new Carbon('last day of this month'))->format('Y-m-d');
+            }
+        }
 
         $details =
             DB::table('imported_data_usages AS i')
-            ->selectRaw('s.name, i.id, i.song_file_name, owner_types, SUM(times) AS total_times,
-                        SUM(times) * percentage / 100 AS discount, percentage')
-            ->join('songs AS s', 'i.song_file_name', '=', 's.file_name')
+            ->selectRaw('s.name, s.id, i.song_file_name, has_fee, owner_types, SUM(times) AS total_times,
+                        (case when has_fee <> 0 then SUM(times) else 0 end) AS total_money,
+                        (case when has_fee <> 0 then SUM(times) * percentage / 100 else 0 end) AS discount,
+                        percentage')
+            ->join('songs AS s', function($join) {
+                $join->on('i.song_file_name', '=', 's.file_name');
+            })
             ->join(DB::raw('(select song_id, song_file_name,
                     GROUP_CONCAT(type SEPARATOR ";") owner_types,
                     SUM(percentage) AS percentage
@@ -97,10 +113,16 @@ class ContentOwnerReportRepository implements Contract
             ), 'i.song_file_name', '=', 't.song_file_name')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('i.song_file_name')
-            ->setBindings([$id, $startDate, $stopDate]);
+            ->setBindings([$request->id, $startDate, $stopDate]);
 
         return Datatables::of($details)
             ->filter(function ($query) use ($request) {
+                if ($request->has('name')) {
+                    $query->where('s.name', 'like', '%' . $request->name . '%');
+                }
+                if ($request->has('file_name')) {
+                    $query->where('s.file_name', 'like', '%' . $request->file_name . '%');
+                }
                 if ($request->has('owner-types')) {
                     $ownerTypes = $request['owner-types'];
                     $ownerTypes = array_filter($ownerTypes);

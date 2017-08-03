@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\EmailCommand',
     ];
 
     /**
@@ -26,6 +26,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+//        $schedule->command('email:everyMonth')->when(function() {
+//            return (new \Carbon\Carbon('first day of this month'))->isToday();
+//        });
+        // Run on 01 day of the month
+        $schedule->command('email:everyMonth')->cron('0 0 01 * *');
     }
 
     /**

@@ -17,7 +17,8 @@ class KtvReportTransformer extends TransformerAbstract
              'district' => $this->getDistrict($import_data->district_id),
              'phone' => $import_data->phone,
              'times' => $import_data->total_times,
-             'total_money' => $this->getTotalMoney($import_data->total_times)
+             'total_money' => $this->getTotalMoney($import_data->total_times),
+             'actions' => '<a href="' . route('ktvreports.show', ['id' => $import_data->ktv_id]) . '" class="btn btn-xs btn-primary waves-effect waves-light ktv-detail"><i class="fa fa-edit"></i> Chi tiết</a>'
          ];
     }
 

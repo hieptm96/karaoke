@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Debugbar;
 use DB;
 use Excel;
+use Datatables;
 use Illuminate\Http\Request;
+use App\Models\ImportedDataUsage;
 use App\Transformers\KtvReportTransformer;
 use App\Contracts\Repositories\KtvReportRepository;
 
@@ -30,13 +31,20 @@ class KtvReportsController extends Controller
         return view('ktvreports.index', compact('provinces'));
     }
 
+    public function show($id)
+    {
+        $ktv = \App\Models\Ktv::findOrFail($id);
+
+        return view('ktvreports.show', compact('ktv'));
+    }
+
     public function exportExcel()
     {
 //        $ktv_reports = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
 //            ->groupBy('ktv_id')
 //            ->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.name as ktv_name, ktvs.province_id, ktvs.district_id, ktvs.phone'));
         $config = json_decode(\App\Models\Config::orderBy('updated_at', 'desc')->first()->config, true);
-        $ktv_reports = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
+        $ktv_reports = ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
             ->join('provinces', 'ktvs.province_id', '=', 'provinces.id')
             ->join('districts', 'ktvs.district_id', '=', 'districts.id')
             ->groupBy('ktv_id')
@@ -59,10 +67,17 @@ class KtvReportsController extends Controller
             $ktv_reports->where('district_id', request('district'));
         }
 
+        if (request()->has('date')) {
+            $date = explode(":", request('date'));
+            $ktv_reports->whereBetween('imported_data_usages.date', [trim($date[0], ' '), trim($date[1], ' ')]);
+        } else {
+            $ktv_reports->whereBetween('imported_data_usages.date', [\Carbon\Carbon::now()->format('Y-m-01'), \Carbon\Carbon::now()->format('Y-m-31')]);
+        }
+
         $ktv_reports = $ktv_reports->get();
 
         Excel::create('ktv_report', function ($excel) use($ktv_reports) {
-            $excel->setTitle('Ktv song report');
+            $excel->setTitle('Thống kê sử dụng bài hát của các đơn vị kinh doanh');
             $excel->sheet('Sheet 1',function ($sheet) use ($ktv_reports) {
                 $sheet->setStyle(array(
                     'font' => array(
@@ -97,5 +112,10 @@ class KtvReportsController extends Controller
     public function datatables(Request $request)
     {
         return $this->ktvReportRepository->getDatatables($request);
+    }
+
+    public function detailDatatables(Request $request)
+    {
+        return $this->ktvReportRepository->getDetailDatatables($request);
     }
 }

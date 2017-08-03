@@ -57,3 +57,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 // Statistics
 Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
 Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
+
+// Songs
+Route::get('/contentowner/{id}/datatables', 'ContentOwnerSongController@datatables')->name('contentowner.datatables');
+Route::get('/contentowner/{id}', 'ContentOwnerSongController@index');
+
+Route::get('/contentowner-reports/datatables', 'ContentOwnerReportController@datatables')->name('contentOwnerReport.datatables');
+Route::get('/contentowner-reports/{id}/datatables', 'ContentOwnerReportController@detailDatatables')->name('contentOwnerDetailReport.datatables');
+Route::post('/contentowner-reports/export', 'ContentOwnerReportController@exportExcel')->name('contentOwnerReport.exportExcel');
+Route::resource('/contentowner-reports', 'ContentOwnerReportController');

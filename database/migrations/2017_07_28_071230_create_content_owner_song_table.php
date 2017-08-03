@@ -20,6 +20,7 @@ class CreateContentOwnerSongTable extends Migration
             $table->string('type', 20);
             $table->unsignedInteger('percentage');
             $table->timestamps();
+            $table->unsignedInteger('song_file_name')->default(0);
 
             $table->unique(['content_owner_id', 'song_id', 'type']);
         });

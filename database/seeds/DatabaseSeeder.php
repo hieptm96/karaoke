@@ -17,15 +17,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersTableSeeder::class);
 
-        $this->call(SongsTableSeeder::class);
-
         $this->call(KtvsTableSeeder::class);
-
+        
         $this->call(ProvincesTableSeeder::class);
 
-        $this->call(DataUsageSeeder::class);
-
         $this->call(ContentOwnersTableSeeder::class);
+
+        $this->call(SongsTableSeeder::class);
+
+        $this->call(DataUsageSeeder::class);
 
         $this->call(ConfigsTableSeeder::class);
     }

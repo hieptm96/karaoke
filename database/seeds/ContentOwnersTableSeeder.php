@@ -14,7 +14,7 @@ class ContentOwnersTableSeeder extends Seeder
         $faker = Faker\Factory::create('vi_VN');
 
         $role = \App\Models\Role::where('name', 'content_owner_unit')->first();
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $user = \App\Models\User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,

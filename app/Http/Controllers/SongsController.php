@@ -52,7 +52,7 @@ class SongsController extends Controller
 
         if ($result != null) {
             flash()->success('Success!', 'Đã thêm thành công bài hát.');
-            return redirect()->route('songs.show', ['id' => $result->id ])
+            return redirect()->route('songs.edit', ['id' => $result->id ])
                     ->with('created', true);
         } else {
             flash()->warning('Error!', 'Không thể thêm bài hát.');
@@ -83,7 +83,7 @@ class SongsController extends Controller
     {
         $song = $this->songRepository->find($id);
 
-        return view('songs.show', ['song' => $song]);
+        return view('songs.edit', ['song' => $song]);
     }
 
     /**
@@ -103,7 +103,7 @@ class SongsController extends Controller
             flash()->warning('Error!', 'Đã có lỗi xảy ra.');
         }
 
-        return redirect()->route('songs.show', ['id' => $id]);
+        return redirect()->route('songs.edit', ['id' => $id]);
     }
 
     /**

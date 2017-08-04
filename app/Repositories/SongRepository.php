@@ -65,6 +65,7 @@ class SongRepository implements Contract
                 return $this->generateActionColumn($song);
             })
             ->setTransformer(new SongTransformer)
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
@@ -218,7 +219,9 @@ class SongRepository implements Contract
     protected function getActionColumnPermissions($song)
     {
         return [
-            //
+            'songs.edit' => '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['id'])
+                . '"><i class="fa fa-edit"></i> Sửa</a>',
+            'songs.delete' => ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>'
         ];
     }
 }

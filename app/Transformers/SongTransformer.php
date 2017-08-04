@@ -18,7 +18,7 @@ class SongTransformer extends TransformerAbstract
             'created_by' => $song['created_by']['name'],
             'created_at' =>  $song['created_at'],
             'updated_at' =>  $song['updated_at'],
-            'actions' => $this->generateActions($song),
+            'actions' => $song['actions'],
             'has_fee' => $this->getHasFeeColumn($song['has_fee']) ,
         ];
     }

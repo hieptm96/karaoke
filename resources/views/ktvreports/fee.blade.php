@@ -13,7 +13,7 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Báo cáo số tiền cần thu của các đơn vị kinh doanh</h4>
+            <h4 class="page-title">Báo cáo số tiền cần thu của các đơn vị kinh doanh trong tháng</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">Đơn vị kinh doanh</a>

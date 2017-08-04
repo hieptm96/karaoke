@@ -17,7 +17,7 @@ class SingerTransformer extends TransformerAbstract
             'created_by' => $singer['created_by']['name'],
             'created_at' =>  $singer['created_at'],
             'updated_at' =>  $singer['updated_at'],
-            'actions' => $this->generateActions($singer),
+            'actions' => $singer['actions'],
         ];
 
     }
@@ -39,7 +39,7 @@ class SingerTransformer extends TransformerAbstract
     {
         $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('singers.edit', $singer['id'])
                     . '"><i class="fa fa-edit"></i> Sửa</a>';
-        $actions .= ' <a class="btn btn-default delete-singer btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-singer-modal"><i class="fa fa-trash"></i> Xóa</a>';
+        $actions .= '<a class="btn btn-default delete-singer btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-singer-modal"><i class="fa fa-trash"></i> Xóa</a>';
 
         return $actions;
     }

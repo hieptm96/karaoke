@@ -49,6 +49,7 @@ class SingerRepository implements Contract
                 return $this->generateActionColumn($singers);
             })
             ->setTransformer(new SingerTransformer)
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
@@ -91,10 +92,12 @@ class SingerRepository implements Contract
     {
     }
 
-    protected function getActionColumnPermissions($singers)
+    protected function getActionColumnPermissions($singer)
     {
         return [
-            //
+            'singers.edit' => '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('singers.edit', $singer['id'])
+                . '"><i class="fa fa-edit"></i> Sửa</a>',
+            'singers.destroy' => '<a class="btn btn-default delete-singer btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-singer-modal"><i class="fa fa-trash"></i> Xóa</a>',
         ];
     }
 }

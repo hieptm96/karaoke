@@ -6,27 +6,52 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/sample-users', 'SampleUsersController@index');
+Route::group(['middleware' => 'acl'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/sample-users', 'SampleUsersController@index');
 
 // Profile
-Route::resource('profiles', 'ProfilesController', ['only' => ['index', 'update']]);
+    Route::resource('profiles', 'ProfilesController', ['only' => ['index', 'update']]);
 
 // Songs
-Route::get('songs/datatables', 'SongsController@datatables')->name('songs.datatables');
-Route::resource('songs', 'SongsController');
+    Route::get('songs/datatables', 'SongsController@datatables')->name('songs.datatables');
+    Route::resource('songs', 'SongsController');
 
 // Singers
-Route::get('singers/datatables', 'SingersController@datatables')->name('singers.datatables');
-Route::resource('singers', 'SingersController');
+    Route::get('singers/datatables', 'SingersController@datatables')->name('singers.datatables');
+    Route::resource('singers', 'SingersController');
 
 // Ktv reports
-Route::get('ktvreports/datatables', 'KtvReportsController@datatables')->name('ktvreports.datatables');
-Route::get('ktvreports/detail-datatables', 'KtvReportsController@detailDatatables')->name('ktvreports.detailDatatables');
-Route::post('ktvreports/export', 'KtvReportsController@exportExcel')->name('ktvreports.exportExcel');
-Route::get('/ktvreports/get-districts', 'KtvReportsController@getDistricts')->name('ktvreports.getdistricts');
-Route::get('/ktvreports/fee', 'KtvReportsController@fee')->name('ktvreports.fee');
-Route::resource('ktvreports', 'KtvReportsController');
+    Route::get('ktvreports/datatables', 'KtvReportsController@datatables')->name('ktvreports.datatables');
+    Route::get('ktvreports/detail-datatables', 'KtvReportsController@detailDatatables')->name('ktvreports.detailDatatables');
+    Route::post('ktvreports/export', 'KtvReportsController@exportExcel')->name('ktvreports.exportExcel');
+    Route::get('/ktvreports/get-districts', 'KtvReportsController@getDistricts')->name('ktvreports.getdistricts');
+    Route::get('/ktvreports/fee', 'KtvReportsController@fee')->name('ktvreports.fee');
+    Route::resource('ktvreports', 'KtvReportsController');
+
+    //Roles
+    Route::get('roles/{id}/permissions', 'RolePermissionsController@index')->name('rolePermissions.index');
+    Route::put('roles/{id}/permissions', 'RolePermissionsController@update')->name('rolePermissions.update');
+    Route::resource('roles', 'RolesController');
+
+//Permissions
+    Route::get('permissions/sync', 'PermissionsController@sync')->name('permissions.sync');
+    Route::resource('permissions', 'PermissionsController');
+
+// Statistics
+    Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
+    Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
+
+// Songs
+    Route::get('/contentowner/{id}/datatables', 'ContentOwnerSongController@datatables')->name('contentowner.datatables');
+    Route::get('/contentowner/{id}', 'ContentOwnerSongController@index');
+
+    Route::get('/contentowner-reports/datatables', 'ContentOwnerReportController@datatables')->name('contentOwnerReport.datatables');
+    Route::get('/contentowner-reports/{id}/datatables', 'ContentOwnerReportController@detailDatatables')->name('contentOwnerDetailReport.datatables');
+    Route::post('/contentowner-reports/export', 'ContentOwnerReportController@exportExcel')->name('contentOwnerReport.exportExcel');
+    Route::resource('/contentowner-reports', 'ContentOwnerReportController');
+});
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
     // Ktv
@@ -41,17 +66,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 
     // Config
     Route::resource('configs', 'ConfigsController', ['only' => ['index', 'update']]);
+
+
 });
 
-// Statistics
-Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
-Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
-
-// Songs
-Route::get('/contentowner/{id}/datatables', 'ContentOwnerSongController@datatables')->name('contentowner.datatables');
-Route::get('/contentowner/{id}', 'ContentOwnerSongController@index');
-
-Route::get('/contentowner-reports/datatables', 'ContentOwnerReportController@datatables')->name('contentOwnerReport.datatables');
-Route::get('/contentowner-reports/{id}/datatables', 'ContentOwnerReportController@detailDatatables')->name('contentOwnerDetailReport.datatables');
-Route::post('/contentowner-reports/export', 'ContentOwnerReportController@exportExcel')->name('contentOwnerReport.exportExcel');
-Route::resource('/contentowner-reports', 'ContentOwnerReportController');

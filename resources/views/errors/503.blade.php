@@ -4,14 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link rel="shortcut icon" href="/vendor/ubold/assets/images/favicon_1.ico">
 
     <title>{{ config('app.name') }}</title>
-
-    @stack('styles')
 
     <link href="/vendor/ubold/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/vendor/ubold/assets/css/core.css" rel="stylesheet" type="text/css" />
@@ -19,8 +13,6 @@
     <link href="/vendor/ubold/assets/css/icons.css" rel="stylesheet" type="text/css" />
     <link href="/vendor/ubold/assets/css/pages.css" rel="stylesheet" type="text/css" />
     <link href="/vendor/ubold/assets/css/responsive.css" rel="stylesheet" type="text/css" />
-
-    @stack('inline_styles')
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,48 +24,22 @@
     <script src="/vendor/ubold/assets/js/modernizr.min.js"></script>
 
 </head>
+<body>
 
-<body class="fixed-left">
+<div class="account-pages"></div>
+<div class="clearfix"></div>
 
-<!-- Begin page -->
-<div id="wrapper">
-
-    <!-- Top Bar Start -->
-    @include('common.header')
-    <!-- Top Bar End -->
-
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="left side-menu">
-        @include('common.menu')
-    </div>
-    <!-- Left Sidebar End -->
-
-    <!-- ============================================================== -->
-    <!-- Start right Content here -->
-    <!-- ============================================================== -->
-    <div class="content-page">
-        <!-- Start content -->
-        <div class="content">
-            <div class="container">
-                @yield('content')
-            </div> <!-- container -->
-
-        </div> <!-- content -->
-
-        <footer class="footer">
-            © @php date('Y') @endphp. All rights reserved.
-        </footer>
+<div class="wrapper-page">
+    <div class="ex-page-content text-center">
+        <div class="text-error"><span class="text-primary">5</span><i class="ti-face-sad text-pink"></i><span class="text-info">3</span></div>
+        <h2>Trang web đang bảo trì.</h2><br>
+        <p class="text-muted">Vui lòng liên hệ <span class="text-danger">Kỹ thuật</span> để được trợ giúp.</p>
+        <br>
+        <a class="btn btn-success waves-effect waves-light" href="{{ url('/') }}"><i class="md md-home"></i> &nbsp;Về trang chủ</a>
 
     </div>
-    <!-- ============================================================== -->
-    <!-- End Right content here -->
-    <!-- ============================================================== -->
-
-    <!-- Right Sidebar -->
-    <!-- /Right-bar -->
-
 </div>
-<!-- END wrapper -->
+
 
 <script>
     var resizefunc = [];
@@ -91,16 +57,9 @@
 <script src="/vendor/ubold/assets/js/jquery.nicescroll.js"></script>
 <script src="/vendor/ubold/assets/js/jquery.scrollTo.min.js"></script>
 
-@stack('scripts')
 
 <script src="/vendor/ubold/assets/js/jquery.core.js"></script>
 <script src="/vendor/ubold/assets/js/jquery.app.js"></script>
-
-@stack('inline_scripts')
-
-@if (config('app.debug'))
-    @include('sudosu::user-selector')
-@endif
 
 </body>
 </html>

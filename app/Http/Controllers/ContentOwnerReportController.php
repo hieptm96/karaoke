@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use DB;
 use Excel;
-use Debugbar;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Transformers\ContentOwnerReportTransformer;
@@ -122,7 +121,9 @@ class ContentOwnerReportController extends Controller
 
     public function show(Request $request, $id)
     {
-        return view('content_owner_report.show', ['id' => $id]);
+        $content_owner = \App\Models\ContentOwner::findOrFail($id);
+
+        return view('content_owner_report.show', compact('content_owner'));
     }
 
     /*

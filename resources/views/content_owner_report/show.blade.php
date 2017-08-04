@@ -13,7 +13,7 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Thống kê số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
+            <h4 class="page-title">Thống kê số tiền cần thu của {{ $content_owner->name }}</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">Đơn vị sở hữu bản quyền</a>
@@ -104,7 +104,7 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{!! route('contentOwnerDetailReport.datatables', ['id' => $id]) !!}",
+                url: "{!! route('contentOwnerDetailReport.datatables', ['id' => $content_owner->id]) !!}",
                 data: function (d) {
                     d.name = $('#name-search').val();
                     d.file_name = $('#file-name-search').val();

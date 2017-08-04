@@ -45,6 +45,10 @@
                 <a href="{{ route('contentowner-reports.index') }}" class="waves-effect"><i class="ti-home"></i> <span>Thống kê đơn vị sở hữu</span> <span class="menu-arrow"></span></a>
             </li>
 
+            <li>
+                <a href="{{ route('song-reports.index') }}" class="waves-effect"><i class="ti-home"></i> <span>Thống kê sử dụng bài hát</span> <span class="menu-arrow"></span></a>
+            </li>
+
         </ul>
         <div class="clearfix"></div>
     </div>

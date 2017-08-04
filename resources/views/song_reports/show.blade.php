@@ -14,10 +14,10 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Thống kê số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
+            <h4 class="page-title">Thống kê dữ liệu sử dụng bài hát <strong>{{ $song['name'] }}</strong></h4>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#">Đơn vị sở hữu bản quyền</a>
+                    <a href="#">Bài hát</a>
                 </li>
                 <li class="active">
                     Thống kê
@@ -68,11 +68,6 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
 
-                <div class="btn-group pull-right m-t-15">
-                    <button id="export-report" type="submit" class="btn btn-default waves-effect waves-light">Export <i class="fa fa-file-excel-o"></i><span class="m-l-5"></span></button>
-                </div>
-
-
                 <p class="text-muted font-13 m-b-30">
                 </p>
 
@@ -84,8 +79,7 @@
                         <th width="20%">Số điện thoại</th>
                         <th width="20%">Tỉnh/Thành</th>
                         <th width="20%">Quận/Huyện</th>
-                        <th width="20%">Tổng tiền</th>
-                        <th width="10%">#</th>
+                        <th width="20%">Số lần sử dụng</th>
                     </tr>
                     </thead>
 
@@ -124,25 +118,26 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{!! route('contentOwnerReport.datatables') !!}",
+                url: "{!! route('songDetailReport.datatables', ['id' => $song['id']]) !!}",
                 data: function (d) {
                     d.name = $('#name-search').val();
                     d.phone = $('#phone-search').val();
                     d.province = $('#province').val();
                     d.district = $('#district-search').val();
                     d.date = $('#date-search').val();
+                    d.from = '{{ Request::get('from') }}';
+                    d.to = '{{ Request::get('to') }}';
                 }
             },
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'phone', name: 'phone'},
-                {data: 'province', name: 'province_id'},
-                {data: 'district', name: 'district_id'},
-                {data: 'total_money', name: 'total_money'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                {data: 'name', name: 'k.name'},
+                {data: 'phone', name: 'k.phone'},
+                {data: 'province', name: 'k.province_id'},
+                {data: 'district', name: 'k.district_id'},
+                {data: 'total_times', name: 'total_times'},
             ],
-            order: [[0, 'asc']]
+            order: [[5, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {
@@ -166,27 +161,6 @@
             if (createdBy.length == 0) {
                 datatable.draw();
             }
-        });
-
-        $('#export-report').on('click', function (e) {
-            $.ajax({
-                url: "{{ route('contentOwnerReport.exportExcel') }}",
-                type: "POST",
-                data: {
-                    "_token": '{{ csrf_token() }}',
-                    "name": $('input[name=name]').val(),
-                    "phone": $('#phone-search').val(),
-                    "province": $('#province').val(),
-                    "district": $('#district-search').val(),
-                    "date": $('#date-search').val()
-                },
-                success: function (res) {
-                    location.href = res.path;
-                },
-                error: function () {
-
-                }
-            });
         });
 
         $('#date-search').daterangepicker({

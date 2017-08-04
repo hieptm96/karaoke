@@ -13,10 +13,10 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Thống kê số tiền cần thu của các đơn vị sở hữu bản quyền</h4>
+            <h4 class="page-title">Thống kê số tiền bản quyền của các bài hát</h4>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#">Đơn vị sở hữu bản quyền</a>
+                    <a href="#">Bài hát</a>
                 </li>
                 <li>
                     <a href="{{ route('song-reports.index') }}">Thống kê</a>
@@ -117,7 +117,7 @@
                 {data: 'total_money', name: 'total_money'},
                 {data: 'actions', name: 'actions', searchable: false, orderable: false}
             ],
-            order: [[4, 'desc']]
+            order: [[5, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {

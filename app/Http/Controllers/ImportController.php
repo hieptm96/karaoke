@@ -15,6 +15,7 @@ class ImportController extends Controller
 {
 
     private static $excelFileExtension = array('xls', 'xlsx');
+    private static $formatFile = '/imports/dataImportformatFile.xls';
 
     private static $dataFields = array(
         'ktv_id',
@@ -31,6 +32,8 @@ class ImportController extends Controller
 
     public function importDataUsages(Request $request)
     {
+        $downloadImportedFileFormat = '<a class="format-file" href="'. request()->getSchemeAndHttpHost()
+            . static::$formatFile . '" target="_blank">Bấm để download định dạng file</a>';
 
         if($request->hasFile('data-usage')){
             $file = $request->file('data-usage');
@@ -53,7 +56,7 @@ class ImportController extends Controller
                     })->get();
                 } else {
                     $result['alert-type'] = 'danger';
-                    $result['message'] = 'Định dạng file không đúng, vui lòng chọn file khác!';
+                    $result['message'] = 'Định dạng file không đúng, vui lòng chọn file khác!<br>' . $downloadImportedFileFormat;
                 }
             } else {
                 $result['alert-type'] = 'danger';

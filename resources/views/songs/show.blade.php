@@ -56,7 +56,14 @@
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên: </label>
                     <div class="col-sm-7">
-                      <input type="text" readonly name="name" value="{{ $song['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
+                      <span class="form-control">{{ $song['name'] }}</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="input-name" class="col-sm-4 control-label">Tên file: </label>
+                    <div class="col-sm-7">
+                      <span class="form-control">{{ $song['file_name'] }}</span>
                     </div>
                   </div>
 
@@ -65,9 +72,9 @@
                     <div class="col-sm-7">
                       @foreach ($song['singers'] as $singer)
                       <div class="singer">
-                          <div class="input-group span6 offset3">
-                              <input type="text" readonly class="form-control" value="{!! $singer->name !!}"/>
-                          </div>
+
+                        <span class="form-control" singer-data="{{ $singer->id }}">{!! $singer->name !!}</span>
+
                           <br/>
                       </div>
                       @endforeach
@@ -82,7 +89,7 @@
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <input type="text" readonly value="{{ config('ktv.languages.'.$song['language'], '') }}" class="form-control">
+                        <span class="form-control">{{ config('ktv.languages.'.$song['language'], '') }}</span>
                     </div>
                   </div>
 
@@ -110,21 +117,22 @@
                         <div class="">
                           <label for="singers" class="">Nhạc sĩ: </label>
                           <div class="">
-                            <input type="text" readonly class="form-control"  value="{{ $song['contentOwners']['musican']['name'] or '' }}">
+                              <span class="form-control">{{ $song['contentOwners']['musican']['name'] or 'Không có ...' }}</span>
                           </div>
                         </div>
 
                         <div class="">
                           <label for="singers" class="">Lời: </label>
                           <div class="">
-                                <input type="text" readonly class="form-control"  value="{{ $song['contentOwners']['title']['name'] or '' }}">
+                              <span class="form-control">{{ $song['contentOwners']['title']['name'] or 'Không có ...' }}</span>
                           </div>
                         </div>
 
                         <div class="">
                           <label for="singers" class="">Ca sĩ: </label>
                           <div class="">
-                                <input type="text" readonly class="form-control"  value="{{ $song['contentOwners']['singer']['name'] or '' }}">
+                              <span class="form-control">{{ $song['contentOwners']['singer']['name'] or 'Không có ...' }}</span>
+
                           </div>
                         </div>
 
@@ -132,7 +140,8 @@
                         <div class="">
                           <label for="singers" class="">Quay phim: </label>
                           <div class="">
-                                <input type="text" readonly class="form-control"  value="{{ $song['contentOwners']['film']['name'] or '' }}">
+                              <span class="form-control">{{ $song['contentOwners']['film']['name'] or 'Không có ...' }}</span>
+
                           </div>
                         </div>
                     </div>

@@ -55,7 +55,7 @@ class SingersController extends Controller
             return redirect()->route('singers.show', ['id' => $singer->id ])
                     ->with('created', true);
         } else {
-            flash()->success('Error!', 'Không thể thêm ca sĩ.');
+            flash()->danger('Error!', 'Không thể thêm ca sĩ.');
             return redirect()->route('show.create');
         }
     }
@@ -103,10 +103,10 @@ class SingersController extends Controller
         if ($success) {
             flash()->success('Success!', 'Đã sửa thành công ca sĩ.');
         } else {
-            flash()->success('Success!', 'Đã có lỗi xảy ra.');
+            flash()->warning('Warning!', 'Đã có lỗi xảy ra.');
         }
 
-        return redirect()->route('singers.show', ['id' => $id]);
+        return redirect()->route('singers.edit', ['id' => $id ]);
     }
 
     /**
@@ -123,7 +123,7 @@ class SingersController extends Controller
         if ($success) {
             flash()->success('Success!', 'Xóa ca sĩ thành công.');
         } else {
-            flash()->error('Error!', 'Không thể xóa ca sĩ.');
+            flash()->warning('Error!', 'Không thể xóa ca sĩ.');
         }
 
         return redirect()->route('singers.index');

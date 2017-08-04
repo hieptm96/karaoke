@@ -6,6 +6,10 @@
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
 @endpush
 
+@php
+$user = Auth::user();
+@endphp
+
 @section('content')
     {{-- delete song modal --}}
     <div id="delete-singer-modal" class="modal fade" role="dialog">
@@ -43,9 +47,11 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
+            @if ($user->can('singers.create'))
             <div class="btn-group pull-right m-t-15">
                 <a href="{{ route('singers.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm ca sĩ </a>
             </div>
+            @endif
 
             <h4 class="page-title">Danh mục ca sĩ</h4>
             <ol class="breadcrumb">

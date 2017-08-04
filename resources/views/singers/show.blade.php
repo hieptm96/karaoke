@@ -75,6 +75,8 @@
         </div>
     @endif
 
+    @include('common.request_errors')
+
 
     <div class="row">
         <div class="col-sm-12">
@@ -88,36 +90,25 @@
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" value="{{ $singer['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
+                      <span class="form-control">{{ $singer['name'] }} </span>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="sex-picker" class="col-sm-4 control-label">Giới tính: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $singer['sex'] }}" name="sex" data-style="btn-white" id="language-picker">
-                        @foreach (config('ktv.sexes') as $key => $sex)
-                            <option value="{{ $key }}">{{ $sex }}</option>
-                        @endforeach
-
-                      </select>
+                      <span class="form-control">{{ config('ktv.languages.' . $singer['sex']) }} </span>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $singer['language'] }}" name="language" data-style="btn-white" id="language-picker">
-                        @foreach (config('ktv.languages') as $key => $language)
-                            <option value="{{ $key }}">{{ $language }}</option>
-                        @endforeach
-
-                      </select>
-
+                      <span class="form-control">{{ config('ktv.languages.' . $singer['language']) }}</span>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $singer['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
+                        <span class="form-control">{{ $singer['created_by'] }}</span>
                     </div>
                   </div>
 
@@ -131,13 +122,6 @@
                     <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
                     <div class="col-sm-7">
                       <input type="text" value="{{ $singer['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-8">
-                      <button type="submit" class="btn btn-primary waves-effect waves-light">
-                        Cập nhật
-                      </button>
                     </div>
                   </div>
                 </form>
@@ -154,22 +138,5 @@
 <!-- Modal-Effect -->
 <script src="/vendor/ubold/assets/plugins/custombox/js/custombox.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/custombox/js/legacy.min.js"></script>
-
-@endpush
-
-@push('inline_scripts')
-<script>
-    $(document).on('click', '.delete-singer', function(e) {
-        $('#delete-singer-modal').modal("show");
-        e.preventDefault();
-    });
-
-    $( document ).ready(function() {
-        $('select[name=language]').val({{ $singer['language'] }});
-        $('select[name=sex]').val({{ $singer['sex'] }});
-        $('.selectpicker').selectpicker('refresh')
-        $('form').parsley();
-    });
-</script>
 
 @endpush

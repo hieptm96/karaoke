@@ -21,6 +21,8 @@
         </div>
     </div>
 
+    <div class="" id="alert-section">
+    </div>
 
     <div class="row">
 		<div class="col-sm-12">
@@ -33,7 +35,7 @@
                                 {{ csrf_field()  }}
                                 <div class="form-group">
                                     <label class="control-label">Chọn file dữ liệu(.xls, .xlsx)</label>
-                                    <input type="file" name="data-usage" class="filestyle" required data-buttonbefore="true" accept=".xls,.xlsx">
+                                    <input type="file"id="file-chooser" name="data-usage" class="filestyle" required data-buttonbefore="true" accept=".xls,.xlsx">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" id="upload-file-btn" class="ladda-button btn btn-primary" data-style="expand-left">
@@ -47,9 +49,6 @@
 			</div>
 		</div>
 	</div>
-
-    <div class="col-xs-12" id="alert-section">
-    </div>
 
 @endsection
 
@@ -80,7 +79,6 @@
             success: function(responseText) {
                 var alert = createAlert(responseText);
                 $('#alert-section').html(alert);
-                console.log(responseText);
             },
             complete: function() {
                 uploadFileBtn.ladda('stop');
@@ -92,16 +90,22 @@
     });
 
     function createAlert(data) {
-
-        var alert = '<div class="col-xs-12" id="alert-section">'
-        +    '<div class="alert alert-' + data['alert-type'] + ' alert-dismissable">'
+        var alert = '<div class="alert alert-' + data['alert-type'] + ' alert-dismissable">'
         +      '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
         +      '<strong>' + data['message'] + '</strong>'
-        +    '</div>'
-        +'</div>';
+        +    '</div>';
 
         return alert;
     }
+
+    $(document).on('click', '.format-file', function(e) {
+        e.preventDefault();
+        location.href = $(this).attr('href');
+    });
+
+    $(document).on('change', '#file-chooser', function(e) {
+        $('#alert-section').html('');
+    });
 
 
 </script>

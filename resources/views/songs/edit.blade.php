@@ -44,6 +44,8 @@
 
     @include('flash-message::default')
 
+    @include('common.request_errors')
+
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
@@ -57,6 +59,13 @@
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
                       <input type="text" name="name" value="{{ $song['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="input-name" class="col-sm-4 control-label">Tên file*: </label>
+                    <div class="col-sm-7">
+                      <input type="text" name="file_name" value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Tên file" required>
                     </div>
                   </div>
 

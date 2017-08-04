@@ -110,6 +110,13 @@ $user = Auth::user();
                     <a href="{{ route('configs.index') }}" class="waves-effect"><i class="ti-settings"></i> <span> Cấu hình </span> </a>
                 </li>
             @endif
+
+            @if ($user->can('importDataUsages.index'))
+            <li>
+                <a href="{{ route('importDataUsages.index') }}" class="waves-effect"><i class="ti-import"></i> <span> Import dữ liệu sử dụng </span> </a>
+            </li>
+            @endif
+            
         </ul>
         <div class="clearfix"></div>
     </div>

@@ -36,6 +36,7 @@
 
     @include('flash-message::default')
 
+    @include('common.request_errors')
 
     <div class="row">
         <div class="col-sm-12">
@@ -46,9 +47,16 @@
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên: </label>
+                    <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
                       <input type="text" name="name" value="" class="form-control" id="input-name" placeholder="Tên" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="input-name" class="col-sm-4 control-label">Tên file*: </label>
+                    <div class="col-sm-7">
+                      <input type="text" name="file_name" value="" class="form-control" id="file-name" placeholder="Tên file" required>
                     </div>
                   </div>
 
@@ -76,7 +84,7 @@
                   </div>
 
                   <div class="form-group">
-					<label class="col-sm-4 control-label">Bài hát có thu phí hay không</label>
+					<label class="col-sm-4 control-label">Bài hát có thu phí hay không*: </label>
 					<div class="col-sm-6">
 
                         <div class="radio radio-primary radio-inline">

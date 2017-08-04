@@ -6,7 +6,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'acl'], function () {
+Route::group(['middleware' => ['auth', 'acl']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/sample-users', 'SampleUsersController@index');
 

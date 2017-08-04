@@ -19,7 +19,7 @@ class Acl
         $user = Auth::user();
 
         if (! $user) {
-            return redirect()->guest('/login');
+            return redirect()->to('/login');
         }
 
         if (! $user->can($request->route()->getName())) {

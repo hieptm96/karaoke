@@ -5,10 +5,10 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Auth::routes();
+Route::get('/sample-users', 'SampleUsersController@index');
 
-Route::group(['middleware' => 'acl'], function () {
+Route::group(['middleware' => ['auth', 'acl']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/sample-users', 'SampleUsersController@index');
 
 // Profile
     Route::resource('profiles', 'ProfilesController', ['only' => ['index', 'update']]);

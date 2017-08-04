@@ -95,6 +95,11 @@ $user = Auth::user();
                 <li class="has_sub">
                 <a href="javascript:void(0);" class="waves-effect"><i class="ti-user"></i> <span> Phân quyền </span> <span class="menu-arrow"></span></a>
                 <ul class="list-unstyled" style="display: block;">
+                    @if ($user->can('users.index'))
+                        <li>
+                            <a href="{{ route('users.index') }}" class="waves-effect"> <span>Thành viên </span> </a>
+                        </li>
+                    @endif
                     <li>
                         <a href="{{ route('roles.index') }}" class="waves-effect"> <span> Vai trò </span> </a>
                     </li>

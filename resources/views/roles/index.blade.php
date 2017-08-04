@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
-                <a href="{{ route('permissions.sync') }}" class="btn btn-default waves-effect waves-light"><i class="fa fa-plus m-r-5"></i> Thêm mới </a>
+                <a href="{{ route('roles.create') }}" class="btn btn-default waves-effect waves-light"><i class="fa fa-plus m-r-5"></i> Thêm mới </a>
             </div>
 
             <h4 class="page-title">Roles</h4>

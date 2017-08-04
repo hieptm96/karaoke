@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth', 'acl']], function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['role:admin', 'acl']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['acl']], function() {
     // Ktv
 	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');
 	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');

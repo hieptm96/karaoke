@@ -41,10 +41,12 @@ class KtvsController extends Controller
 
     public function store(KtvRequest $request)
     {
+        $password = ($request->password) ? $request->password : '123456';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('123456')
+            'password' => bcrypt($password)
         ]);
         $ktv = Ktv::forceCreate([
             'name' => $request->name,
@@ -58,6 +60,9 @@ class KtvsController extends Controller
             'created_by' => Auth::id(),
             'updated_by' => Auth::id()
         ]);
+
+        $role = \App\Models\Role::where('name', 'business_unit')->first();
+        $user->attachRole($role);
 
         flash()->success('Success!', 'Tạo đơn vị kinh doanh thành công.');
 
@@ -86,11 +91,19 @@ class KtvsController extends Controller
             'district_id' => $request->district_id,
             'updated_by' => Auth::id()
         ]);
-        $ktv->user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt('123456')
-        ]);
+        if ($request->password) {
+            $ktv->user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+        } else {
+            $ktv->user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+        }
+
 
         flash()->success('Success!', 'Chỉnh sửa đơn vị kinh doanh thành công.');
 

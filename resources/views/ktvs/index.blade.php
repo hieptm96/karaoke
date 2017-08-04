@@ -16,13 +16,13 @@
                     <a href="{{ route('ktvs.create') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Thêm mới </button></a>
                 </div>
 
-                <h4 class="page-title">Đơn vị kinh doanh</h4>
+                <h4 class="page-title">Danh mục đơn vị kinh doanh</h4>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#">KTV</a>
+                        <a href="#">Đơn vị kinh doanh</a>
                     </li>
                     <li class="active">
-                        Danh sách đơn vị kinh doanh
+                        Danh sách
                     </li>
                 </ol>
             </div>

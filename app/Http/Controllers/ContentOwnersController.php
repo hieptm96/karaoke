@@ -41,10 +41,12 @@ class ContentOwnersController extends Controller
 
     public function store(ContentOwnerRequest $request)
     {
+        $password = ($request->password) ? $request->password : '123456';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('123456')
+            'password' => bcrypt($password)
         ]);
         $content_owner = ContentOwner::forceCreate([
             'name' => $request->name,
@@ -58,6 +60,9 @@ class ContentOwnersController extends Controller
             'created_by' => Auth::id(),
             'updated_by' => Auth::id()
         ]);
+
+        $role = \App\Models\Role::where('name', 'content_owner_unit')->first();
+        $user->attachRole($role);
 
         flash()->success('Success!', 'Tạo đơn vị sở hữu bản quyền thành công.');
 
@@ -86,11 +91,19 @@ class ContentOwnersController extends Controller
             'code' => $request->code,
             'updated_by' => Auth::id()
         ]);
-        $content_owner->user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt('123456')
-        ]);
+        if ($request->password) {
+            $content_owner->user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+        } else {
+            $content_owner->user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+        }
+
 
         flash()->success('Success!', 'Chỉnh sửa đơn vị sở hữu bản quyền thành công.');
 

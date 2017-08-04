@@ -91,6 +91,20 @@ $user = Auth::user();
                 </ul>
             <li>
 
+            @if ($user->can('roles.*', 'permissions.*', true))
+                <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect"><i class="ti-user"></i> <span> Phân quyền </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled" style="display: block;">
+                    <li>
+                        <a href="{{ route('roles.index') }}" class="waves-effect"> <span> Vai trò </span> </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('permissions.index') }}" class="waves-effect"> <span> Quyền truy cập </span> </a>
+                    </li>
+                </ul>
+            <li>
+            @endif
+
             @if ($user->can('configs.index'))
                 <li>
                     <a href="{{ route('configs.index') }}" class="waves-effect"><i class="ti-settings"></i> <span> Cấu hình </span> </a>

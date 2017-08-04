@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
+
 trait HasActionColumn
 {
     public function generateActionColumn($item)
@@ -12,12 +14,14 @@ trait HasActionColumn
 
         $actionColumn = [];
 
+        $user = Auth::user();
 
         $permissions = $this->getActionColumnPermissions($item);
 
         foreach ($permissions as $key => $value) {
-            //need check user has access to this action
-            $actionColumn[] = $value;
+            if ($user->can($key)) {
+                $actionColumn[] = $value;
+            }
         }
 
         return implode(' ', $actionColumn);

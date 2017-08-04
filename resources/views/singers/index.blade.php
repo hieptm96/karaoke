@@ -47,16 +47,13 @@
                 <a href="{{ route('singers.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm ca sĩ </a>
             </div>
 
-            <h4 class="page-title">Ca sĩ</h4>
+            <h4 class="page-title">Danh mục ca sĩ</h4>
             <ol class="breadcrumb">
-                <li>
-                    <a href="#">KTV</a>
-                </li>
                 <li>
                     <a href="#">Ca sĩ</a>
                 </li>
                 <li class="active">
-                    Danh sách ca sĩ
+                    Danh sách
                 </li>
             </ol>
         </div>
@@ -129,7 +126,9 @@
                         <th width="10%">Người tạo</th>
                         <th width="10%">Ngày tạo</th>
                         <th width="10%">Ngày cập nhật</th>
+                        @if (Auth::user()->can('singers.edit', 'singers.destroy', true))
                         <th width="12%">#</th>
+                        @endif
                     </tr>
                     </thead>
 
@@ -186,7 +185,9 @@
                 {data: 'created_by', name: 'created_by'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'updated_at', name: 'updated_at'},
+                @if (Auth::user()->can('singers.edit', 'singers.destroy', true))
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
+                @endif
             ],
             order: [[2, 'asc']]
         });

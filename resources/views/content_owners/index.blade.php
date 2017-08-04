@@ -16,13 +16,13 @@
                     <a href="{{ route('contentowners.create') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Thêm mới </button></a>
                 </div>
 
-                <h4 class="page-title">Đơn vị sở hữu bản quyền</h4>
+                <h4 class="page-title">Danh mục đơn vị sở hữu bản quyền</h4>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#">Manage</a>
+                        <a href="#">Đơn vị sở hữu bản quyền</a>
                     </li>
                     <li class="active">
-                        Danh sách đơn vị sở hữu bản quyền
+                        Danh sách
                     </li>
                 </ol>
             </div>

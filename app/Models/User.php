@@ -44,4 +44,14 @@ class User extends Authenticatable
     {
         return $this->is_superadmin == 1;
     }
+
+    public function ktv()
+    {
+        return $this->hasOne('App\Models\Ktv');
+    }
+
+    public function contentOwner()
+    {
+        return $this->hasOne('App\Models\ContentOwner');
+    }
 }

@@ -40,6 +40,8 @@ class EmailCommand extends Command
      */
     public function handle()
     {
+        \App\Models\Ktv::where('fee_status', 'yes')->update(['fee_status' => 'no']);
+
         $ktv_reports = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
             ->whereBetween('imported_data_usages.date', [\Carbon\Carbon::now()->format('Y-m-01'), \Carbon\Carbon::now()->format('Y-m-31')])
             ->groupBy('ktv_id')

@@ -27,7 +27,8 @@ class SongRequest extends Request
     {
         return [
             'name' => 'required',
-            'language' => 'required|validLanguage'
+            'language' => 'required|validLanguage',
+            'file_name' => 'required|unique:songs',
         ];
     }
 
@@ -35,7 +36,9 @@ class SongRequest extends Request
     {
         return [
             'name.required' => 'Tên không được bỏ trống',
-            'language.required' => 'Phải chọn ngôn ngữ'
+            'language.required' => 'Phải chọn ngôn ngữ',
+            'file_name.required' => 'Tên file không được trống',
+            'file_name.unique' => 'Tên file bị trùng',
         ];
     }
 }

@@ -36,6 +36,8 @@
         </div>
     @endif
 
+    @include('common.request_errors')
+
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
@@ -45,13 +47,13 @@
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên <span class="text-danger">*</span>: </label>
+                    <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
                       <input type="text" name="name"  class="form-control" id="input-name" placeholder="Tên" required>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="sex-picker" class="col-sm-4 control-label">Giới tính: </label>
+                    <label for="sex-picker" class="col-sm-4 control-label">Giới tính*: </label>
                     <div class="col-sm-7">
                       <select class="form-control" name="sex" data-style="btn-white">
                         @foreach (config('ktv.sexes') as $key => $sex)
@@ -62,7 +64,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="language-picker"class="col-sm-4 control-label">Ngôn ngữ: </label>
+                    <label for="language-picker"class="col-sm-4 control-label">Ngôn ngữ*: </label>
                     <div class="col-sm-7">
                       <select class="selectpicker" name="language" data-style="btn-white">
                         @foreach (config('ktv.languages') as $key => $language)

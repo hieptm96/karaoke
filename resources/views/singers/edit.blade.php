@@ -75,6 +75,8 @@
         </div>
     @endif
 
+    @include('common.request_errors')
+
 
     <div class="row">
         <div class="col-sm-12">

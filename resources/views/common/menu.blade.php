@@ -66,6 +66,12 @@ $user = Auth::user();
             </li>
             @endif
 
+            @if ($user->can('importDataUsages.index'))
+            <li>
+                <a href="{{ route('importDataUsages.index') }}" class="waves-effect"><i class="ti-import"></i> <span> Import dữ liệu sử dụng </span> </a>
+            </li>
+            @endif
+
 
 
 

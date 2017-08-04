@@ -8,6 +8,10 @@
     <link href="/vendor/ubold/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
 @endpush
 
+@php
+$user = Auth::user();
+@endphp
+
 @section('content')
     {{-- delete song modal --}}
     <div id="delete-song-modal" class="modal fade" role="dialog">
@@ -45,9 +49,11 @@
         {{ Session::has('deleted') }}
 
         <div class="col-sm-12">
+            @if ($user->can('singers.create'))
             <div class="btn-group pull-right m-t-15">
                 <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm bài hát </a>
             </div>
+            @endif
 
             <h4 class="page-title">Bài hát</h4>
             <ol class="breadcrumb">

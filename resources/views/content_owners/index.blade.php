@@ -7,14 +7,21 @@
 
 @endpush
 
+@php
+$user = Auth::user();
+@endphp
+
 @section('content')
     <div ng-app="ktv-form" ng-controller="ktv-ctl">
         <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
+
+                @if ($user->can('contentowners.create'))
                 <div class="btn-group pull-right m-t-15">
-                    <a href="{{ route('contentowners.create') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Thêm mới </button></a>
+                    <a href="{{ route('contentowners.create') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light"><i class="md md-add"></i> Thêm mới </button></a>
                 </div>
+                @endif
 
                 <h4 class="page-title">Đơn vị sở hữu bản quyền</h4>
                 <ol class="breadcrumb">

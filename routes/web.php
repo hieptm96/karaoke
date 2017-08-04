@@ -39,8 +39,8 @@ Route::group(['middleware' => ['auth', 'acl']], function () {
     Route::resource('permissions', 'PermissionsController');
 
 // Statistics
-    Route::get('/statistics/import-data-usage', 'ImportController@index')->name('statistics.import');
-    Route::post('/statistics/import-data-usage', 'ImportController@importDataUsages');
+    Route::get('/import-data-usages', 'ImportController@index')->name('importDataUsages.index');
+    Route::post('/import-data-usages', 'ImportController@importDataUsages')->name('importDataUsages.import');
 
 // Songs
     Route::get('/contentowner/{id}/datatables', 'ContentOwnerSongController@datatables')->name('contentowner.datatables');
@@ -80,4 +80,3 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
 
 
 });
-

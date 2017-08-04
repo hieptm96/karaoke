@@ -16,8 +16,8 @@ class CreateImportedDataUsageTable extends Migration
          Schema::create('imported_data_usages', function (Blueprint $table) {
              $table->increments('id');
              $table->unsignedInteger('imported_file_id')->default(0);
-             $table->unsignedInteger('ktv_id');
-             $table->unsignedInteger('song_file_name');
+             $table->unsignedInteger('ktv_id')->index();
+             $table->unsignedInteger('song_file_name')->index();
              $table->unsignedInteger('times')->default(1);
              $table->date('date');
              $table->softDeletes();

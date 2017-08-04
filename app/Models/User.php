@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-    use EntrustUserTrait;
+    use EntrustUserTrait {
+        can as entrustCan;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -28,4 +30,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function can($permission, $requireAll = false)
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        return $this->entrustCan($permission, $requireAll);
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->is_superadmin == 1;
+    }
 }

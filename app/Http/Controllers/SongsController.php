@@ -52,7 +52,7 @@ class SongsController extends Controller
 
         if ($result != null) {
             flash()->success('Success!', 'Đã thêm thành công bài hát.');
-            return redirect()->route('songs.show', ['id' => $result->id ])
+            return redirect()->route('songs.edit', ['id' => $result->id ])
                     ->with('created', true);
         } else {
             flash()->warning('Error!', 'Không thể thêm bài hát.');
@@ -70,22 +70,20 @@ class SongsController extends Controller
     {
         $song = $this->songRepository->find($id);
 
-        if ($song != null) {
-            return view('songs.show', ['song' => $song]);
-        } else {
-            return redirect()->route('songs.index');
-        }
+        return view('songs.show', ['song' => $song]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      *
-     * @param  \App\Models\SongRequest  $song
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(SongRequest $song)
+    public function edit($id)
     {
-        //
+        $song = $this->songRepository->find($id);
+
+        return view('songs.edit', ['song' => $song]);
     }
 
     /**
@@ -105,7 +103,7 @@ class SongsController extends Controller
             flash()->warning('Error!', 'Đã có lỗi xảy ra.');
         }
 
-        return redirect()->route('songs.show', ['id' => $id]);
+        return redirect()->route('songs.edit', ['id' => $id]);
     }
 
     /**

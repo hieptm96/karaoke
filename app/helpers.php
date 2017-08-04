@@ -20,3 +20,24 @@ if (! function_exists('str_abbr')) {
         return $acronym;
     }
 }
+
+if (! function_exists('str_before')) {
+    function str_before($subject, $search)
+    {
+        return $search == '' ? $subject : explode($search, $subject)[0];
+    }
+}
+
+if (! function_exists('get_controller_name')) {
+    function get_controller_name($string)
+    {
+        return camel_case(str_before(class_basename(str_before($string, '@')), 'Controller'));
+    }
+}
+
+if (! function_exists('get_action_name')) {
+    function get_action_name($string)
+    {
+        return camel_case(str_after($string, '@'));
+    }
+}

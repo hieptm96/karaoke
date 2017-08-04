@@ -4,6 +4,7 @@
     <!-- DataTables -->
     <link href="/vendor/ubold/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/ubold/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="/css/custom.css" rel="stylesheet" type="text/css"/>
 
 @endpush
@@ -48,6 +49,10 @@
                             <option     value="">-- Chọn Quận/Huyện --</option>
                             <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
                         </select>
+                        <div class="form-group m-l-10">
+                            <label class="sr-only" for="date-search">Thời gian</label>
+                            <input id="date-search" class="form-control input-daterange-datepicker" type="text" name="date" value="" placeholder="Chọn thời gian" style="width: 200px;">
+                        </div>
                         <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
                     </form>
                 </div>
@@ -79,7 +84,8 @@
                         <th width="10%">Quận/Huyện</th>
                         <th width="10%">Số điện thoại</th>
                         <th width="10%">Số lần sử dụng bài hát</th>
-                        <th width="10%">Thanh toán</th>
+                        <th>Tổng tiền</th>
+                        <th width="7%">#</th>
                     </tr>
                     </thead>
 
@@ -101,6 +107,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="/js/main.js"></script>
 
+<script src="/vendor/ubold/assets/plugins/moment/moment.js"></script>
+<script src="/vendor/ubold/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
 @endpush
 
 @push('inline_scripts')
@@ -118,6 +127,7 @@
                     d.phone = $('#phone-search').val();
                     d.province = $('#province').val();
                     d.district = $('#district-search').val();
+                    d.date = $('.input-daterange-datepicker').val();
                 }
             },
             columns: [
@@ -128,8 +138,9 @@
                 {data: 'phone', name: 'phone'},
                 {data: 'times', name: 'times'},
                 {data: 'total_money', name: 'total_money'},
+                {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
-            order: [[0, 'asc']]
+            order: [[1, 'asc']]
         });
 
         $('#name-search').on('keyup', function(e) {
@@ -158,7 +169,8 @@
                     "name": $('input[name=name]').val(),
                     "phone": $('#phone-search').val(),
                     "province": $('#province').val(),
-                    "district": $('#district-search').val()
+                    "district": $('#district-search').val(),
+                    "date": $('.input-daterange-datepicker').val()
                 },
                 success: function (res) {
                     location.href = res.path;
@@ -168,6 +180,63 @@
                 }
             });
         });
+
+        // Datepicker
+        $('.input-daterange-datepicker').daterangepicker({
+            autoUpdateInput: false,
+            dateLimit: {
+                days: 60
+            },
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            opens: 'left',
+            drops: 'down',
+            buttonClasses: ['btn', 'btn-sm'],
+            applyClass: 'btn-default',
+            cancelClass: 'btn-white',
+            separator: ' to ',
+            locale: {
+                format: 'DD/MM/YYYY',
+                applyLabel: 'Submit',
+                cancelLabel: 'Clear',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                firstDay: 1
+            }
+        });
+
+        $('.input-daterange-datepicker').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' : ' + picker.endDate.format('YYYY-MM-DD'));
+            datatable.draw();
+        });
+
+        $('.input-daterange-datepicker').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+        $(document).on('click', '.ktv-detail', function(e) {
+            e.preventDefault();
+            if ($('.input-daterange-datepicker').val()) {
+                var from = $('.input-daterange-datepicker').val().split(':')[0].trim(' ');
+                var to = $('.input-daterange-datepicker').val().split(':')[1].trim(' ');
+                $(this).attr('href', $(this).attr('href') + '?from=' + from + '&to=' + to);
+            }
+            window.location = $(this).attr('href');
+        })
     });
 </script>
 

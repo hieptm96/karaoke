@@ -19,7 +19,7 @@ class SongTransformer extends TransformerAbstract
             'created_at' =>  $song['created_at'],
             'updated_at' =>  $song['updated_at'],
             'actions' => $this->generateActions($song),
-            'has_fee' => $song['has_fee'] ? 'Có': 'Không' ,
+            'has_fee' => $this->getHasFeeColumn($song['has_fee']) ,
         ];
     }
 
@@ -75,11 +75,20 @@ class SongTransformer extends TransformerAbstract
 
     private function generateActions($song)
     {
-        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.show', $song['id'])
+        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['id'])
                     . '"><i class="fa fa-edit"></i> Sửa</a>';
         $actions .= ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>';
 
 
         return $actions;
+    }
+
+    private function getHasFeeColumn($has_fee)
+    {
+        if ($has_fee != 0) {
+            return '<span class="label label-success">Có phí</span>';
+        } else {
+            return '<span class="label label-primary">Không phí</span>';
+        }
     }
 }

@@ -119,7 +119,7 @@
                 {data: 'song_file_name', name: 'song_file_name'},
                 {data: 'has_fee', name: 'has_fee'},
                 {data: 'total_times', name: 'total_times'},
-                {data: 'total_money', name: 'total_mony'},
+                {data: 'total_money', name: 'total_money'},
                 {data: 'discount', name: 'discount'}
             ],
             order: [[6, 'desc']]

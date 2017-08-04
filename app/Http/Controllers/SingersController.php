@@ -82,7 +82,10 @@ class SingersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $singer = Singer::findOrFail($id);
+        $singer = SingerTransformer::transformWithoutLink($singer);
+
+        return view('singers.edit', ['singer' => $singer]);
     }
 
     /**

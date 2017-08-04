@@ -22,6 +22,7 @@ class CreateKtvsTable extends Migration
             $table->string('address');
             $table->unsignedInteger('district_id');
             $table->unsignedInteger('province_id');
+            $table->enum('fee_status', ['no', 'yes']);
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');

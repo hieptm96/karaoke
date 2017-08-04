@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Datatables;
 use App\Models\Song;
+use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Transformers\SongTransformer;
 use App\Contracts\Repositories\SongRepository as Contract;
@@ -11,6 +12,20 @@ use App\Contracts\Repositories\SongRepository as Contract;
 class SongRepository implements Contract
 {
     use HasActionColumn;
+
+    public static $config;
+
+    static function init()
+    {
+        self::$config = json_decode(\App\Models\Config::orderBy('updated_at')->first()->config, true);
+    }
+
+    public function __construct()
+    {
+        if (is_null(static::$config)) {
+            static::init();
+        }
+    }
 
     public function getDatatables(Request $request)
     {
@@ -95,11 +110,12 @@ class SongRepository implements Contract
     }
 
     private static $percentType =
-        ['musican' => 33, 'title' => 28, 'singer' => 15, 'film' => 24];
+        ['musican' => 'musician_rate', 'title' => 'title_rate',
+            'singer' => 'singer_rate', 'film' => 'film_rate'];
 
-    public static function getDefaultPercentage($ownerType)
+    public function getDefaultPercentage($ownerType)
     {
-        return static::$percentType[$ownerType];
+        return static::$config[static::$percentType[$ownerType]];
     }
 
     public function getOwners($request, $songFileName)
@@ -107,28 +123,28 @@ class SongRepository implements Contract
         $owners = [];
 
         if (!empty($request['singer-owner'])) {
-            $defaultPercentage = static::getDefaultPercentage('singer');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['singer-owner'],
                     'type' => 'singer', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['musican-owner'])) {
-            $defaultPercentage = static::getDefaultPercentage('musican');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['musican-owner'],
                     'type' => 'musican', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['title-owner'])) {
-            $defaultPercentage = static::getDefaultPercentage('title');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['title-owner'],
                     'type' => 'title', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['film-owner'])) {
-            $defaultPercentage = static::getDefaultPercentage('film');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['film-owner'],
                     'type' => 'film', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
@@ -176,7 +192,8 @@ class SongRepository implements Contract
             $song->singers()->detach();
         }
 
-        $owners = $this->getOwners($request);
+
+        $owners = $this->getOwners($request, $song->file_name);
         $song->contentOwners()->detach();
         $song->contentOwners()->attach($owners);
 

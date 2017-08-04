@@ -44,6 +44,7 @@
                     </div>
                     <div>
                         {{ csrf_field()  }}
+                        {{ method_field('patch') }}
 
                         <div class="form-group">
                             <label for="name" class="col-sm-4 control-label pull-left">Tên*</label>
@@ -55,6 +56,26 @@
                             <label for="email" class="col-sm-4 control-label pull-left">Email*</label>
                             <div class="col-sm-7">
                                 <input type="email" required="" parsley-type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ Auth::user()->email }}">
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="m-t-0 header-title"><b>Thay đổi mật khẩu</b></h4>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-4 control-label pull-left">Mật khẩu hiện tại*</label>
+                            <div class="col-sm-7">
+                                <input type="password" required="" parsley-type="password" name="password" class="form-control" id="password" placeholder="Mật khẩu">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password" class="col-sm-4 control-label pull-left">Mật khẩu mới*</label>
+                            <div class="col-sm-7">
+                                <input type="password" required="" parsley-type="password" name="new_password" class="form-control" id="new_password" placeholder="Mật khẩu mới">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="re_password" class="col-sm-4 control-label pull-left">Xác nhận mật khẩu*</label>
+                            <div class="col-sm-7">
+                                <input type="password" required="" parsley-type="password" name="re_password" class="form-control" id="re_password" placeholder="Mật khẩu xác nhận">
                             </div>
                         </div>
 

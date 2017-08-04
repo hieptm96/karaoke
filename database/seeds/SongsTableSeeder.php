@@ -42,11 +42,12 @@ class SongsTableSeeder extends Seeder
         $realOwnerTypes = $faker->randomElements(static::$ownerTypes, $nOwners);
 
         $sumPercent = 0;
+        $songRepository = new SongRepository;
 
         for ($i = 0; $i < $nOwners; $i++) {
             $ownerType = $realOwnerTypes[$i];
             $ownerId = $faker->randomElement($contentOwnerIds);
-            $defaultPercentage = SongRepository::getDefaultPercentage($ownerType);
+            $defaultPercentage = $songRepository->getDefaultPercentage($ownerType);
             $owners[] = ['content_owner_id' => $ownerId,
                     'type' => $ownerType, 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];

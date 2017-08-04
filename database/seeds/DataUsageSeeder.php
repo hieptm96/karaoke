@@ -16,7 +16,7 @@ class DataUsageSeeder extends Seeder
         $songFileNames = \App\Models\Song::pluck('file_name')->toArray();
         $ktvIds = \App\Models\Ktv::pluck('id')->toArray();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $data = \App\Models\ImportedDataUsage::create([
                 'ktv_id' => $faker->randomElement($ktvIds),
                 'song_file_name' => $faker->randomElement($songFileNames),

@@ -4,9 +4,9 @@
     <div class="topbar-left">
         <div class="text-center">
             <!-- Image Logo here -->
-            <a href="index.html" class="logo">
-                <i class="icon-c-logo"> <img src="/vendor/ubold/assets/images/logo_sm.png" height="42"/> </i>
-                <span><img src="/vendor/ubold/assets/images/logo_light.png" height="20"/></span>
+            <a href="/" class="logo">
+                <i class="icon-c-logo"> <img src="/logo.png" height="20"/> </i>
+                <span><img src="/logo.png" height="50"/></span>
             </a>
         </div>
     </div>

@@ -13,7 +13,7 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Báo cáo số tiền cần thu của các đơn vị kinh doanh trong tháng</h4>
+            <h4 class="page-title">Báo cáo số tiền cần thu của các đơn vị kinh doanh</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">Đơn vị kinh doanh</a>
@@ -61,7 +61,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
+                <h4 class="m-t-0 header-title"><b>Danh sách đơn vị kinh doanh</b></h4>
 
                 <div class="btn-group pull-right m-t-15">
                     <button id="export-report" type="submit" class="btn btn-default waves-effect waves-light">Export <i class="fa fa-file-excel-o"></i><span class="m-l-5"></span></button>
@@ -76,7 +76,7 @@
                     <tr>
                         <th width="2%">Mã</th>
                         <th>Đơn vị kinh doanh</th>
-                        <th width="10%">Tỉnh</th>
+                        <th width="10%">Tỉnh/Thành</th>
                         <th width="10%">Quận/Huyện</th>
                         <th width="10%">Số điện thoại</th>
                         <th width="10%">Số lần sử dụng bài hát</th>
@@ -135,12 +135,12 @@
                 {data: 'district', name: 'district_id'},
                 {data: 'phone', name: 'phone'},
                 {data: 'times', name: 'times'},
-                {data: 'total_money', name: 'total_money'},
+                {data: 'total_money', name: 'fee_total_times'},
                 {data: 'fee_status', name: 'fee_status'},
                 {data: 'fee_actions', name: 'fee_actions', orderable: false, searchable: false},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
-            order: [[7, 'asc']]
+            order: [[7, 'asc'], [6, 'desc']]
         });
 
         $('#name-search').on('keyup', function(e) {

@@ -115,7 +115,7 @@
                 {data: 'date', name: 'date'},
                 {data: 'action', name: 'action', orderable: false},
             ],
-            order: [[0, 'asc']]
+            order: [[2, 'desc']]
         });
 
 

@@ -61,10 +61,11 @@ Route::group(['middleware' => ['auth', 'acl']], function () {
     Route::get('/song-reports/datatables', 'SongReportController@datatables')->name('songReport.datatables');
     Route::get('/song-reports/{id}/datatables', 'SongReportController@detailDatatables')->name('songDetailReport.datatables');
     Route::resource('/song-reports', 'SongReportController');
+
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['role:admin', 'acl']], function() {
     // Ktv
 	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');
 	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');
@@ -78,5 +79,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
     // Config
     Route::resource('configs', 'ConfigsController', ['only' => ['index', 'update']]);
 
+    // User
+    Route::get('/users/datatables', 'UsersController@datatables')->name('users.datatables');
+    Route::resource('users', 'UsersController');
 
 });

@@ -17,9 +17,11 @@ class KtvReportRepository implements Contract
         // $ktv_report = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.province_id, ktvs.district_id, ktvs.phone'))->groupBy('ktv_id')->get();
         $ktv_report = \App\Models\ImportedDataUsage::join('ktvs', 'imported_data_usages.ktv_id', '=', 'ktvs.id')
             ->join('songs', 'imported_data_usages.song_file_name', '=', 'songs.file_name')
-            ->where('songs.has_fee', 1)
+            // ->where('songs.has_fee', 1)
             ->groupBy('ktv_id')
-            ->select(DB::raw('sum(imported_data_usages.times) as total_times, imported_data_usages.id, imported_data_usages.ktv_id, ktvs.name as ktv_name, ktvs.fee_status as fee_status, ktvs.province_id, ktvs.district_id, ktvs.phone'));
+            ->select(DB::raw('sum(imported_data_usages.times) as total_times,
+                    sum(case when songs.has_fee <> 0 then imported_data_usages.times else 0 end)  as fee_total_times
+                    , imported_data_usages.id, imported_data_usages.ktv_id, ktvs.name as ktv_name, ktvs.fee_status as fee_status, ktvs.province_id, ktvs.district_id, ktvs.phone'));
 
         return Datatables::of($ktv_report)
             ->filter(function ($query) use ($request) {

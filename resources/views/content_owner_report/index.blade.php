@@ -33,8 +33,8 @@
                 <div class="col-sm-12">
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
-                            <label class="sr-only" for="">Tên đơn vị kinh doanh</label>
-                            <input type="text" id="name-search" class="form-control" placeholder="Tên đơn vị kinh doanh" name="name" />
+                            <label class="sr-only" for="">Tên đơn vị sở hữu bản quyền</label>
+                            <input type="text" id="name-search" class="form-control" placeholder="Đơn vị sở hữu bản quyền" name="name" />
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="">Số điện thoại</label>
@@ -66,7 +66,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
+                <h4 class="m-t-0 header-title"><b>Danh sách đơn vị sở hữu bản quyền</b></h4>
 
                 <div class="btn-group pull-right m-t-15">
                     <button id="export-report" type="submit" class="btn btn-default waves-effect waves-light">Export <i class="fa fa-file-excel-o"></i><span class="m-l-5"></span></button>
@@ -80,7 +80,7 @@
                     <thead>
                     <tr>
                         <th width="2%">Mã</th>
-                        <th width="20%">Họ và tên</th>
+                        <th width="20%">Đơn vị sở hữu bản quyền</th>
                         <th width="20%">Số điện thoại</th>
                         <th width="20%">Tỉnh/Thành</th>
                         <th width="20%">Quận/Huyện</th>
@@ -142,7 +142,7 @@
                 {data: 'total_money', name: 'total_money'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
-            order: [[0, 'asc']]
+            order: [[5, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {

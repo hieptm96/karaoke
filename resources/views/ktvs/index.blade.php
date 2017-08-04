@@ -75,7 +75,7 @@ $user = Auth::user();
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box table-responsive">
-                    <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
+                    <h4 class="m-t-0 header-title"><b>Danh sách đơn vị kinh doanh</b></h4>
                     <p class="text-muted font-13 m-b-30">
                     </p>
 
@@ -145,7 +145,7 @@ $user = Auth::user();
                 {data: 'district', name: 'district_id'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
-            order: [[2, 'asc']]
+            order: [[1, 'asc']]
         });
 
         $('#name-search').on('keyup', function(e) {

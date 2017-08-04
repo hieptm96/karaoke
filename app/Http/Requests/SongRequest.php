@@ -28,7 +28,8 @@ class SongRequest extends Request
         return [
             'name' => 'required',
             'language' => 'required|validLanguage',
-            'file_name' => 'required|unique:songs',
+        //    'file_name' =>  ['required'Rule::unique('songs')->ignore($song->id, 'id'),
+            'file_name' => 'required|unique:songs,file_name,'.$this->song_id,
         ];
     }
 

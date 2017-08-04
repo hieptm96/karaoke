@@ -98,9 +98,9 @@
 
 @stack('inline_scripts')
 
-{{--@if (config('app.debug'))--}}
-    {{--@include('sudosu::user-selector')--}}
-{{--@endif--}}
+@if (config('app.debug'))
+    @include('sudosu::user-selector')
+@endif
 
 </body>
 </html>

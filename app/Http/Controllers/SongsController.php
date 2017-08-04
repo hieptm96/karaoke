@@ -93,7 +93,7 @@ class SongsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, SongRequest $request)
+    public function update(SongRequest $request, $id)
     {
         $success = $this->songRepository->update($id, $request);
 

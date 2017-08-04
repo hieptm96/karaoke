@@ -14,10 +14,10 @@ class DataUsageSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         // $songFileNames = \App\Models\Song::pluck('file_name')->toArray();
-        $songFileNames = \App\Models\Song::take(10)->pluck('file_name')->toArray();
+        $songFileNames = \App\Models\Song::pluck('file_name')->toArray();
         $ktvIds = \App\Models\Ktv::take(2)->pluck('id')->toArray();
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 5000; $i++) {
             $data = \App\Models\ImportedDataUsage::create([
                 'ktv_id' => $faker->randomElement($ktvIds),
                 'song_file_name' => $faker->randomElement($songFileNames),

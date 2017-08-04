@@ -276,25 +276,18 @@
             order: [[2, 'asc']]
         });
 
-        $('#search-form').on('submit', function(e) {
+        $('#singer-filter-form').on('submit', function(e) {
             datatable.draw();
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#singer-filter-form').on('change', function(e) {
             datatable.draw();
         });
 
         $('#name-filter').on('keyup', function(e) {
             var name = $('#name-filter').val();
             if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#created-by-filter').on('keyup', function(e) {
-            var createdBy = $('#created-by-filter').val();
-            if (createdBy.length == 0) {
                 datatable.draw();
             }
         });
@@ -309,6 +302,8 @@
             searching: false,
             serverSide: true,
             processing: true,
+            scrollY: '250px',
+            scrollCollapse: false,
             ajax: {
                 url: "{!! route('contentowners.datatables') !!}",
                 data: function (d) {
@@ -336,10 +331,10 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'phone', name: 'phone'},
-                {data: 'email', name: 'mail'},
+                {data: 'email', name: 'email'},
                 {data: 'address', name: 'address'},
-                {data: 'province', name: 'province'},
-                {data: 'district', name: 'district'},
+                {data: 'province', name: 'province_id'},
+                {data: 'district', name: 'district_id'},
                 {data: 'code', name: 'code'},
                 {name: 'select', orderable: false, searchable: false},
             ],
@@ -366,6 +361,10 @@
             datatable.draw();
             e.preventDefault();
         });
+
+        $('.modal').on('shown.bs.modal', function() {
+            // console.log('1');
+        })
     });
 
     function changeOwnerValue(ownerId, ownerName) {
@@ -373,7 +372,6 @@
         owner.find('.name').text(ownerName);
 
         checkAction();
-        console.log(12);
     }
 
     // select owner event
@@ -384,6 +382,15 @@
 
         changeOwnerValue(ownerId, ownerName);
     });
+
+    $(document).on('shown.bs.modal', '#owner-modal', function() {
+        var datatable = $("#content-owner-datatable").dataTable();
+        datatable.fnAdjustColumnSizing();
+    });
+
+    $('#modal-content').on('shown', function() {
+        $("#txtname").focus();
+    })
 
     // delete owner event
     $(document).on('click', '.delete-owner', function() {

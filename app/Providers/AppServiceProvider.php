@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if (config('app.debug')) {
+            $this->app->register('VIACreative\SudoSu\ServiceProvider');
+        }
+
         $this->registerServices();
 
         $this->registerViewComposers();
@@ -36,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
     protected function registerServices()
     {
         $services = [
-            'Song', 'Ktv', 'Singer', 'ContentOwner', 'KtvReport'
+            'Song', 'Ktv', 'Singer', 'ContentOwner', 'KtvReport', 'ContentOwnerReport'
         ];
 
         foreach ($services as $service) {

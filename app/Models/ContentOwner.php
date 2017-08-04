@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Song;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,5 +28,10 @@ class ContentOwner extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function songs()
+    {
+        return $this->belongsToMany(Song::class);
     }
 }

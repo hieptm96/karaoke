@@ -84,7 +84,7 @@
                         <th width="10%">Quận/Huyện</th>
                         <th width="10%">Số điện thoại</th>
                         <th width="10%">Số lần sử dụng bài hát</th>
-                        <th width="10%">Thanh toán</th>
+                        <th>Tổng tiền</th>
                         <th width="7%">#</th>
                     </tr>
                     </thead>

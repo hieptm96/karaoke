@@ -66,7 +66,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                <h4 class="m-t-0 header-title"><b>Danh sách bài hát</b></h4>
+                <h4 class="m-t-0 header-title"><b>Danh sách đơn vị kinh doanh</b></h4>
 
                 <p class="text-muted font-13 m-b-30">
                 </p>
@@ -75,7 +75,7 @@
                     <thead>
                     <tr>
                         <th width="2%">Mã</th>
-                        <th width="20%">Họ và tên</th>
+                        <th width="20%">Đơn vị kinh doanh</th>
                         <th width="20%">Số điện thoại</th>
                         <th width="20%">Tỉnh/Thành</th>
                         <th width="20%">Quận/Huyện</th>

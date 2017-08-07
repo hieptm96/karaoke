@@ -147,26 +147,29 @@
                     </div>
                   </div>
 
+                  <hr />
+
 
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
+                        <span class="form-control">{{ $song['created_by'] }}</span>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
+                        <span class="form-control">{{ $song['created_at'] }}</span>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
+                        <span class="form-control">{{ $song['updated_at'] }}</span>
                     </div>
                   </div>
+
                 </form>
               </div>
             </div>
@@ -174,13 +177,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-<script src="/vendor/ubold/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/datatables/dataTables.bootstrap.js"></script>
-<script src="/vendor/ubold/assets/plugins/datatables/dataTables.responsive.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-<script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
-
-@endpush

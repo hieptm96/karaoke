@@ -29,9 +29,9 @@ class SingerTransformer extends TransformerAbstract
             'name' => $singer->name,
             'sex' => $singer->sex,
             'language' => $singer->language,
-            'created_by' => $singer->createdBy->name,
-            'created_at' => $singer->created_at->toDateTimeString(),
-            'updated_at' => $singer->updated_at->toDateTimeString(),
+            'created_by' => !empty($singer->createdBy) ? $singer->createdBy->name : '',
+            'created_at' => $singer->created_at,
+            'updated_at' => $singer->updated_at,
         ];
     }
 

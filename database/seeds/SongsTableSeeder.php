@@ -55,9 +55,18 @@ class SongsTableSeeder extends Seeder
             $sumPercent += $defaultPercentage;
         }
 
+        $remainPercent = 100;
+        $nComputedOwners = 0;
+
         foreach ($owners as $key => &$owner) {
-            $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
-            $owner['percentage'] = round($realPercent);
+            if ($nComputedOwners == count($owners) - 1) {    // last owner
+                $owner['percentage'] = $remainPercent;
+            } else {
+                $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
+                $owner['percentage'] = round($realPercent);
+                $remainPercent -= $owner['percentage'];
+                $nComputedOwners++;
+            }
         }
 
         return $owners;

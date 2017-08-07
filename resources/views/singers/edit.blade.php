@@ -2,8 +2,6 @@
 
 @push('styles')
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="/vendor/ubold/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -83,7 +81,7 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin ca sĩ</b></h4>
 
-                <form class="form-horizontal" method="post" action="/singers/{{ $singer['id'] }}" role="form"  data-parsley-validate novalidate>
+                <form class="form-horizontal" method="post" action="/singers/{{ $singer['id'] }}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
@@ -96,9 +94,9 @@
                   <div class="form-group">
                     <label for="sex-picker" class="col-sm-4 control-label">Giới tính: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $singer['sex'] }}" name="sex" data-style="btn-white" id="language-picker">
+                      <select class="form-control" name="sex" data-style="btn-white" id="language-picker">
                         @foreach (config('ktv.sexes') as $key => $sex)
-                            <option value="{{ $key }}">{{ $sex }}</option>
+                            <option value="{{ $key }}" @if($singer['sex'] == $key) selected @endif>{{ $sex }}</option>
                         @endforeach
 
                       </select>
@@ -107,32 +105,35 @@
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $singer['language'] }}" name="language" data-style="btn-white" id="language-picker">
+                      <select class="form-control" name="language" data-style="btn-white" id="language-picker">
                         @foreach (config('ktv.languages') as $key => $language)
-                            <option value="{{ $key }}">{{ $language }}</option>
+                            <option value="{{ $key }}" @if($singer['language'] == $key) selected @endif>{{ $language }}</option>
                         @endforeach
 
                       </select>
 
                     </div>
                   </div>
+
+                  <hr>
+
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $singer['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
+                      <input type="text" value="{{ $singer['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $singer['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
+                      <input type="text" value="{{ $singer['created_at'] }}" id="created-at"  class="form-control" readonly placeholder="Ngày tạo">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $singer['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
+                      <input type="text" value="{{ $singer['updated_at'] }}" id="webSite" class="form-control" readonly placeholder="Ngày sửa đổi cuối">
                     </div>
                   </div>
                   <div class="form-group">
@@ -151,11 +152,7 @@
 @endsection
 
 @push('scripts')
-<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
-<!-- Modal-Effect -->
-<script src="/vendor/ubold/assets/plugins/custombox/js/custombox.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/custombox/js/legacy.min.js"></script>
 
 @endpush
 

@@ -32,9 +32,9 @@ class SongTransformer extends TransformerAbstract
             'file_name' => $song['file_name'],
             'language' => $song->language,
             'singers' => $this->getSingerUrls($song),
-            'created_by' => $song->createdBy->name,
-            'created_at' => $song->created_at->toDateTimeString(),
-            'updated_at' => $song->updated_at->toDateTimeString(),
+            'created_by' => !empty($song->createdBy) ? $song->createdBy->name : '',
+            'created_at' => $song->created_at,
+            'updated_at' => $song->updated_at,
             'contentOwners' => $this->getContentOwners($song),
             'has_fee' => $song['has_fee'],
         ];
@@ -45,8 +45,6 @@ class SongTransformer extends TransformerAbstract
         $owners = [];
 
         foreach ($song['contentOwners'] as $owner) {
-            // $owners[] = [ $owner['pivot']['type'] =>
-            //                 ['id' => $owner['id'], 'name' => $owner['name']] ];
             $owners[$owner['pivot']['type']] = ['id' => $owner['id'], 'name' => $owner['name']];
         }
 

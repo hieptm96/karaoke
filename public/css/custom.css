@@ -1,5 +1,3 @@
-.data-modal {
-    width: 1000px;
-    margin: auto;
+.bg-white {
+    background-color: #fff;
 }
-.fix-select {width: 205px !important;}

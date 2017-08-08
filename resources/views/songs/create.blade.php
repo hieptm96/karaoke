@@ -2,8 +2,6 @@
 
 @push('styles')
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="/vendor/ubold/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -43,20 +41,19 @@
             <div class="card-box">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" method="post" action="{{ route('songs.store') }}" role="form"  data-parsley-validate novalidate>
+                <form class="form-horizontal" method="post" action="{{ route('songs.store') }}" role="form"  data-parsley-validate>
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
-
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" value="" class="form-control" id="input-name" placeholder="Tên" required>
+                      <input type="text" name="name" class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}" required>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên file*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="file_name" value="" class="form-control" id="file-name" placeholder="Tên file" required>
+                      <input type="text" name="file_name" class="form-control" id="file-name" placeholder="Tên file" value="{{ old('file_name') }}" required>
                     </div>
                   </div>
 
@@ -73,7 +70,7 @@
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" name="language" data-style="btn-white" id="language-picker">
+                      <select class="form-control" name="language" data-style="btn-white" id="language-picker">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach
@@ -88,13 +85,12 @@
 					<div class="col-sm-6">
 
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="1" name="has_fee" checked>
-                            <label for="inlineRadio1"> Có </label>
+                            <input type="radio" id="yes" value="1" name="has_fee" checked>
+                            <label for="yes"> Có </label>
                         </div>
-
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="0" name="has_fee">
-                            <label for="inlineRadio1"> Không </label>
+                            <input type="radio" id="no" value="0" name="has_fee" @if(old('has_fee') != null && old('has_fee') == 0) checked @endif>
+                            <label for="no"> Không </label>
 
                         </div>
 					</div>
@@ -180,12 +176,11 @@
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.bootstrap.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-<script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="/js/main.js"></script>
-
+<script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
 @endpush
 
 @push('inline_scripts')

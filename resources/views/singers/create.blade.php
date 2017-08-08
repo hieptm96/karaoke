@@ -2,7 +2,7 @@
 
 @push('styles')
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/custom.css">
 @endpush
 
 @section('content')
@@ -43,13 +43,13 @@
             <div class="card-box">
                 <h4 class="m-t-0 header-title"><b>Thông tin ca sĩ</b></h4>
 
-                <form class="form-horizontal" method="post" action="{{ route('singers.store') }}" role="form"  data-parsley-validate novalidate>
+                <form class="form-horizontal" method="post" action="{{ route('singers.store') }}" role="form"  data-parsley-validate>
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name"  class="form-control" id="input-name" placeholder="Tên" required>
+                      <input type="text" name="name"  class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -66,7 +66,7 @@
                   <div class="form-group">
                     <label for="language-picker"class="col-sm-4 control-label">Ngôn ngữ*: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" name="language" data-style="btn-white">
+                      <select class="form-control" name="language" data-style="btn-white">
                         @foreach (config('ktv.languages') as $key => $language)
                             <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach
@@ -95,9 +95,10 @@
 @endsection
 
 @push('scripts')
-<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
 
 @endpush
 
 @push('inline_scripts')
+
+@endpush

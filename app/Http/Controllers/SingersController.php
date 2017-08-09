@@ -52,7 +52,7 @@ class SingersController extends Controller
 
         if ($singer != null) {
             flash()->success('Success!', 'Đã thêm thành công ca sĩ.');
-            return redirect()->route('singers.show', ['id' => $singer->id ])
+            return redirect()->route('singers.edit', ['id' => $singer->id ])
                     ->with('created', true);
         } else {
             flash()->danger('Error!', 'Không thể thêm ca sĩ.');

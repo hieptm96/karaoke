@@ -83,7 +83,7 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin ca sĩ</b></h4>
 
-                <form class="form-horizontal" method="post" action="/singers/{{ $singer['id'] }}" role="form"  data-parsley-validate novalidate>
+                <form class="form-horizontal" method="post" action="/singers/{{ $singer['id'] }}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
@@ -93,18 +93,23 @@
                       <span class="form-control">{{ $singer['name'] }} </span>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="sex-picker" class="col-sm-4 control-label">Giới tính: </label>
                     <div class="col-sm-7">
-                      <span class="form-control">{{ config('ktv.languages.' . $singer['sex']) }} </span>
+                      <span class="form-control">{{ config('ktv.sexes.' . $singer['sex']) }} </span>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ: </label>
                     <div class="col-sm-7">
                       <span class="form-control">{{ config('ktv.languages.' . $singer['language']) }}</span>
                     </div>
                   </div>
+
+                  <hr>
+
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
@@ -115,15 +120,17 @@
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $singer['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
+                        <span class="form-control">{{ $singer['created_at'] }}</span>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $singer['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
+                        <span class="form-control">{{ $singer['updated_at'] }}</span>
                     </div>
                   </div>
+
                 </form>
               </div>
             </div>
@@ -131,12 +138,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-<script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
-<!-- Modal-Effect -->
-<script src="/vendor/ubold/assets/plugins/custombox/js/custombox.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/custombox/js/legacy.min.js"></script>
-
-@endpush

@@ -19,7 +19,7 @@ class SongsTableSeeder extends Seeder
         $singerIds = \App\Models\Singer::pluck('id')->toArray();
         $contentOwnerIds = \App\Models\ContentOwner::pluck('id')->toArray();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $song = \App\Models\Song::create([
                 'name' => $faker->name,
                 'language' => $faker->randomElement([1, 2, 3]),
@@ -55,9 +55,18 @@ class SongsTableSeeder extends Seeder
             $sumPercent += $defaultPercentage;
         }
 
+        $remainPercent = 100;
+        $nComputedOwners = 0;
+
         foreach ($owners as $key => &$owner) {
-            $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
-            $owner['percentage'] = round($realPercent);
+            if ($nComputedOwners == count($owners) - 1) {    // last owner
+                $owner['percentage'] = $remainPercent;
+            } else {
+                $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
+                $owner['percentage'] = round($realPercent);
+                $remainPercent -= $owner['percentage'];
+                $nComputedOwners++;
+            }
         }
 
         return $owners;

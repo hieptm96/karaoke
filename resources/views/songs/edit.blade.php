@@ -2,8 +2,6 @@
 
 @push('styles')
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="/vendor/ubold/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -51,7 +49,7 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['id'])}}" role="form"  data-parsley-validate novalidate>
+                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['file_name'])}}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
                    <input type="hidden" value="{{ $song['id'] }}" name="song_id">
@@ -94,9 +92,9 @@
                   <div class="form-group">
                     <label for="language-picker" class="col-sm-4 control-label">Ngôn ngữ*: </label>
                     <div class="col-sm-7">
-                      <select class="selectpicker" value="{{ $song['language'] }}" name="language" data-style="btn-white" id="song-language-filter">
+                      <select class="form-control" value="{{ $song['language'] }}" name="language" data-style="btn-white" id="song-language-filter">
                         @foreach (config('ktv.languages') as $key => $language)
-                            <option value="{{ $key }}">{{ $language }}</option>
+                            <option value="{{ $key }}" @if($song['language']==$key) selected  @endif>{{ $language }}</option>
                         @endforeach
 
                       </select>
@@ -105,23 +103,20 @@
                   </div>
 
                   <div class="form-group">
-					<label class="col-sm-4 control-label">Bài hát có thu phí hay không*:</label>
-					<div class="col-sm-6">
-
+      					<label class="col-sm-4 control-label">Bài hát có thu phí hay không*:</label>
+      					<div class="col-sm-6">
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="1" name="has_fee" @if($song['has_fee']) checked @endif>
-                            <label for="inlineRadio1"> Có </label>
+                            <input type="radio" id="yes" value="1" name="has_fee" @if($song['has_fee']) checked @endif>
+                            <label for="yes-radio"> Có </label>
                         </div>
 
                         <div class="radio radio-primary radio-inline">
-                            <input type="radio" id="inlineRadio1" value="0" name="has_fee" @if(!$song['has_fee']) checked @endif>
-                            <label for="inlineRadio1"> Không </label>
+                            <input type="radio" id="no" value="0" name="has_fee" @if(!$song['has_fee']) checked @endif>
+                            <label for="no-radio"> Không </label>
 
                         </div>
-
-
-					</div>
-				</div>
+          					</div>
+          				</div>
 
                   <hr />
 
@@ -178,24 +173,25 @@
                     </div>
                   </div>
 
+                  <hr>
 
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
+                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
+                      <input type="text" value="{{ $song['created_at'] }}" id="created-at"  class="form-control" readonly placeholder="Ngày tạo">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
+                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" class="form-control" readonly placeholder="Ngày sửa đổi cuối">
                     </div>
                   </div>
                   <div class="form-group">
@@ -213,13 +209,14 @@
 
 @endsection
 
+
 @push('scripts')
 <script src="/vendor/ubold/assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.bootstrap.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-<script src="/vendor/ubold/assets/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
+
 
 @endpush
 
@@ -244,10 +241,6 @@
     }
 
     $( document ).ready(function() {
-        $('#song-language-filter').val('{{ $song['language'] }}');
-        $('.selectpicker').selectpicker('refresh');
-        $('form').parsley();
-
         checkAction();
     });
 

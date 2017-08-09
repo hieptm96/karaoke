@@ -16,10 +16,10 @@ class CreateSingerSongTable extends Migration
         Schema::create('singer_song', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('singer_id');
-            $table->unsignedInteger('song_id');
+            $table->unsignedInteger('song_file_name');
             $table->timestamps();
 
-            $table->unique(['singer_id', 'song_id']);
+            $table->unique(['singer_id', 'song_file_name']);
         });
     }
 

@@ -178,7 +178,7 @@ $user = Auth::user();
                 'className': "singer-data",
             } ],
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'file_name', name: 'file_name'},
                 {data: 'name', name: 'name'},
                 {data: 'singers', name: 'singers', orderable: false, searchable: false},
                 {data: 'has_fee', name: 'has_fee', searchable: false},
@@ -191,7 +191,7 @@ $user = Auth::user();
                 @endif
 //                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
-            order: [[2, 'asc']]
+            order: [[0, 'asc']]
         });
 
         $('#search-form').on('submit', function(e) {
@@ -209,7 +209,7 @@ $user = Auth::user();
                 datatable.draw();
             }
         });
-
+        
         $('#singer-filter').on('keyup', function(e) {
             var createdBy = $('#singer-filter').val();
             if (createdBy.length == 0) {

@@ -195,7 +195,7 @@ $user = Auth::user();
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
                 @endif
             ],
-            order: [[2, 'asc']]
+            order: [[1, 'asc']]
         });
 
         $('#search-form').on('submit', function(e) {

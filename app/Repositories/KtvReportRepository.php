@@ -27,7 +27,7 @@ class KtvReportRepository implements Contract
             ->filter(function ($query) use ($request) {
                 if ($request->has('name')) {
                      $param = '%'.$request->name.'%';
-                     $query->where('name', 'like', $param);
+                     $query->where('ktvs.name', 'like', $param);
                  }
                  if ($request->has('phone')) {
                      $query->where('phone', 'like', '%'.$request->phone.'%');
@@ -56,7 +56,12 @@ class KtvReportRepository implements Contract
 
     public function getDetailDatatables(Request $request)
     {
-        $ktv_reports = \App\Models\ImportedDataUsage::where('ktv_id', $request->id);
+        $ktv_reports = \App\Models\ImportedDataUsage::with(array('song'=>function($query){
+                            $query->select('file_name','name');
+                        }))
+                        ->where('ktv_id', $request->id)
+                        ->select('song_file_name','ktv_id', 'times', 'date');
+
 
         return Datatables::of($ktv_reports)
             ->filter(function ($query) use ($request) {
@@ -72,9 +77,6 @@ class KtvReportRepository implements Contract
             })
             ->editColumn('ktv_name', function($ktv_report) {
                 return $ktv_report->ktv->name;
-            })
-            ->editColumn('song_name', function($ktv_report) {
-                return $ktv_report->song->name;
             })
             ->addColumn('action', function($ktv_report) {
                 return ($ktv_report->song->has_fee == 1) ? '<span class="label label-success">Có phí</span>' : '<span class="label label-primary">Không có phí</span>';

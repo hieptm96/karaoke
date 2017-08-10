@@ -215,9 +215,11 @@
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.bootstrap.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="/js/main.js"></script>
 <script src="/vendor/ubold/assets/plugins/parsleyjs/parsley.min.js"></script>
-
-
 @endpush
 
 @push('inline_scripts')
@@ -353,7 +355,7 @@
     var owner;
     var contentOwnerDatatable;
     $(function () {
-        contentOwnerDatatable = $("#content-owner-datatable").dataTable({
+        contentOwnerDatatable = $("#content-owner-datatable").DataTable({
             searching: false,
             serverSide: true,
             processing: true,
@@ -439,8 +441,8 @@
     });
 
     $(document).on('shown.bs.modal', '#owner-modal', function() {
-        console.log('1');
-        contentOwnerDatatable.fnAdjustColumnSizing();
+        var datatable = $("#content-owner-datatable").dataTable();
+        datatable.fnAdjustColumnSizing();
     });
 
     $('#modal-content').on('shown', function() {

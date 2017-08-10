@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use DB;
 use Illuminate\Console\Command;
 
-class LoadData extends Command
+class LoadProviceDistrict extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ktv:load-data';
+    protected $signature = 'ktv:load-province-district';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Load data from csv';
+    protected $description = 'Load provinces and districts from csv file';
 
     /**
      * Create a new command instance.
@@ -38,22 +38,14 @@ class LoadData extends Command
      */
     public function handle()
     {
-        $this->importFromCSV();
-    }
+        $songsFile = realpath('data/provinces.csv');
+        $songFields = '(id, name)';
+        $this->import($songsFile, 'provinces', $songFields);
 
-    private function importFromCSV()
-    {
-        $songsFile = realpath('data/songs.csv');
-        $songFields = '(name, word_num, file_name, language, is_new_song, freq, name_raw, abbr)';
-        $this->import($songsFile, 'songs', $songFields);
+        $singerFile = realpath('data/districts.csv');
+        $singerFields = '(id, name, province_id)';
+        $this->import($singerFile, 'districts', $singerFields);
 
-        $singerFile = realpath('data/singers.csv');
-        $singerFields = '(id, name, sex, language, abbr, file_name, star, name_raw, freq)';
-        $this->import($singerFile, 'singers', $singerFields);
-
-        $singerSongFile = realpath('data/singer_song.csv');
-        $singerSongFields = '(song_file_name, singer_id)';
-        $this->import($singerSongFile, 'singer_song', $singerSongFields);
     }
 
     private function import($pathFile, $table, $fields)

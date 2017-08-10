@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth', 'acl']], function () {
 
     // Songs report
     Route::get('/song-reports/datatables', 'SongReportController@datatables')->name('songReport.datatables');
-    Route::get('/song-reports/{id}/datatables', 'SongReportController@detailDatatables')->name('songDetailReport.datatables');
+    Route::get('/song-reports/{filename}/datatables', 'SongReportController@detailDatatables')->name('songDetailReport.datatables');
     Route::resource('/song-reports', 'SongReportController');
 
 });

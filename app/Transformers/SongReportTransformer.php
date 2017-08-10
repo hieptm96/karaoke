@@ -23,7 +23,7 @@ class SongReportTransformer extends TransformerAbstract
          'has_fee' => $this->getHasFeeColumn($songReport['has_fee']),
          'total_money' => $this->getTotalMoney($songReport),
          'total_times' => $songReport['total_times'],
-         'actions' => '<a href="' . route('song-reports.show', ['id' => $songReport['id']])
+         'actions' => '<a href="' . route('song-reports.show', ['file-name' => $songReport['file_name']])
             . '" class="btn btn-xs btn-primary waves-effect waves-light song-detail"><i class="fa fa-edit"></i> Chi tiết</a>'
         ];
     }

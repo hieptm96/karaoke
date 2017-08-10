@@ -76,6 +76,11 @@ $user = Auth::user();
                 <div class="col-sm-12">
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
+                            <label class="sr-only" for="">Mã bài hát</label>
+                            <input type="text" id="filename-filter" class="form-control" placeholder="M bài hát" name="filename" />
+                        </div>
+
+                        <div class="form-group">
                             <label class="sr-only" for="">Tên bài hát</label>
                             <input type="text" id="name-filter" class="form-control" placeholder="Tên bài hát" name="name" />
                         </div>
@@ -114,8 +119,8 @@ $user = Auth::user();
                 <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th width="2%">Mã</th>
-                        <th>Tên</th>
+                        <th width="10%">Mã bài hát</th>
+                        <th>Tên bài hát</th>
                         <th>Ca sỹ</th>
                         <th>Thu phí</th>
                         <th width="10%">Language</th>
@@ -167,6 +172,7 @@ $user = Auth::user();
             ajax: {
                 url: "{!! route('songs.datatables') !!}",
                 data: function (d) {
+                    d.filename = $('filename-filter').val();
                     d.name = $('input[name=name]').val();
                     d.singer = $('#singer-filter').val();
                     d.language = $('#language-filter').val();

@@ -41,7 +41,7 @@
                             <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
                         </div>
                         <select name="province" id="province" class="form-control fix-select" ng-model="province" ng-change="get_districts()">
-                            <option value="">-- Chọn tỉnh -- </option>
+                            <option value="">-- Chọn Tỉnh/Thành -- </option>
                             @foreach ($provinces as $province)
                                 <option value="{{ $province->id }}">{{ $province->name }}</option>
                             @endforeach

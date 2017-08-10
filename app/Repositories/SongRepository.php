@@ -43,6 +43,13 @@ class SongRepository implements Contract
                             ->orWhere('name_raw', 'like', $param);
                     });
                 }
+                if ($request->has('filename')) {
+                    $param = '%'.$request->filename.'%';
+
+                    $query->where(function ($q) use ($param) {
+                        $q->where('name', 'like', $param);
+                    });
+                }
                 if ($request->has('singer')) {
                     $param = '%'.$request->singer.'%';
                     $query->whereHas('singers', function($q) use ($param) {

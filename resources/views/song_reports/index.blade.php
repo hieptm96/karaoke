@@ -25,25 +25,27 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        <div class="card-box">
-            <div class="row">
-                <div class="col-sm-12">
-                    <form class="form-inline" role="form" id="search-form">
-                        <div class="form-group">
-                            <label class="sr-only" for="">Tên bài hát</label>
-                            <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
-                        </div>home
-                        <div class="form-group">
-                            <label class="sr-only" for="">Tên file</label>
-                            <input type="text" id="file-name-search" class="form-control" placeholder="Tên file" name="file_name" />
-                        </div>
-                        <div class="form-group m-l-10">
-                            <label class="sr-only" for="date-search">Thời gian</label>
-                            <input id="date-search" class="form-control input-daterange-datepicker" type="text" name="date" value="" placeholder="Chọn thời gian" style="width: 200px;">
-                        </div>
-                        <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
-                    </form>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="form-inline" role="form" id="search-form">
+                            <div class="form-group">
+                                <label class="sr-only" for="">Mã bài hát</label>
+                                <input type="text" id="file-name-search" class="form-control" placeholder="Mã bài hát" name="file_name" />
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="">Tên bài hát</label>
+                                <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
+                            </div>
+                            <div class="form-group m-l-10">
+                                <label class="sr-only" for="date-search">Thời gian</label>
+                                <input id="date-search" class="form-control input-daterange-datepicker" type="text" name="date" value="" placeholder="Chọn thời gian" style="width: 200px;">
+                            </div>
+                            <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,9 +63,8 @@
                 <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th width="2%">Mã</th>
-                        <th width="20%">Bài hát</th>
-                        <th width="10%">Tên file</th>
+                        <th width="10%">Mã bài hát</th>
+                        <th width="20%">Tên bài hát</th>
                         <th width="10%">Có thu phí</th>
                         <th width="10%">Số lần sử dụng</th>
                         <th width="15%">Tổng tiền</th>
@@ -109,9 +110,8 @@
                 }
             },
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
                 {data: 'file_name', name: 'file_name'},
+                {data: 'name', name: 'name'},
                 {data: 'has_fee', name: 'has_fee'},
                 {data: 'total_times', name: 'total_times'},
                 {data: 'total_money', name: 'total_money'},

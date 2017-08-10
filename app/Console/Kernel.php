@@ -2,9 +2,11 @@
 
 namespace App\Console;
 
-use App\Console\Commands\LoadData;
+
+use App\Console\Commands\LoadSingerSong;
 use App\Console\Commands\MakeSampleData;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\LoadProviceDistrict;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -17,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\EmailCommand',
         MakeSampleData::class,
-        LoadData::class,
+        LoadSingerSong::class,
+        LoadProviceDistrict::class,
 
     ];
 

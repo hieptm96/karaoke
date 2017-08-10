@@ -60,7 +60,7 @@
                 <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th width="5%">Id</th>
+                        <th width="10%">Mã bài hát</th>
                         <th>Tên bài hát</th>
                         <th>Số lần sử dụng</th>
                         <th>Ngày tháng</th>
@@ -109,8 +109,8 @@
                 }
             },
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'song_name', name: 'song_name'},
+                {data: 'song.file_name', name: 'song.file_name'},
+                {data: 'song.name', name: 'song.name'},
                 {data: 'times', name: 'times'},
                 {data: 'date', name: 'date'},
                 {data: 'action', name: 'action', orderable: false},

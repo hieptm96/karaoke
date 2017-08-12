@@ -7,22 +7,24 @@ use League\Fractal\TransformerAbstract;
 
 class KtvTransformer extends TransformerAbstract
 {
-    public function transform(Ktv $ktv)
+    public function transform($ktv)
     {
+        //dd($ktv);
          return [
-             'id' => $ktv->id,
-             'name' => $ktv->name,
-             'representative' => $ktv->representative,
-             'phone' => $ktv->phone,
-             'email' => $ktv->email,
-             'address' => $ktv->address,
-             'province' => $this->getProvince($ktv->province_id),
-             'district' => $this->getDistrict($ktv->district_id),
+             'id' => $ktv['id'],
+             'name' => $ktv['name'],
+             'representative' => $ktv['representative'],
+             'phone' => $ktv['phone'],
+             'email' => $ktv['email'],
+             'address' => $ktv['address'],
+             'province' => $this->getProvince($ktv['province_id']),
+             'district' => $this->getDistrict($ktv['district_id']),
 //                'created_by' => $song->createdBy->name,
-             'created_at' => $ktv->created_at->toDateTimeString(),
-             'updated_at' => $ktv->updated_at->toDateTimeString(),
-             'actions' => '<a href="' . route('ktvs.edit', ['id' => $ktv->id]) . '" class="btn btn-xs btn-primary waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
-                           <a href="#" class="btn btn-xs btn-primary waves-effect waves-light ktv-delete" data-id="' . $ktv->id . '"><i class="fa fa-trash"></i> Xóa</a>
+             // 'created_at' => $ktv['created_at'],
+             // 'updated_at' => $ktv['updated_at'],
+             'n_boxes' => $ktv['n_boxes'],
+             'actions' => '<a href="' . route('ktvs.edit', ['id' => $ktv['id']]) . '" class="btn btn-xs btn-primary waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
+                           <a href="#" class="btn btn-xs btn-primary waves-effect waves-light ktv-delete" data-id="' . $ktv['id'] . '"><i class="fa fa-trash"></i> Xóa</a>
                             '
          ];
     }

@@ -13,35 +13,6 @@ $user = Auth::user();
 @endphp
 
 @section('content')
-    {{-- delete song modal --}}
-    <div id="delete-song-modal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3 class="modal-title">Xóa bài hát</h3>
-          </div>
-          <div class="modal-body">
-            <p>Bạn có chắc muốn xóa bài hát không?</p>
-          </div>
-          <div class="modal-footer">
-              <div class="custom-modal-text text-left">
-                  <form role="form" id="delete-song-form" method="post" action="">
-                      <input name="_method" value="DELETE" type="hidden">
-                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
-                      <div class="text-right">
-                          <button type="submit" class="btn btn-primary waves-effect waves-light">Xóa</button>
-                          <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
-                      </div>
-                  </form>
-              </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
 
     <!-- Page-Title -->
     <div class="row">

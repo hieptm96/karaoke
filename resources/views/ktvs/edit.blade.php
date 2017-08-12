@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">

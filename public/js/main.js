@@ -42,4 +42,6 @@ $(document).ready(function() {
         $('#ktv-delete-form').attr('action', '/admin/ktvs/' + $(this).attr('data-id'));
         $('#ktv-delete-form').submit();
     });
+
 });
+

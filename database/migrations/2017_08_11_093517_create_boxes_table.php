@@ -17,13 +17,11 @@ class CreateBoxesTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->unsignedInteger('ktv_id')->index();
-            $table->string('info');
+            $table->string('info')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['code', 'ktv_id']);
         });
     }
 

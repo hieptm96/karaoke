@@ -2,6 +2,7 @@
 <div class="modal fade" id="edit-box-modal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+        <form class="form-horizontal" id="edit-box-form" action="https://google.com">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
@@ -18,7 +19,7 @@
             <!-- Modal Body -->
             <div class="modal-body">
 
-                <form class="form-horizontal" id="edit-box-form" >
+
                     {{ csrf_field() }}
                     {{ method_field('patch') }}
                     <div class="form-group">
@@ -37,21 +38,21 @@
                                       id="info" placeholder="Thông tin đầu máy"></textarea>
                         </div>
                     </div>
-                </form>
+
 
             </div>
 
             <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" id="done" class="btn btn-default"
-                        data-dismiss="modal">
-                    Xong
-                </button>
+                <input type="submit" id="done" class="btn btn-default" value="Xong">
+
                 <button type="button" class="btn btn-primary" data-dismiss="modal">
                     Hủy
                 </button>
             </div>
+
         </div>
+        </form>
     </div>
 </div>
 

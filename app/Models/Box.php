@@ -18,6 +18,8 @@ class Box extends ModelTracking
         'info',
     ];
 
+    protected $dates = ['deleted_at'];
+
     public function ktv()
     {
         $this->belongsTo(Ktv::class);

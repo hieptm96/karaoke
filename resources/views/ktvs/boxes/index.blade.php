@@ -13,25 +13,59 @@ $user = Auth::user();
 
 @section('content')
 
-    @include('ktvs.boxes.box-modal')
-   
+    {{--@include('ktvs.boxes.box-modal')--}}
+
+    {{-- delete song modal --}}
+    <div id="delete-box-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Xóa đầu máy/thiết bị phát</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc muốn xóa đầu máy/thiết bị phát không?</p>
+                </div>
+                <div class="modal-footer">
+                    <div class="custom-modal-text text-left">
+                        <form role="form" id="delete-box-form" method="post" action="">
+                            <input name="_method" value="DELETE" type="hidden">
+                            {{-- {{ method_field('DELETE') }} --}}
+                            <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Xóa</button>
+                                <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
 
             @if ($user->can('ktvs.create'))
             <div class="btn-group pull-right m-t-15">
-                <a href="" data-toggle="modal" data-target="#add-box-modal"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light"><i class="md md-add"></i> Thêm mới </button></a>
+                <a href="{{ route('ktvs.boxes.create', ['ktv' => $ktv->id]) }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light"><i class="md md-add"></i> Thêm mới </button></a>
             </div>
             @endif
 
             <h4 class="page-title">Danh mục đơn vị kinh doanh</h4>
             <ol class="breadcrumb">
                 <li>
-                    <a href="#">Đơn vị kinh doanh</a>
+                    <a href="{{ route('ktvs.index') }}">Đơn vị kinh doanh</a>
+                </li>
+                <li>
+                    {{ $ktv->name }}
                 </li>
                 <li class="active">
-                    Danh sách
+                    Danh sách đầu máy/thiết bị phát
                 </li>
             </ol>
         </div>
@@ -41,26 +75,11 @@ $user = Auth::user();
 
     @include('common.request_errors')
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-box">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form class="row form-inline" role="form" id="search-form">
-
-                            <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                <h4 class="m-t-0 header-title"><b>Danh sách đơn vị kinh doanh</b></h4>
+                <h4 class="m-t-0 header-title"><b>Danh sách đầu máy/thiết bị phát</b></h4>
                 <p class="text-muted font-13 m-b-30">
                 </p>
 
@@ -91,43 +110,43 @@ $user = Auth::user();
 
 @push('inline_scripts')
 <script>
-    var dataSet = [['123', '123', '1232', '232'], ['343', '43434', '323', '32']];
+
+    $(document).on('click', '.delete-box', function(e) {
+        var boxRow = $(this).parent().parent();
+        var action = window.location.href + '/' + boxRow.attr('box-data');
+//        console.log('action: ' + action);
+        $('#delete-box-form').attr('action', action);
+    });
+
+    var dataSet = [];
+
     $(function () {
+
         var datatable = $("#datatable").DataTable({
-            searching: false,
+            searching: true,
             // serverSide: true,
-            // processing: true,
+            processing: true,
+            "createdRow": function ( row, data, index ) {
+                $(row).attr('box-data', data['id']);
+            },
             "columnDefs": [ {
-                "data": null,
-                "defaultContent": '<a class="btn btn-primary btn-xs edit-box waves-effect waves-light" data-toggle="modal" data-target="#edit-box-modal"><i class="fa fa-edit"></i> Sửa</a>'
-                        + ' <a class="delete-box btn btn-default btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-box-modal"><i class="fa fa-trash"></i> Xóa</a>',
-                "targets": -1,
-                orderable: false
-            },
-            {
-                "targets": 0,
-                "className": "box-code"
-            },
-            {
-                "targets": 1,
-                "className": "box-info"
-            } ],
+                    "targets": 0,
+                    "className": "box-code"
+                },
+                {
+                    "targets": 1,
+                    "className": "box-info"
+                }
+            ],
             data: dataSet,
-            // ajax: {
-            //     url: "{!! route('ktvs.datatables') !!}",
-            //     data: function (d) {
-            //         d.name = $('#name-search').val();
-            //         d.phone = $('#phone-search').val();
-            //         d.email = $('#email-search').val();
-            //         d.province = $('#province').val();
-            //         d.district = $('#district-search').val();
-            //     }
-            // },
-            // columns: [
-            //     {data: 'id', name: 'id'},
-            //     {data: 'name', name: 'name'},
-            //     {data: 'representative', name: 'representative'},
-            // ],
+            columns: [
+                {data: 'code'},
+                {data: 'info', name: 'name'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            "oLanguage": {
+                "sSearch": "Lọc: "
+            },
             order: [[0, 'asc']]
         });
 
@@ -151,6 +170,21 @@ $user = Auth::user();
             datatable.draw();
             e.preventDefault();
         });
+
+
+        $.ajax({
+            url: '{{ route('ktvs.boxes.datatables', ['ktv' => $ktv->id]) }}',
+            method: 'get',
+            dataType: 'json',
+            beforeSend: function() {
+                $('.dataTables_processing', $('#datatable').closest('.dataTables_wrapper')).show();
+            },
+            success: function(data) {
+                datatable.clear().rows.add(data).draw()
+                $('.dataTables_processing', $('#datatable').closest('.dataTables_wrapper')).hide();
+            }
+        });
+
     });
 </script>
 

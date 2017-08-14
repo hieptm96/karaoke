@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['acl']], function() {
 	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');
 	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');
 	Route::resource('ktvs', 'KtvsController');
-    // Route::get('/ktvs/{ktv_id}/boxes', 'KtvBoxesController@index')->name('ktv.boxes.index');
+    Route::get('/ktvs/{ktv}/boxes/datatables', 'KtvsBoxesController@datatables')->name('ktvs.boxes.datatables');
     Route::resource('ktvs.boxes', 'KtvsBoxesController');
 
 	// Content Owner
@@ -84,19 +84,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['acl']], function() {
     // User
     Route::get('/users/datatables', 'UsersController@datatables')->name('users.datatables');
     Route::resource('users', 'UsersController');
-
-});
-
-Route::get('/test', function() {
-    $ktv = App\Models\Ktv::with('boxes')->first();
-
-    $boxes = array(
-        new App\Models\Box(['code' => '123', 'info' => 'karaoke']),
-        new App\Models\Box(['code' => '123', 'info' => '1manger']),
-    );
-
-    $ktv->boxes()->delete();
-    $ktv->boxes()->saveMany($boxes);
 
 });
 

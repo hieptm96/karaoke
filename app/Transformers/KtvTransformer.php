@@ -22,7 +22,7 @@ class KtvTransformer extends TransformerAbstract
 //                'created_by' => $song->createdBy->name,
              // 'created_at' => $ktv['created_at'],
              // 'updated_at' => $ktv['updated_at'],
-             'n_boxes' => $ktv['n_boxes'],
+             'n_boxes' => '<a href="' . route('ktvs.boxes.index', ['ktv' => $ktv['id']]) . '">' . $ktv['n_boxes'] . '</a>',
              'actions' => '<a href="' . route('ktvs.edit', ['id' => $ktv['id']]) . '" class="btn btn-xs btn-primary waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
                            <a href="#" class="btn btn-xs btn-primary waves-effect waves-light ktv-delete" data-id="' . $ktv['id'] . '"><i class="fa fa-trash"></i> Xóa</a>
                             '

@@ -34,12 +34,12 @@
                 <div class="col-sm-12">
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
-                            <label class="sr-only" for="">Tên bài hát</label>
-                            <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
-                        </div>
-                        <div class="form-group">
                             <label class="sr-only" for="">Mã bài hát</label>
                             <input type="text" id="file-name-search" class="form-control" placeholder="Mã bài hát" name="file_name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="">Tên bài hát</label>
+                            <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
                         </div>
                         <div class="form-group m-l-10">
                             <label class="sr-only" for="date-search">Thời gian</label>
@@ -98,7 +98,9 @@
 <script>
     $(function () {
 
-        var datatable = $("#datatable").DataTable({
+        console.log($('#datatable'));
+
+        var datatable = $('#datatable').DataTable({
             searching: false,
             serverSide: true,
             processing: true,
@@ -120,7 +122,7 @@
                 {data: 'total_money', name: 'total_money'},
                 {data: 'discount', name: 'discount'}
             ],
-            order: [[6, 'desc']]
+            order: [[5, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {
@@ -128,19 +130,12 @@
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#search-form select').on('change', function(e) {
             datatable.draw();
         });
 
-        $('#name-search').on('keyup', function(e) {
-            var name = $(this).val();
-            if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#phone-search').on('keyup', function(e) {
-            var createdBy = $($this).val();
+        $('#search-form input').on('keyup', function(e) {
+            var createdBy = $(this).val();
             if (createdBy.length == 0) {
                 datatable.draw();
             }

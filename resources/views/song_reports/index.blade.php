@@ -117,7 +117,7 @@
                 {data: 'total_money', name: 'total_money'},
                 {data: 'actions', name: 'actions', searchable: false, orderable: false}
             ],
-            order: [[5, 'desc']]
+            order: [[4, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {

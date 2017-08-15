@@ -104,12 +104,11 @@ class ContentOwnerReportRepository implements Contract
             ->join('songs AS s', function($join) {
                 $join->on('i.song_file_name', '=', 's.file_name');
             })
-            ->join(DB::raw('(select song_id, song_file_name,
-                    GROUP_CONCAT(type SEPARATOR ";") owner_types,
-                    SUM(percentage) AS percentage
+            ->join(DB::raw('(select song_file_name, SUM(percentage) AS percentage,
+                    GROUP_CONCAT(type SEPARATOR ";") owner_types
                     FROM content_owner_song AS c
                     WHERE content_owner_id = ?
-                    GROUP BY song_id) AS t'
+                    GROUP BY song_file_name) AS t'
             ), 'i.song_file_name', '=', 't.song_file_name')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('i.song_file_name')

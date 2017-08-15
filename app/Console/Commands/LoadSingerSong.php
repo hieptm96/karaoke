@@ -12,7 +12,7 @@ class LoadSingerSong extends Command
      *
      * @var string
      */
-    protected $signature = 'ktv:load-singer-song';
+    protected $signature = 'ktv:load-singer-song-data';
 
     /**
      * The console command description.
@@ -44,34 +44,15 @@ class LoadSingerSong extends Command
     private function importFromCSV()
     {
         $songsFile = realpath('data/songs.csv');
-        $songFields = '(name, word_num, file_name, language, is_new_song, freq, name_raw, abbr)';
-        $this->import($songsFile, 'songs', $songFields);
+        $songColumns = '(name, word_num, file_name, language, is_new_song, freq, name_raw, abbr)';
+        import_from_csv($songsFile, 'songs', $songColumns);
 
         $singerFile = realpath('data/singers.csv');
-        $singerFields = '(id, name, sex, language, abbr, file_name, star, name_raw, freq)';
-        $this->import($singerFile, 'singers', $singerFields);
+        $singerColumns = '(id, name, sex, language, abbr, file_name, star, name_raw, freq)';
+        import_from_csv($singerFile, 'singers', $singerColumns);
 
         $singerSongFile = realpath('data/singer_song.csv');
-        $singerSongFields = '(song_file_name, singer_id)';
-        $this->import($singerSongFile, 'singer_song', $singerSongFields);
-
-        $contentOwnerSongFile = realpath('data/content_owner_song.csv');
-        $singerSongFields = '(song_file_name, singer_id)';
-        $this->import($singerSongFile, 'content_owner_song', $singerSongFields);
-    }
-
-    private function import($pathFile, $table, $fields)
-    {
-        $query = sprintf("LOAD DATA local INFILE '%s'
-                INTO TABLE %s
-                CHARACTER SET UTF8
-                FIELDS TERMINATED BY ',' 
-                ENCLOSED BY '\"'
-                LINES TERMINATED BY '\n'
-                IGNORE 1 ROWS %s", addslashes($pathFile), $table, $fields);
-
-        echo $query;
-
-        return DB::connection()->getpdo()->exec($query);
+        $singerSongColumns = '(song_file_name, singer_id)';
+        import_from_csv($singerSongFile, 'singer_song', $singerSongColumns);
     }
 }

@@ -47,7 +47,7 @@ class SongRepository implements Contract
                     $param = '%'.$request->filename.'%';
 
                     $query->where(function ($q) use ($param) {
-                        $q->where('name', 'like', $param);
+                        $q->where('file_name', 'like', $param);
                     });
                 }
                 if ($request->has('singer')) {

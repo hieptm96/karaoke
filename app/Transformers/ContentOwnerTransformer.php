@@ -19,8 +19,8 @@ class ContentOwnerTransformer extends TransformerAbstract
              'district' => $this->getDistrict($content_owner->district_id),
 //                'created_by' => $song->createdBy->name,
              'code' => $content_owner->code,
-             'created_at' => $content_owner->created_at->toDateTimeString(),
-             'updated_at' => $content_owner->updated_at->toDateTimeString(),
+             'created_at' => $content_owner->created_at,
+             'updated_at' => $content_owner->updated_at,
              'actions' => '<a href="' . route('contentowners.edit', ['id' => $content_owner->id]) . '" class="btn btn-xs btn-primary waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
                             '
          ];

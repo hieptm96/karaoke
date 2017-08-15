@@ -12,7 +12,7 @@ class LoadProviceDistrict extends Command
      *
      * @var string
      */
-    protected $signature = 'ktv:load-province-district';
+    protected $signature = 'ktv:load-province-district-data';
 
     /**
      * The console command description.
@@ -39,27 +39,12 @@ class LoadProviceDistrict extends Command
     public function handle()
     {
         $songsFile = realpath('data/provinces.csv');
-        $songFields = '(id, name)';
-        $this->import($songsFile, 'provinces', $songFields);
+        $songColumns = '(id, name)';
+        import_from_csv($songsFile, 'provinces', $songColumns);
 
         $singerFile = realpath('data/districts.csv');
-        $singerFields = '(id, name, province_id)';
-        $this->import($singerFile, 'districts', $singerFields);
+        $singerColumns = '(id, name, province_id)';
+        import_from_csv($singerFile, 'districts', $singerColumns);
 
-    }
-
-    private function import($pathFile, $table, $fields)
-    {
-        $query = sprintf("LOAD DATA local INFILE '%s'
-                INTO TABLE %s
-                CHARACTER SET UTF8
-                FIELDS TERMINATED BY ',' 
-                ENCLOSED BY '\"'
-                LINES TERMINATED BY '\n'
-                IGNORE 1 ROWS %s", addslashes($pathFile), $table, $fields);
-
-        echo $query;
-
-        return DB::connection()->getpdo()->exec($query);
     }
 }

@@ -203,19 +203,12 @@ $user = Auth::user();
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#search-form select').on('change', function(e) {
             datatable.draw();
         });
 
-        $('#name-filter').on('keyup', function(e) {
-            var name = $('#name-filter').val();
-            if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#created-by-filter').on('keyup', function(e) {
-            var createdBy = $('#created-by-filter').val();
+        $('#search-form input').on('keyup', function(e) {
+            var createdBy = $(this).val();
             if (createdBy.length == 0) {
                 datatable.draw();
             }

@@ -19,8 +19,8 @@ class KtvTransformer extends TransformerAbstract
              'province' => $this->getProvince($ktv->province_id),
              'district' => $this->getDistrict($ktv->district_id),
 //                'created_by' => $song->createdBy->name,
-             'created_at' => $ktv->created_at->toDateTimeString(),
-             'updated_at' => $ktv->updated_at->toDateTimeString(),
+             'created_at' => $ktv->created_at,
+             'updated_at' => $ktv->updated_at,
              'actions' => '<a href="' . route('ktvs.edit', ['id' => $ktv->id]) . '" class="btn btn-xs btn-primary waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
                            <a href="#" class="btn btn-xs btn-primary waves-effect waves-light ktv-delete" data-id="' . $ktv->id . '"><i class="fa fa-trash"></i> Xóa</a>
                             '

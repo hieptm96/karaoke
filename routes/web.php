@@ -70,6 +70,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['acl']], function() {
 	Route::get('/ktvs/datatables', 'KtvsController@datatables')->name('ktvs.datatables');
 	Route::get('/ktvs/get-districts', 'KtvsController@getDistricts')->name('ktvs.getdistricts');
 	Route::resource('ktvs', 'KtvsController');
+    Route::get('/ktvs/{ktv}/boxes/datatables', 'KtvsBoxesController@datatables')->name('ktvs.boxes.datatables');
+    Route::resource('ktvs.boxes', 'KtvsBoxesController');
 
 	// Content Owner
     Route::get('/contentowners/datatables', 'ContentOwnersController@datatables')->name('contentowners.datatables');
@@ -84,3 +86,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['acl']], function() {
     Route::resource('users', 'UsersController');
 
 });
+

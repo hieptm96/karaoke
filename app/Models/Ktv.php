@@ -24,8 +24,28 @@ class Ktv extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($ktv) {
+            $ktv->boxes()->delete();
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function boxes()
+    {
+        return $this->hasMany(Box::class);
+    }
+
+    public function boxesCount()
+    {
+        return $this->hasOne(Box::class)
+                ->selectRaw('ktv_id, count(*) as n_boxes')
+                ->groupBy('ktv_id');
     }
 }

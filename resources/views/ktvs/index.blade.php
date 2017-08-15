@@ -90,6 +90,7 @@ $user = Auth::user();
                             <th width="10%">Địa chỉ</th>
                             <th width="10%">Tỉnh</th>
                             <th width="10%">Quận/Huyện</th>
+                            <th width="10%">Số lượng đầu máy</th>
                             <th width="9%">#</th>
                         </tr>
                         </thead>
@@ -143,6 +144,7 @@ $user = Auth::user();
                 {data: 'address', name: 'address'},
                 {data: 'province', name: 'province_id'},
                 {data: 'district', name: 'district_id'},
+                {data: 'n_boxes', name: 'n_boxes'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],
             order: [[1, 'asc']]

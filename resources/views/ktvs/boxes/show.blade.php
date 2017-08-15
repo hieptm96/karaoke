@@ -30,8 +30,18 @@
                 </p>
 
                 <form action="{{ route('ktvs.update', ['id' => $ktv->id])  }}" method="POST" class="form-horizontal" role="form" data-parsley-validate="" novalidate="">
-                    {{ method_field('patch') }}
-                    @include('ktvs._form')
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label" for="code">Mã đầu máy:</label>
+                        <div class="col-sm-7">
+                            <span type="code" class="form-control" placeholder="Mã đầu máy">{{ $box->code or '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="info" >Thông tin</label>
+                        <div class="col-sm-7">
+                            <textarea class="form-control" placeholder="Thông tin đầu máy">{{ $box->info or '' }}</textarea>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

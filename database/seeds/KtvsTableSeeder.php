@@ -40,6 +40,14 @@ class KtvsTableSeeder extends Seeder
                 'created_by' => 1,
                 'updated_by' => 1
             ]);
+
+            $nBoxes = rand(5, 15);
+            $boxes = [];
+            for ($j = 0; $j < $nBoxes; $j++) {
+                $boxes[] = new App\Models\Box(['code' => $ktv->id . '#' . $j, 'info' => 'Karaoke player']);
+            }
+
+            $ktv->boxes()->saveMany($boxes);
         }
     }
 }

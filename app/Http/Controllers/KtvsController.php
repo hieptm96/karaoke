@@ -113,6 +113,7 @@ class KtvsController extends Controller
     public function destroy($id)
     {
         $ktv = Ktv::findOrFail($id);
+        $ktv->boxes()->delete();
         $ktv->user->delete();
         $provinces = Province::all();
 

@@ -19,6 +19,7 @@ class ImportController extends Controller
 
     private static $dataFields = array(
         'ktv_id',
+        'box_code',
         'date',
         'song_file_name',
         'times'

@@ -17,6 +17,7 @@ class CreateImportedDataUsageTable extends Migration
              $table->increments('id');
              $table->unsignedInteger('imported_file_id')->default(0);
              $table->unsignedInteger('ktv_id')->index();
+             $table->string('box_code')->index();
              $table->unsignedInteger('song_file_name')->index();
              $table->unsignedInteger('times')->default(1);
              $table->date('date');

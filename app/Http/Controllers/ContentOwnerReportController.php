@@ -75,7 +75,7 @@ class ContentOwnerReportController extends Controller
             ->setBindings([intval($config['price']), $startDate, $stopDate, 0]);
 
         if ($request->has('name')) {
-            $query->where('name', 'like', '%'.$request->name.'%');
+            $query->where('co.name', 'like', '%'.$request->name.'%');
         }
 
         if ($request->has('phone')) {

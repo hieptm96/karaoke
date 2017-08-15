@@ -59,7 +59,7 @@ class ContentOwnerReportRepository implements Contract
             ->filter(function ($query) use ($request) {
                  if ($request->has('name')) {
                      $param = '%'.$request->name.'%';
-                    $query->where('name', 'like', $param);
+                    $query->where('co.name', 'like', $param);
                  }
                  if ($request->has('phone')) {
                      $query->where('phone', 'like', '%'.$request->phone.'%');

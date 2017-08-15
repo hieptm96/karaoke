@@ -14,16 +14,9 @@
     <div class="row">
         <div class="col-sm-12">
 
-            @if ( session('created') )
-                <div class="btn-group pull-right m-t-15">
-                    <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm tiếp </a>
-                </div>
-            @else
-                <div class="btn-group pull-right m-t-15">
-                    <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
-                </div>
-            @endif
-
+            <div class="btn-group pull-right m-t-15">
+                <a href="{{ url()->previous() }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+            </div>
 
             <h4 class="page-title">Bài hát</h4>
             <ol class="breadcrumb">

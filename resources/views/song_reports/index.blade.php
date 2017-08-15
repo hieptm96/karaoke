@@ -125,19 +125,12 @@
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#search-form select').on('change', function(e) {
             datatable.draw();
         });
 
-        $('#name-search').on('keyup', function(e) {
-            var name = $(this).val();
-            if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#phone-search').on('keyup', function(e) {
-            var createdBy = $($this).val();
+        $('#search-form input').on('keyup', function(e) {
+            var createdBy = $(this).val();
             if (createdBy.length == 0) {
                 datatable.draw();
             }

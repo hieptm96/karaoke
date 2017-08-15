@@ -70,8 +70,7 @@ class KtvsBoxesController extends Controller
 
         flash()->success('Thành công!', 'Đã thêm thành công đầu máy/thiêt bị phát.');
 
-        return redirect()->route('ktvs.boxes.edit', ['ktv' => $ktv->id, 'box' => $box->id])
-                        ->with(['created' => true]);
+        return redirect()->route('ktvs.boxes.edit', ['ktv' => $ktv->id, 'box' => $box->id]);
     }
 
     /**

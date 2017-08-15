@@ -15,6 +15,7 @@ class ImportedDataUsage extends Model
         'id',
         'imported_file_id',
         'ktv_id',
+        'box_code',
         'song_file_name',
         'times',
         'date',

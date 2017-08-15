@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use DB;
 use App\Models\Ktv;
 use App\Models\Song;
 use Carbon\Carbon;
@@ -47,15 +48,21 @@ class MakeSampleData extends Command
             $dates[] = $date->toDateString();
         }
 
-        $ktvIds = Ktv::pluck('id')->toArray();
+//        $ktvIds = Ktv::pluck('id')->toArray();
+        $ktvBoxes = DB::table('boxes')
+                        ->select('ktv_id', 'code')
+                        ->get()->toArray();
 
         $data = [];
         for ($i = 0; $i < 1000; $i ++) {
+            $ktvBox = array_random($ktvBoxes);
+
             $song = Song::inRandomOrder()->first();
 
             $data[] = [
-                'ktv_id' => array_random($ktvIds),
+                'ktv_id' => $ktvBox->ktv_id,
                 'song_file_name' => $song->file_name,
+                'box_code' => $ktvBox->code,
                 'times' => rand(10, 1000),
                 'date' => array_random($dates),
             ];

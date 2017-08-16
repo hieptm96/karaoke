@@ -27,6 +27,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SongsTableSeeder::class);
 
-        $this->call(DataUsageSeeder::class);
+//        $this->call(DataUsageSeeder::class);
     }
 }

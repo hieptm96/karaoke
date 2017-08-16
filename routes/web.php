@@ -87,3 +87,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['acl']], function() {
 
 });
 
+Route::get('/test/ktvreports/{ktv}', function($id) {
+    $ktv = \App\Models\Ktv::findOrFail($id);
+    return view('ktvreports.ktv-boxes', ['ktv' => $ktv]);
+});
+Route::get('/test/ktvreports/{ktv}/datatables', 'KtvReportsController@boxesDetailDatatables')->name('ktvBoxesDetailReports.datatables');
+
+

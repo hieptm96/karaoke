@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use DB;
 use Datatables;
+use App\Models\Ktv;
 use Illuminate\Http\Request;
 use App\Transformers\KtvReportTransformer;
 use App\Contracts\Repositories\KtvReportRepository as Contract;
@@ -81,6 +82,43 @@ class KtvReportRepository implements Contract
             ->addColumn('action', function($ktv_report) {
                 return ($ktv_report->song->has_fee == 1) ? '<span class="label label-success">Có phí</span>' : '<span class="label label-primary">Không có phí</span>';
             })
+            ->make(true);
+    }
+
+    public function getBoxesDetailDatatables(Ktv $ktv, Request $request)
+    {
+        $ktvBoxesReports = DB::table('boxes as b')
+                            ->selectRaw('box_code, sum(times) as sum_times, 
+                            sum(case when s.has_fee <> 0 then i.times else 0 end)  as fee_times,
+                            sum(case when s.has_fee = 0 then i.times else 0 end)  as no_fee_times')
+                            ->leftJoin('imported_data_usages as i', function($join) {
+                                $join->on('i.box_code', '=', 'b.code');
+                            })
+                            ->join('songs as s', 's.file_name', '=', 'i.song_file_name')
+                            ->whereNull('b.deleted_at')
+                            ->whereNull('s.deleted_at')
+                            ->where('i.ktv_id', '=', '?')
+                            ->groupBy('box_code')
+                            ->setBindings([$ktv->id]);
+
+        return Datatables::of($ktvBoxesReports)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('from') && $request->has('to')) {
+                    $query->whereBetween('i.date', [$request->from, $request->to]);
+                } else {
+                    $query->whereBetween('i.date', [\Carbon\Carbon::now()->format('Y-m-01'), \Carbon\Carbon::now()->format('Y-m-31')]);
+                }
+                if ($request->has('date')) {
+                    $date = explode(":", $request->date);
+                    $query->whereBetween('i.date', [trim($date[0], ' '), trim($date[1], ' ')]);
+                }
+            })
+//            ->editColumn('ktv_name', function($ktv_report) {
+//                return $ktv_report->ktv->name;
+//            })
+//            ->addColumn('action', function($ktv_report) {
+//                return ($ktv_report->song->has_fee == 1) ? '<span class="label label-success">Có phí</span>' : '<span class="label label-primary">Không có phí</span>';
+//            })
             ->make(true);
     }
 

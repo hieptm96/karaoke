@@ -47,6 +47,11 @@ $user = Auth::user();
                 <div class="col-sm-12">
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
+                            <label class="sr-only" for="">Mã bài hát</label>
+                            <input type="text" id="filename-filter" class="form-control" placeholder="Mã bài hát" name="filename" />
+                        </div>
+
+                        <div class="form-group">
                             <label class="sr-only" for="">Tên bài hát</label>
                             <input type="text" id="name-filter" class="form-control" placeholder="Tên bài hát" name="name" />
                         </div>
@@ -85,8 +90,8 @@ $user = Auth::user();
                 <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th width="2%">Mã</th>
-                        <th>Tên</th>
+                        <th width="10%">Mã bài hát</th>
+                        <th>Tên bài hát</th>
                         <th>Ca sỹ</th>
                         <th>Thu phí</th>
                         <th width="10%">Language</th>
@@ -138,7 +143,8 @@ $user = Auth::user();
             ajax: {
                 url: "{!! route('songs.datatables') !!}",
                 data: function (d) {
-                    d.name = $('input[name=name]').val();
+                    d.filename = $('#filename-filter').val();
+                    d.name = $('#name-filter').val();
                     d.singer = $('#singer-filter').val();
                     d.language = $('#language-filter').val();
                 }
@@ -149,7 +155,7 @@ $user = Auth::user();
                 'className': "singer-data",
             } ],
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'file_name', name: 'file_name'},
                 {data: 'name', name: 'name'},
                 {data: 'singers', name: 'singers', orderable: false, searchable: false},
                 {data: 'has_fee', name: 'has_fee', searchable: false},
@@ -162,7 +168,7 @@ $user = Auth::user();
                 @endif
 //                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
-            order: [[2, 'asc']]
+            order: [[0, 'asc']]
         });
 
         $('#search-form').on('submit', function(e) {
@@ -170,19 +176,12 @@ $user = Auth::user();
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#search-form select').on('change', function(e) {
             datatable.draw();
         });
-
-        $('#name-filter').on('keyup', function(e) {
-            var name = $('#name-filter').val();
-            if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#singer-filter').on('keyup', function(e) {
-            var createdBy = $('#singer-filter').val();
+        
+        $('#search-form input').on('keyup', function(e) {
+            var createdBy = $(this).val();
             if (createdBy.length == 0) {
                 datatable.draw();
             }

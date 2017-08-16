@@ -14,16 +14,9 @@
     <div class="row">
         <div class="col-sm-12">
 
-            @if ( session('created') )
-                <div class="btn-group pull-right m-t-15">
-                    <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm tiếp </a>
-                </div>
-            @else
-                <div class="btn-group pull-right m-t-15">
-                    <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
-                </div>
-            @endif
-
+            <div class="btn-group pull-right m-t-15">
+                <a href="{{ url()->previous() }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+            </div>
 
             <h4 class="page-title">Bài hát</h4>
             <ol class="breadcrumb">
@@ -49,11 +42,17 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['id'])}}" role="form"  data-parsley-validate>
+                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['file_name'])}}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
                    <input type="hidden" value="{{ $song['id'] }}" name="song_id">
 
+                    <div class="form-group">
+                        <label for="input-name" class="col-sm-4 control-label">Mã bài hát: </label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Mã bài hát">
+                        </div>
+                    </div>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
@@ -62,12 +61,6 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên file*: </label>
-                    <div class="col-sm-7">
-                      <input type="text" name="file_name" value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Tên file" required>
-                    </div>
-                  </div>
 
                   <div class="form-group">
                     <label for="singers" class="col-sm-4 control-label">Ca sĩ: </label>
@@ -178,20 +171,20 @@
                   <div class="form-group">
                     <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly required>
+                      <input type="text" value="{{ $song['created_by'] }}" id="created_by" placeholder="Người tạo" class="form-control" readonly>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['created_at'] }}" id="created-at" required  class="form-control" readonly placeholder="Ngày tạo">
+                      <input type="text" value="{{ $song['created_at'] }}" id="created-at"  class="form-control" readonly placeholder="Ngày tạo">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
                     <div class="col-sm-7">
-                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" required class="form-control" readonly placeholder="Ngày sửa đổi cuối">
+                      <input type="text" value="{{ $song['updated_at'] }}" id="webSite" class="form-control" readonly placeholder="Ngày sửa đổi cuối">
                     </div>
                   </div>
                   <div class="form-group">

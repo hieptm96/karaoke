@@ -16,13 +16,13 @@ class CreateContentOwnerSongTable extends Migration
         Schema::create('content_owner_song', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('content_owner_id');
-            $table->unsignedInteger('song_id');
+//            $table->unsignedInteger('song_id');
             $table->string('type', 20);
             $table->unsignedInteger('percentage');
             $table->timestamps();
             $table->unsignedInteger('song_file_name')->default(0);
 
-            $table->unique(['content_owner_id', 'song_id', 'type']);
+            $table->unique(['content_owner_id', 'song_file_name', 'type']);
         });
     }
 

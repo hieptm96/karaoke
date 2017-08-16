@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@include('ktvs.box-modal');
-
 @section('content')
     <!-- Page-Title -->
     <div class="row">

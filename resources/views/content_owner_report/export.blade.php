@@ -17,7 +17,7 @@
                 <td>{{ $content_owner->name }}</td>
                 <td>{{ $content_owner->phone }}</td>
                 <td>{{ $content_owner->province }}</td>
-                <td>{{ $content_owner->province }}</td>
+                <td>{{ $content_owner->district }}</td>
                 <td>{{ number_format($content_owner->total_money, 0, '.', '.') }} VNĐ</td>
             </tr>
         @endforeach

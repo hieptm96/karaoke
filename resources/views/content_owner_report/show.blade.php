@@ -34,12 +34,12 @@
                 <div class="col-sm-12">
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
-                            <label class="sr-only" for="">Tên bài hát</label>
-                            <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
+                            <label class="sr-only" for="">Mã bài hát</label>
+                            <input type="text" id="file-name-search" class="form-control" placeholder="Mã bài hát" name="file_name" />
                         </div>
                         <div class="form-group">
-                            <label class="sr-only" for="">Tên file</label>
-                            <input type="text" id="file-name-search" class="form-control" placeholder="Tên file" name="file_name" />
+                            <label class="sr-only" for="">Tên bài hát</label>
+                            <input type="text" id="name-search" class="form-control" placeholder="Tên bài hát" name="name" />
                         </div>
                         <div class="form-group m-l-10">
                             <label class="sr-only" for="date-search">Thời gian</label>
@@ -64,9 +64,8 @@
                 <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th width="2%">Mã</th>
+                        <th width="10%">Mã bài hát</th>
                         <th width="20%">Bài hát</th>
-                        <th width="10%">Tên file</th>
                         <th width="10%">Có thu phí</th>
                         <th width="10%">Số lần sử dụng</th>
                         <th width="20%">Tổng tiền</th>
@@ -99,7 +98,9 @@
 <script>
     $(function () {
 
-        var datatable = $("#datatable").DataTable({
+        console.log($('#datatable'));
+
+        var datatable = $('#datatable').DataTable({
             searching: false,
             serverSide: true,
             processing: true,
@@ -114,15 +115,14 @@
                 }
             },
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
                 {data: 'song_file_name', name: 'song_file_name'},
+                {data: 'name', name: 'name'},
                 {data: 'has_fee', name: 'has_fee'},
                 {data: 'total_times', name: 'total_times'},
                 {data: 'total_money', name: 'total_money'},
                 {data: 'discount', name: 'discount'}
             ],
-            order: [[6, 'desc']]
+            order: [[5, 'desc']]
         });
 
         $('#search-form').on('submit', function(e) {
@@ -130,19 +130,12 @@
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#search-form select').on('change', function(e) {
             datatable.draw();
         });
 
-        $('#name-search').on('keyup', function(e) {
-            var name = $(this).val();
-            if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#phone-search').on('keyup', function(e) {
-            var createdBy = $($this).val();
+        $('#search-form input').on('keyup', function(e) {
+            var createdBy = $(this).val();
             if (createdBy.length == 0) {
                 datatable.draw();
             }

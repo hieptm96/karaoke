@@ -109,7 +109,9 @@ class SongReportController extends Controller
             }
         }
 
-        $song = Song::findOrFail($request->id);
+//        $song = Song::where('id', '=', $request->id)->findOrFail();
+
+        $fileName = $request->filename;
 
         $query = DB::table('ktvs AS k')
                     ->selectRaw('k.id, k.name, k.phone, p.name AS province, d.name AS district, total_times')
@@ -121,7 +123,7 @@ class SongReportController extends Controller
                     ), 'k.id', '=' , 't.ktv_id')
                     ->join('provinces AS p', 'k.province_id', '=', 'p.id')
                     ->join('districts AS d', 'k.district_id', '=', 'd.id')
-                    ->setBindings([$song->file_name, $startDate, $stopDate]);
+                    ->setBindings([$fileName, $startDate, $stopDate]);
 
         return Datatables::of($query)
             ->filter(function ($query) use ($request) {

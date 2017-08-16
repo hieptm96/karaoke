@@ -81,14 +81,14 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin ca sĩ</b></h4>
 
-                <form class="form-horizontal" method="post" action="/singers/{{ $singer['id'] }}" role="form"  data-parsley-validate>
+                <form id="singers-edit" class="form-horizontal" method="post" action="/singers/{{ $singer['id'] }}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" value="{{ $singer['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
+                      <input type="text" name="name" value="{{ $singer['name'] }}" class="form-control" id="input-name" placeholder="Tên">
                     </div>
                   </div>
                   <div class="form-group">
@@ -166,9 +166,22 @@
     $( document ).ready(function() {
         $('select[name=language]').val({{ $singer['language'] }});
         $('select[name=sex]').val({{ $singer['sex'] }});
-        $('.selectpicker').selectpicker('refresh')
         $('form').parsley();
+
+        $('#singers-edit').validate({
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 255
+                }
+            },
+            messages: {
+                name: {
+                    required: "Tên không được để trống",
+                    maxlength: "Tên tối đa 255 ký tự"
+                }
+            }
+        });
     });
 </script>
-
 @endpush

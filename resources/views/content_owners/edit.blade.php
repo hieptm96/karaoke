@@ -28,7 +28,7 @@
                 <p class="text-muted font-13 m-b-30">
                 </p>
 
-                <form action="{{ route('contentowners.update', ['id' => $content_owner->id])  }}" method="POST" class="form-horizontal" role="form" data-parsley-validate="" novalidate="">
+                <form action="{{ route('contentowners.update', ['id' => $content_owner->id])  }}" method="POST" id="content-owner-form" class="form-horizontal" role="form" data-parsley-validate="" novalidate="">
                     {{ method_field('patch') }}
                     @include('content_owners._form')
                 </form>

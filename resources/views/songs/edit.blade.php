@@ -49,7 +49,7 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['id'])}}" role="form"  data-parsley-validate>
+                <form id="songs-edit" class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['id'])}}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
                    <input type="hidden" value="{{ $song['id'] }}" name="song_id">
@@ -58,14 +58,14 @@
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" value="{{ $song['name'] }}" class="form-control" id="input-name" placeholder="Tên" required>
+                      <input type="text" name="name" value="{{ $song['name'] }}" class="form-control" id="input-name" placeholder="Tên">
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên file*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="file_name" value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Tên file" required>
+                      <input type="text" name="file_name" value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Tên file">
                     </div>
                   </div>
 
@@ -462,6 +462,31 @@
     // select owner event
     $(document).on('click', '.select-owner-btn', function() {
         owner = $(this).parent();
+    });
+
+    $(function() {
+        $('#songs-edit').validate({
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 255
+                },
+                file_name: {
+                    required: true,
+                    maxlength: 255
+                }
+            },
+            messages: {
+                name: {
+                    required: "Tên không được để trống",
+                    maxlength: "Tên tối đa 255 ký tự"
+                },
+                file_name: {
+                    required: "Mã bài hát không được để trống",
+                    maxlength: "Mã bài hát tối đa 255 ký tự"
+                }
+            }
+        });
     });
 
 </script>

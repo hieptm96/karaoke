@@ -29,7 +29,7 @@
                 <p class="text-muted font-13 m-b-30">
                 </p>
 
-                <form action="{{ route('ktvs.update', ['id' => $ktv->id])  }}" method="POST" class="form-horizontal" role="form" data-parsley-validate="" novalidate="">
+                <form action="{{ route('ktvs.update', ['id' => $ktv->id])  }}" method="POST" id="ktv-form" class="form-horizontal" role="form" data-parsley-validate="" validate="">
                     {{ method_field('patch') }}
                     @include('ktvs._form')
                 </form>

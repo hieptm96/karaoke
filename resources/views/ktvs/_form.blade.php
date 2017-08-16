@@ -80,9 +80,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="hori-pass1" class="col-sm-4 control-label">Password*</label>
+        <label for="hori-pass1" class="col-sm-4 control-label">Password</label>
         <div class="col-sm-7">
-            <input type="password" name="password" id="password" placeholder="Password" required="" class="form-control">
+            <input type="password" name="password" id="password" placeholder="Password" class="form-control">
         </div>
     </div>
 
@@ -111,5 +111,68 @@
 <script>
     var url = '{{ route('ktvs.getdistricts') }}';
     var provinces = {!! $provinces !!};
+
+    $(document).ready(function() {
+        $.validator.methods.phoneVN = function(value, element, params) {
+            var regex = new RegExp(params);
+            return this.optional( element ) || regex.test(value);
+        };
+        $('#ktv-form').validate({
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 255
+                },
+                representative: {
+                    required: true,
+                    maxlength: 255
+                },
+                phone: {
+                    required: true,
+                    phoneVN: "^[0-9]+$"
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                address: {
+                    required: true,
+                },
+                province_id: {
+                    required: true
+                },
+                district_id: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Tên không được để trống",
+                    maxlength: "Tên tối đa 255 ký tự"
+                },
+                representative: {
+                    required: "Người đại diện không được để trống",
+                    maxlength: "Tên tối đa 255 ký tự"
+                },
+                phone: {
+                    required: "Số điện thoại không được để trống",
+                    phoneVN: "Số điện thoại không đúng định dạng"
+                },
+                email: {
+                    required: "Email không được để trống",
+                    email: "Email không đúng định dạng"
+                },
+                address: {
+                    required: "Địa chỉ không được để trống",
+                },
+                province_id: {
+                    required: "Phải chọn Tỉnh"
+                },
+                district_id: {
+                    required: "Phải chọn Quận/Huyện"
+                }
+            }
+        });
+    });
 </script>
 @endpush

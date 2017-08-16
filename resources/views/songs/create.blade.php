@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
-                <a href="{{ route('songs.index') }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+                <a href="{{ url()->previous() }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
             </div>
 
             <h4 class="page-title">bài hát</h4>
@@ -51,9 +51,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên file*: </label>
+                    <label for="input-name" class="col-sm-4 control-label">Mã bài hát*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="file_name" class="form-control" id="file-name" placeholder="Tên file" value="{{ old('file_name') }}" required>
+                      <input type="text" name="file_name" class="form-control" id="file-name" placeholder="Mã bài hát" value="{{ old('file_name') }}" required>
                     </div>
                   </div>
 

@@ -13,24 +13,29 @@ class KtvsTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create('vi_VN');
 
+        $ktvNames = ['Karaoke Kingdom', 'Karaoke Fyou', 'Karaoke Laravel', 'Karaoke Python', 'Karaoke Best',
+            'Karaoke Nice', 'Karaoke Ruby', 'Karaoke Teemo'];
+
+        $representatives = ['Nguyễn Xuân Phúc', 'Phan Văn Trường', 'Trần Thị Châu'];
+
         $role = \App\Models\Role::where('name', 'business_unit')->first();
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < count($ktvNames); $i++) {
+            $email = generate_email($ktvNames[$i]);
             $user = \App\Models\User::create([
-                'name' => $faker->name,
-                'email' => $faker->email,
+                'name' => $ktvNames[$i],
+                'email' => $email,
                 'password' => bcrypt('123456'),
             ]);
 
             $user->attachRole($role);
 
             $ktv = \App\Models\Ktv::create([
-                'name' => $faker->name,
-                'representative' => $faker->name,
-                'phone' => $faker->phoneNumber,
-                'email' => $faker->email,
-                'address' => $faker->address,
-                'province_id' => 1,
-                'district_id' => 1,
+                'name' => $ktvNames[$i],
+                'representative' => $faker->randomElement($representatives),
+                'phone' => '09' . $faker->numerify("########"),
+                'email' => $email,
+                'province_id' => 24,
+                'district_id' => 561,
                 'user_id' => $user->id,
                 'created_by' => 1,
                 'updated_by' => 1

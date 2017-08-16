@@ -2,8 +2,13 @@
 
 namespace App\Console;
 
+
+use App\Console\Commands\KtvInit;
+use App\Console\Commands\LoadSingerSong;
 use App\Console\Commands\MakeSampleData;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\LoadProviceDistrict;
+use App\Console\Commands\LoadContentOwnerSong;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -16,9 +21,13 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\EmailCommand',
         MakeSampleData::class,
+        LoadSingerSong::class,
+        LoadProviceDistrict::class,
+        LoadContentOwnerSong::class,
+        KtvInit::class,
     ];
 
-    /**
+    /**dd
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule

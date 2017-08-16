@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="btn-group pull-right m-t-15">
-                <a href="{{ route('ktvs.boxes.index', ['ktv' => $ktv->id]) }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
+                <a href="{{ url()->previous() }}"><button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light">Quay lại </button></a>
             </div>
 
             <h4 class="page-title">Danh mục đơn vị kinh doanh</h4>

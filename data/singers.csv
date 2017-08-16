@@ -1,0 +1,730 @@
+ID,name,sex,language,abbr,file_name,star,name_raw,freq
+1,1088,3,1,1088,1800,1,1088,0
+2,Ba Con Mèo,3,1,BCM,1801,1,Ba Con Meo,0
+3,Ac&m,3,1,ACM,1802,1,Ac&m,0
+4,Ái Vân,2,1,AV,1803,1,Ai Van,0
+5,Anh Dũng,1,1,AD,1804,1,Anh Dung,0
+6,Anh Kiệt,1,1,AK,1805,1,Anh Kiet,0
+7,Anh Thư,2,1,AT,1806,1,Anh Thu,0
+8,Anh Tú,1,1,AT,1807,1,Anh Tu,0
+9,Axn,3,1,A,1808,1,Axn,0
+10,Bằng Kiều,1,1,BK,1809,1,Bang Kieu,0
+11,Bảo Hân,2,1,BH,1810,1,Bao Han,0
+12,Bảo Phúc,1,1,BP,1811,1,Bao Phuc,0
+13,Bảo Tuấn,1,1,BT,1812,1,Bao Tuan,0
+14,Bảo Yến,2,1,BY,1813,1,Bao Yen,0
+16,Bích Ngọc,2,1,BN,1815,1,Bich Ngoc,0
+17,Bông Mai,2,1,BM,1816,1,Bong Mai,0
+18,Bonneur Trinh,2,1,BT,1817,1,Bonneur Trinh,0
+19,Bửu Trung,1,1,BT,1818,1,Buu Trung,0
+20,Cẩm Ly,2,1,CL,1819,1,Cam Ly,0
+21,Cẩm Vân,2,1,CV,1820,1,Cam Van,0
+22,Cảnh Hàn,1,1,CH,1821,1,Canh Han,0
+23,Cao Thái Sơn,1,1,CTS,1822,1,Cao Thai Son,0
+24,Cát Tiên,2,1,CT,1823,1,Cat Tien,0
+25,Châu Gia Kiệt,1,1,CGK,1824,1,Chau Gia Kiet,0
+26,Châu Thanh,1,1,CT,1825,1,Chau Thanh,0
+27,Chế Linh,1,1,CL,1826,1,Che Linh,0
+28,Chế Thanh,1,1,CT,1827,1,Che Thanh,0
+30,Chung Tử Lưu,1,1,CTL,1829,1,Chung Tu Luu,0
+31,Công Thành,1,1,CT,1830,1,Cong Thanh,0
+32,Đàm Vĩnh Hưng,1,1,DVH,1831,1,Dam Vinh Hung,0
+33,Đan Huy,1,1,DH,1832,1,Dan Huy,0
+34,Đan Trường,1,1,DT,1833,1,Dan Truong,0
+35,Đăng Khôi,1,1,DK,1834,1,Dang Khoi,0
+36,Đăng Minh,1,1,DM,1835,1,Dang Minh,0
+37,Đặng Trọng Vũ,1,1,DTV,1836,1,Dang Trong Vu,0
+38,Đặng Trường Phát,1,1,DTP,1837,1,Dang Truong Phat,0
+39,Diễm Liên,2,1,DL,1838,1,Diem Lien,0
+40,Diệp Thanh Thanh,2,1,DTT,1839,1,Diep Thanh Thanh,0
+41,Đình Trí,1,1,DT,1840,1,Dinh Tri,0
+42,Đình Văn,1,1,DV,1841,1,Dinh Van,0
+43,Đoan Thy,2,1,DT,1842,1,Doan Thy,0
+44,Đoan Trang,2,1,DT,1843,1,Doan Trang,0
+45,Don Hồ,1,1,DH,1844,1,Don Ho,0
+46,Đức Duy,1,1,DD,1845,1,Duc Duy,0
+47,Đức Huy,1,1,DH,1846,1,Duc Huy,0
+48,Đức Phương,1,1,DP,1847,1,Duc Phuong,0
+49,Duy Khánh,1,1,DK,1848,1,Duy Khanh,0
+50,Duy Linh,1,1,DL,1849,1,Duy Linh,0
+51,Duy Mạnh,1,1,DM,1850,1,Duy Manh,0
+52,Duy Quang,1,1,DQ,1851,1,Duy Quang,0
+53,Elvis Phương,1,1,EP,1852,1,Elvis Phuong,0
+54,Gia Huy,1,1,GH,1853,1,Gia Huy,0
+55,Giao Linh,2,1,GL,1854,1,Giao Linh,0
+56,Gmc,3,1,G,1855,1,Gmc,0
+57,Go On,3,1,GO,1856,1,Go On,0
+58,H.a.t,3,1,H,1857,1,H.a.t,0
+59,Hà Phương,2,1,HP,1858,1,Ha Phuong,0
+60,Hạ Vy,2,1,HV,1859,1,Ha Vy,0
+61,Hải Triều,1,1,HT,1861,1,Hai Trieu,0
+62,Hàn Thái Tú,1,1,HTT,1862,1,Han Thai Tu,0
+63,Hạnh Nguyên,2,1,HN,1863,1,Hanh Nguyen,0
+64,Hiền Thục,2,1,HT,1864,1,Hien Thuc,0
+65,Hồ Lệ Thu,2,1,HLT,1865,1,Ho Le Thu,0
+66,Họa Mi,2,1,HM,1866,1,Hoa Mi,0
+67,Hoài Linh,1,1,HL,1867,1,Hoai Linh,0
+68,Hoài Nam,1,1,HN,1868,1,Hoai Nam,0
+69,Hoài Sơn,1,1,HS,1869,1,Hoai Son,0
+70,Hoàng Châu,2,1,HC,1870,1,Hoang Chau,0
+71,Hoàng Lan,2,1,HL,1871,1,Hoang Lan,0
+72,Hoàng Nam,1,1,HN,1872,1,Hoang Nam,0
+73,Hoàng Oanh,2,1,HO,1873,1,Hoang Oanh,0
+74,Hoàng Tâm,1,1,HT,1874,1,Hoang Tam,0
+75,Hoàng Thanh,1,1,HT,1875,1,Hoang Thanh,0
+76,Hồng Hạnh,2,1,HH,1876,1,Hong Hanh,0
+77,Hồng Ngọc,2,1,HN,1877,1,Hong Ngoc,0
+78,Hồng Nhung,2,1,HN,1878,1,Hong Nhung,0
+79,Hứa Vĩ Văn,1,1,HVV,1879,1,Hua Vi Van,0
+80,Hương Lan,2,1,HL,1880,1,Huong Lan,0
+81,Huy Tâm,1,1,HT,1881,1,Huy Tam,0
+82,Huy Vũ,1,1,HV,1882,1,Huy Vu,0
+83,Jimmy Nguyễn,1,1,JMN,1883,1,Jimmy Nguyen,0
+85,Johnny Dũng,1,1,JD,1885,1,Johnny Dung,0
+86,Kenny Thái,1,1,KT,1887,1,Kenny Thai,0
+87,Kevin Khoa,1,1,KK,1888,1,Kevin Khoa,0
+88,Khả Tú,2,1,KT,1889,1,Kha Tu,0
+89,Khắc Dũng,1,1,KD,1890,1,Khac Dung,0
+90,Khang Chí Vỹ,1,1,KCV,1891,1,Khang Chi Vy,0
+91,Khánh Đăng,1,1,KD,1892,1,Khanh Dang,0
+92,Khánh Du,2,1,KD,1893,1,Khanh Du,0
+93,Khánh Duy,1,1,KD,1894,1,Khanh Duy,0
+94,Khánh Hà,2,1,KH,1895,1,Khanh Ha,0
+95,Khánh Hoàng,1,1,KH,1896,1,Khanh Hoang,0
+96,Phạm Khánh Hưng,1,1,PKH,1897,1,Pham Khanh Hung,0
+97,Khánh Ly,2,1,KL,1898,1,Khanh Ly,0
+98,Khánh Ngọc,2,1,KN,1899,1,Khanh Ngoc,0
+99,Kiều Nga,2,1,KN,1900,1,Kieu Nga,0
+100,Kim Anh,2,1,KA,1901,1,Kim Anh,0
+101,Kim Huyên,2,1,KH,1902,1,Kim Huyen,0
+102,La Sương Sương,2,1,LSS,1904,1,La Suong Suong,0
+103,Lâm Chấn Huy,1,1,LCH,1905,1,Lam Chan Huy,0
+104,Lâm Chí Khanh,1,1,LCK,1906,1,Lam Chi Khanh,0
+105,Lâm Hùng,1,1,LH,1907,1,Lam Hung,0
+106,Lâm Minh,1,1,LM,1908,1,Lam Minh,0
+107,Lâm Nhật Tiến,1,1,LNT,1909,1,Lam Nhat Tien,0
+108,Lam Phương,1,1,LP,1910,1,Lam Phuong,0
+109,Lâm Thúy Vân,2,1,LTV,1911,1,Lam Thuy Van,0
+110,Lam Trường,1,1,LT,1912,1,Lam Truong,0
+111,Lâm Vũ,1,1,LV,1913,1,Lam Vu,0
+112,Lây Minh,1,1,LM,1914,1,Lay Minh,0
+113,Lê Dung,2,1,LD,1915,1,Le Dung,0
+114,Lê Dũng,1,1,LD,1916,1,Le Dung,0
+115,Lê Huỳnh,1,1,LH,1917,1,Le Huỳnh,0
+116,Lệ Quyên,2,1,LQ,1918,1,Le Quyen,0
+117,Lê Tâm,1,1,LT,1919,1,Le Tam,0
+118,Lệ Thuỷ,2,1,LT,1920,1,Le Thuỷ,0
+119,Lê Toàn,1,1,LT,1921,1,Le Toan,0
+120,Lê Uyên Nhi,2,1,LUN,1922,1,Le Uyen Nhi,0
+121,Lê Uyên Phương,2,1,LUP,1923,1,Le Uyen Phuong,0
+122,Linda Trang Đài,2,1,LTD,1924,1,Linda Trang Dai,0
+123,Loan Châu,2,1,LC,1925,1,Loan Chau,0
+124,Long Nhật,1,1,LN,1926,1,Long Nhat,0
+125,Lương Gia Huy,1,1,LGH,1927,1,Luong Gia Huy,0
+126,Lương Tùng Quang,1,1,LTQ,1928,1,Luong Tung Quang,0
+127,Lưu Bích,2,1,LB,1929,1,Luu Bich,0
+128,Lưu Chí Vỹ,1,1,LCV,1930,1,Luu Chi Vy,0
+129,Lưu Gia Bảo,1,1,LGB,1931,1,Luu Gia Bao,0
+130,Lưu Minh Thắng,1,1,LMT,1932,1,Luu Minh Thang,0
+131,Lý Hải,1,1,LH,1933,1,Ly Hai,0
+132,Lý Thái Sơn,1,1,LTS,1934,1,Ly Thai Son,0
+133,Mạnh Đình,1,1,MD,1936,1,Manh Dinh,0
+134,Mạnh Quỳnh,1,1,MQ,1937,1,Manh Quỳnh,0
+135,Mắt Ngọc,3,1,MN,1938,1,Mat Ngoc,0
+136,Minh Quân,1,1,MQ,1939,1,Minh Quan,0
+137,Minh Thư,2,1,MT,1940,1,Minh Thu,0
+138,Minh Thuận,1,1,MT,1941,1,Minh Thuan,0
+139,Minh Trí,1,1,MT,1942,1,Minh Tri,0
+140,Minh Tuyết,2,1,MT,1943,1,Minh Tuyet,0
+141,Minh Vương,1,1,MV,1944,1,Minh Vuong,0
+142,Mộng Thi,2,1,MT,1945,1,Mong Thi,0
+143,Mtv,3,1,M,1946,1,Mtv,0
+144,Mỹ Hạnh,2,1,MH,1947,1,My Hanh,0
+145,Mỹ Huyền,2,1,MH,1948,1,My Huyen,0
+146,Mỹ Lệ,2,1,ML,1949,1,My Le,0
+147,Mỹ Linh,2,1,ML,1950,1,My Linh,0
+148,Mỹ Tâm,2,1,MT,1951,1,My Tam,0
+149,Mỹ Tiên,2,1,MT,1952,1,My Tien,0
+150,Nghi Văn,2,1,NV,1953,1,Nghi Van,0
+151,Ngô Thanh Vân,2,1,NTV,1954,1,Ngo Thanh Van,0
+152,Ngô Quốc Linh,1,1,NTM,1955,1,Ngo Quoc Linh,0
+153,Ngọc Anh,2,1,NA,1956,1,Ngoc Anh,0
+154,Ngọc Ánh,2,1,NA,1957,1,Ngoc Anh,0
+155,Ngọc Bích,2,1,NB,1958,1,Ngoc Bich,0
+156,Ngọc Châu,1,1,NC,1959,1,Ngoc Chau,0
+157,Ngọc Hạ,2,1,NH,1960,1,Ngoc Ha,0
+158,Ngọc Hải,1,1,NH,1961,1,Ngoc Hai,0
+159,Ngọc Hân,2,1,NH,1962,1,Ngoc Han,0
+160,Ngọc Hồ,1,1,NH,1963,1,Ngoc Ho,0
+161,Ngọc Huệ,2,1,NH,1964,1,Ngoc Hue,0
+162,Ngọc Hương,2,1,NH,1965,1,Ngoc Huong,0
+163,Ngọc Huyền,2,1,NH,1966,1,Ngoc Huyen,0
+164,Ngọc Lan,2,1,NL,1967,1,Ngoc Lan,0
+165,Ngọc Sơn,1,1,NS,1968,1,Ngoc Son,0
+166,Ngọc Thúy,2,1,NT,1969,1,Ngoc Thuy,0
+167,Kim Tử Long,1,1,KTL,1971,1,Kim Tu Long,0
+168,Mây Trắng,3,1,MT,1972,1,May Trang,0
+169,Nguyễn Đức,1,1,ND,1973,1,Nguyen Duc,0
+170,Nguyễn Hưng,1,1,NH,1974,1,Nguyen Hung,0
+171,Nguyễn Khang,1,1,NK,1975,1,Nguyen Khang,0
+172,Nguyễn Lộc,1,1,NL,1976,1,Nguyen Loc,0
+173,Nguyễn Phi Hùng,1,1,NPH,1977,1,Nguyen Phi Hung,0
+174,Nguyễn Thắng,1,1,NT,1978,1,Nguyen Thang,0
+175,Nguyên Vũ,1,1,NV,1979,1,Nguyen Vu,0
+177,Nhã Phương,2,1,NP,1981,1,Nha Phuong,0
+178,Nhã Thanh,2,1,NT,1982,1,Nha Thanh,0
+179,Nhật Hào,1,1,NH,1983,1,Nhat Hao,0
+180,Nhật Thực,3,1,NT,1984,1,Nhat Thuc,0
+181,Nhật Tinh Anh,1,1,NTA,1985,1,Nhat Tinh Anh,0
+182,Nhật Trung,1,1,NT,1986,1,Nhat Trung,0
+183,Nhật Trường,1,1,NT,1987,1,Nhat Truong,0
+184,Nini Khanh,2,1,NNK,1989,1,Nini Khanh,0
+185,Phạm Thanh Thảo,2,1,PTT,1990,1,Pham Thanh Thao,0
+186,Phan Đinh Tùng,1,1,PDT,1991,1,Phan Dinh Tung,0
+187,Phi Nhung,2,1,PN,1992,1,Phi Nhung,0
+188,Phi Thúy Hạnh,2,1,PTH,1993,1,Phi Thuy Hanh,0
+189,Phong Đạt,1,1,PD,1994,1,Phong Dat,0
+190,Phương Diễm Hạnh,2,1,PDH,1995,1,Phuong Diem Hanh,0
+191,Phương Dung,2,1,PD,1996,1,Phuong Dung,0
+192,Phương Hồng Quế,2,1,PHQ,1997,1,Phuong Hong Que,0
+193,Phương Lam,1,1,PL,1998,1,Phuong Lam,0
+194,Phượng Mai,2,1,PM,1999,1,Phuong Mai,0
+195,Phương Thanh,2,1,PT,2000,1,Phuong Thanh,0
+197,Quách Thành Danh,1,1,QTD,2002,1,Quach Thanh Danh,0
+198,Quách Tuấn Du,1,1,QTD,2003,1,Quach Tuan Du,0
+199,Quang Dũng,1,1,QD,2004,1,Quang Dung,0
+200,Quang Hà,1,1,QH,2005,1,Quang Ha,0
+201,Quang Lê,1,1,QL,2006,1,Quang Le,0
+202,Quang Linh,1,1,QL,2007,1,Quang Linh,0
+203,Quang Vinh,1,1,QV,2008,1,Quang Vinh,0
+204,Quỳnh Lan,2,1,QL,2009,1,Quỳnh Lan,0
+205,Sắc Màu,3,1,SM,2010,1,Sac Mau,0
+206,Sao Mai,2,1,SM,2011,1,Sao Mai,0
+207,Shayla,2,1,S,2012,1,Shayla,0
+208,Sĩ Phú,1,1,SP,2013,1,Si Phu,0
+209,Siu Black,2,1,SB,2014,1,Siu Black,0
+210,Sơn Ca,2,1,SC,2015,1,Son Ca,0
+211,Sơn Tuyền,2,1,ST,2016,1,Son Tuyen,0
+212,Sỹ Đan,1,1,SD,2017,1,Sy Dan,0
+213,Tam Ca 3a,3,1,TC3,2018,1,Tam Ca 3a,0
+214,Tam Ca Áo Trắng,3,1,TCAT,2019,1,Tam Ca Ao Trang,0
+215,Tâm Đoan,2,1,TD,2020,1,Tam Doan,0
+216,Tấn Minh,1,1,TM,2021,1,Tan Minh,0
+217,Techno,3,1,TN,2022,1,Techno,0
+218,Thái Châu,1,1,TC,2023,1,Thai Chau,0
+219,Thái Hiền,2,1,TH,2024,1,Thai Hien,0
+220,Thái Tài,2,1,TT,2025,1,Thai Tai,0
+221,Thanh Hà,2,1,TH,2026,1,Thanh Ha,0
+222,Thanh Kim Huệ,2,1,TKH,2027,1,Thanh Kim Hue,0
+223,Thanh Lam,2,1,TL,2028,1,Thanh Lam,0
+224,Thanh Lan,2,1,TL,2029,1,Thanh Lan,0
+225,Thành Lộc,1,1,TL,2030,1,Thanh Loc,0
+226,Thanh Long,1,1,TL,2031,1,Thanh Long,0
+227,Thanh Thanh,2,1,TT,2032,1,Thanh Thanh,0
+228,Thanh Thảo,2,1,TT,2033,1,Thanh Thao,0
+229,Thanh Thu,2,1,TT,2034,1,Thanh Thu,0
+230,Thanh Thúy,2,1,TT,2035,1,Thanh Thuy,0
+231,Thanh Trúc,2,1,TT,2036,1,Thanh Truc,0
+232,Thanh Tuyền,2,1,TT,2037,1,Thanh Tuyen,0
+233,Thảo My,2,1,TM,2038,1,Thao My,0
+234,The Bells,3,1,TB,2039,1,The Bells,0
+235,Thế Sơn,1,1,TS,2040,1,The Son,0
+236,Thiên Đăng,1,1,TD,2041,1,Thien Dang,0
+237,Thiên Kim,2,1,TK,2042,1,Thien Kim,0
+238,Thiên Phượng,2,1,TP,2043,1,Thien Phuong,0
+239,Thiên Trang,2,1,TT,2044,1,Thien Trang,0
+240,Thiên Trường Địa Hải,3,1,TTDH,2045,1,Thien Truong Dia Hai,0
+241,Thu Hà,2,1,TH,2046,1,Thu Ha,0
+242,Thu Hiền,2,1,TH,2047,1,Thu Hien,0
+243,Thu Minh,2,1,TM,2048,1,Thu Minh,0
+244,Thu Phương,2,1,TP,2049,1,Thu Phuong,0
+245,Thúy Diễm,2,1,TD,2050,1,Thuy Diem,0
+246,Thùy Dung,2,1,TD,2051,1,Thuy Dung,0
+247,Thúy Hằng,2,1,TH,2052,1,Thuy Hang,0
+248,Thủy Tiên,2,1,TT,2053,1,Thuy Tien,0
+249,Thùy Trang,2,1,TT,2054,1,Thuy Trang,0
+250,Tiến Dũng,1,1,TD,2055,1,Tien Dung,0
+251,Tô Chấn Phong,1,1,TCP,2057,1,To Chan Phong,0
+252,Tô Phương Trang,2,1,TPT,2058,1,To Phuong Trang,0
+253,Tommy Ngô,1,1,TN,2059,1,Tommy Ngo,0
+255,Trần Đức,1,1,TD,2061,1,Tran Duc,0
+256,Trần Tâm,1,1,TT,2062,1,Tran Tam,0
+257,Trần Thái Hoà,1,1,TTH,2063,1,Tran Thai Hoa,0
+258,Trần Tiến,1,1,TT,2064,1,Tran Tien,0
+259,Trang Thanh Lan,2,1,TTL,2065,1,Trang Thanh Lan,0
+260,Triệu Hoàng,1,1,TH,2066,1,Trieu Hoang,0
+261,Trịnh Nam Sơn,1,1,TNS,2067,1,Trinh Nam Son,0
+262,Trio 666,3,1,T6,2068,1,Trio 666,0
+263,Trish Thùy Trang,2,1,TTT,2069,1,Trish Thuy Trang,0
+264,Trọng Phúc,1,1,TP,2070,1,Trong Phuc,0
+265,Trọng Tấn,1,1,TT,2071,1,Trong Tan,0
+266,Trương Chí Dũng,1,1,TCD,2072,1,Truong Chi Dung,0
+267,Trương Đan Huy,1,1,TDH,2073,1,Truong Dan Huy,0
+268,Trường Hiệp,1,1,TH,2074,1,Truong Hiep,0
+270,Trương Vĩnh Toàn,1,1,TVT,2076,1,Truong Vinh Toan,0
+271,Trường Vũ,1,1,TV,2077,1,Truong Vu,0
+272,Tứ Ca Ngẫu Nhiên,3,1,TCNN,2078,1,Tu Ca Ngau Nhien,0
+273,Từ Công Phụng,1,1,TCP,2079,1,Tu Cong Phung,0
+274,Tú Quyên,2,1,TQ,2080,1,Tu Quyen,0
+275,Tuấn Đức,1,1,TD,2081,1,Tuan Duc,0
+276,Tuấn Hưng,1,1,TH,2082,1,Tuan Hung,0
+277,Tuấn Khang,1,1,TK,2083,1,Tuan Khang,0
+278,Tuấn Ngọc,1,1,TN,2084,1,Tuan Ngoc,0
+279,Tuấn Vũ,1,1,TV,2085,1,Tuan Vu,0
+280,Tuấn Vỹ,1,1,TV,2086,1,Tuan Vy,0
+281,Tường Nguyên,1,1,TN,2087,1,Tuong Nguyen,0
+282,Ty My Ty,3,1,TMT,2088,1,Ty My Ty,0
+283,Ưng Hoàng Phúc,1,1,UHP,2089,1,Ung Hoang Phuc,0
+284,Uyên Trang,2,1,UT,2090,1,Uyen Trang,0
+285,Vân Quang Long,1,1,VQL,2091,1,Van Quang Long,0
+286,Vân Trường,1,1,VT,2092,1,Van Truong,0
+287,Việt Quang,1,1,VQ,2093,1,Viet Quang,0
+288,Anh Khoa,1,1,AK,2094,1,Anh Khoa,0
+289,Vũ Hà,1,1,VH,2095,1,Vu Ha,0
+290,Vũ Khanh,1,1,VK,2096,1,Vu Khanh,0
+291,Vũ Luân,1,1,VL,2097,1,Vu Luan,0
+292,Vũ Trâm Anh,2,1,VTA,2098,1,Vu Tram Anh,0
+293,Vũ Vân,2,1,VV,2099,1,Vu Van,0
+295,Ý Lan,2,1,YL,2101,1,Y Lan,0
+296,Yến Khoa,2,1,YK,2102,1,Yen Khoa,0
+297,Yến Phương,2,1,YP,2103,1,Yen Phuong,0
+298,Kỳ Duyên,2,1,KD,2104,1,Kỳ Duyen,0
+299,Trần Thu Hà,2,1,TTH,2105,1,Tran Thu Ha,0
+300,Lệ Thu,2,1,LT,2106,1,Le Thu,0
+301,Điền Thái Toàn,1,1,DTT,2107,1,Dien Thai Toan,0
+303,Mỹ Linh 1,2,1,ML,2109,1,My Linh 1,0
+304,Anh Thơ,2,1,AT,2110,1,Anh Tho,0
+305,Ánh Tuyết,2,1,AT,2111,1,Anh Tuyet,0
+306,Bích Việt,2,1,BV,2112,1,Bich Viet,0
+307,Cao Minh,1,1,CM,2113,1,Cao Minh,0
+308,Chí Linh,1,1,CL,2114,1,Chi Linh,0
+310,Hồ Quỳnh Hương,2,1,HQH,2116,1,Ho Quỳnh Huong,0
+311,Lan Ngọc,2,1,LN,2117,1,Lan Ngoc,0
+312,Linh Tâm,1,1,LT,2118,1,Linh Tam,0
+314,Phi Khanh,2,1,PK,2120,1,Phi Khanh,0
+315,Phương Trinh,2,1,PT,2121,1,Phuong Trinh,0
+316,Quang Thọ,1,1,QT,2122,1,Quang Tho,0
+317,Quý Dương,1,1,QD,2123,1,Quy Duong,0
+318,Thu Thủy,2,1,TT,2124,1,Thu Thuy,0
+319,Tịnh Quyên,2,1,TQ,2125,1,Tinh Quyen,0
+320,Trung Đức,1,1,TD,2126,1,Trung Duc,0
+321,Trung Hậu,2,1,TH,2127,1,Trung Hau,0
+322,Trung Kiên,1,1,TK,2128,1,Trung Kien,0
+324,Như Loan,2,1,NL,2130,1,Nhu Loan,0
+325,D&d,3,1,D,2131,1,D&d,0
+326,Ni Ni,2,1,NN,2132,1,Ni Ni,0
+327,Lương Bằng Quang,1,1,LBQ,2133,1,Luong Bang Quang,0
+328,Lương Bích Hữu,2,1,LBH,2134,1,Luong Bich Huu,0
+329,Mbk,3,1,M,2135,1,Mbk,0
+330,Phạm Quỳnh Anh,2,1,PQA,2136,1,Pham Quỳnh Anh,0
+332,Lâm Gia Minh,1,1,LGM,2138,1,Lam Gia Minh,0
+333,Huy Mc,1,1,HM,2139,1,Huy Mc,0
+334,Hải Anh,1,1,HA,2140,1,Hai Anh,0
+335,Hương Thủy,2,1,HT,2141,1,Huong Thuy,0
+336,Thùy Hương,2,1,TH,2142,1,Thuy Huong,0
+337,Ánh Minh,2,1,AM,2143,1,Anh Minh,0
+338,Andy Quách,1,1,AQ,2144,1,Andy Quach,0
+339,Dạ Nhật Yến,2,1,DNY,2145,1,Da Nhat Yen,0
+340,Anh Tiến,1,1,AT,2146,1,Anh Tien,0
+341,Ngọc Minh,2,1,NM,2147,1,Ngoc Minh,0
+343,Quách An An,2,1,QAA,2149,1,Quach An An,0
+344,Hồng Trúc,2,1,HT,2150,1,Hong Truc,0
+345,Như Mai,2,1,NM,2152,1,Nhu Mai,0
+346,Abba,3,2,A,2153,1,Abba,0
+347,Air Supply,3,2,AS,2154,1,Air Supply,0
+349,98degrees,3,2,D,2156,1,98degrees,0
+350,Aceofbase,3,2,AOB,2157,1,Aceofbase,0
+351,Aero Smith,1,2,AS,2158,1,Aero Smith,0
+352,Amy Grant,2,2,AG,2159,1,Amy Grant,0
+353,Aqua,3,2,A,2160,1,Aqua,0
+354,Babyface,1,2,B,2161,1,Babyface,0
+355,Bsb,3,2,BTB,2162,1,Bsb,0
+356,Bangles,3,2,B,2163,1,Bangles,0
+357,Bee Gees,3,2,BG,2164,1,Bee Gees,0
+359,Bryanadams,1,2,BA,2167,1,Bryanadams,0
+360,Carpenters,2,2,C,2168,1,Carpenters,0
+361,Celinedion,2,2,CLD,2169,1,Celinedion,0
+363,Danhill,1,2,D,2171,1,Danhill,0
+364,Elton John,1,2,EJ,2172,1,Elton John,0
+365,Emilia,2,2,E,2173,1,Emilia,0
+366,Evita,2,2,E,2174,1,Evita,0
+369,Garybarlow,1,2,GB,2177,1,Garybarlow,0
+371,Jewel,2,2,J,2179,1,Jewel,0
+372,Johndenver,1,2,JD,2180,1,Johndenver,0
+374,Lobo,1,2,L,2182,1,Lobo,0
+375,M2m,3,2,MTM,2183,1,M2m,0
+377,Madonna,2,2,M,2185,1,Madonna,0
+379,Oscar,3,2,O,2188,1,Oscar,0
+382,Thebeatles,3,2,TB,2191,1,Thebeatles,0
+383,U2,3,2,U,2192,1,U2,0
+386,Y Zak,1,1,YZ,2196,1,Y Zak,0
+387,Leo Sayer,1,2,LS,2197,1,Leo Sayer,0
+389,Tố Nga,2,1,TN,2199,1,To Nga,0
+390,Trademark,3,2,T,2200,1,Trademark,0
+391,Xuân Hồng,1,1,XH,2201,1,Xuan Hong,0
+392,Xuân Mai,2,1,XM,2202,1,Xuan Mai,0
+393,Cát Trắng,3,1,CT,2203,1,Cat Trang,0
+395,Dân Ca,1,1,DC,2206,1,Dan Ca,0
+396,Disco,3,2,D,2207,1,Disco,0
+397,Philip Huy,1,1,PH,2208,1,Philip Huy,0
+398,Lê Trí,1,1,LT,2209,1,Le Tri,0
+399,Thu Thuỷ 1,2,1,TT,2211,1,Thu Thuỷ 1,0
+400,Vũ Quốc Việt,1,1,VQV,2212,1,Vu Quoc Viet,0
+401,Kim Tiểu Long,1,1,KTL,2214,1,Kim Tieu Long,0
+402,Nguyễn Hoàng Nam,1,1,NHN,2215,1,Nguyen Hoang Nam,0
+403,Ngô Mai Trang,2,1,NMT,2216,1,Ngo Mai Trang,0
+404,Phú Quang,1,1,PQ,2217,1,Phu Quang,0
+405,Quốc Đại,1,1,QD,2218,1,Quoc Dai,0
+406,Vũ Nhật Thành,1,1,VNT,2219,1,Vu Nhat Thanh,0
+407,All 4 One,3,2,AFO,2220,1,All 4 One,0
+408,Anh Khôi,1,1,AK,2221,1,Anh Khoi,0
+409,Anh Tuấn,1,1,AT,2222,1,Anh Tuan,0
+410,Bích Tuyền,2,1,BT,2223,1,Bich Tuyen,0
+411,Boyz 2 Men,3,2,BTM,2224,1,Boyz 2 Men,0
+412,Cải Lương,3,1,CL,2225,1,Cai Luong,0
+413,Cher,2,2,C,2226,1,Cher,0
+414,Christi Lê,2,1,CL,2227,1,Christi Le,0
+415,Dalena,2,1,D,2228,1,Dalena,0
+416,Đăng Dương,1,1,DD,2230,1,Dang Duong,0
+418,Eagles,3,2,E,2232,1,Eagles,0
+420,Hoàng Thiên Long,1,1,HTL,2234,1,Hoang Thien Long,0
+421,Henry Chúc,1,1,HC,2235,1,Henry Chuc,0
+422,Huyền Thoại,3,1,HT,2236,1,Huyen Thoai,0
+424,Khang Bảo Hùng,1,1,KBH,2238,1,Khang Bao Hung,0
+425,Kim Minh Huy,1,1,KMH,2239,1,Kim Minh Huy,0
+426,Khánh Linh,2,1,KL,2240,1,Khanh Linh,0
+427,Kiều Hưng,1,1,KH,2241,1,Kieu Hung,0
+428,Kỳ Anh,1,1,KA,2242,1,Kỳ Anh,0
+429,Lâm Huy Lĩnh,1,1,LHL,2243,1,Lam Huy Linh,0
+430,Lệ Thu Thảo,2,1,LTT,2244,1,Le Thu Thao,0
+431,Lan Anh,2,1,LA,2245,1,Lan Anh,0
+434,Mai Lệ Huyền,2,1,MLH,2248,1,Mai Le Huyen,0
+436,Mai Vy,2,1,MV,2250,1,Mai Vy,0
+437,Nguyên Khương,1,1,NK,2251,1,Nguyen Khuong,0
+438,Ngọc Tân,1,1,NT,2252,1,Ngoc Tan,0
+439,Phạm Huy Du,1,1,PHD,2253,1,Pham Huy Du,0
+440,Quang Lý,1,1,QL,2254,1,Quang Ly,0
+441,Spice Girl,3,2,SG,2255,1,Spice Girl,0
+442,Tạ Minh Tâm,1,1,TMT,2256,1,Ta Minh Tam,0
+443,Thái Phong Vũ,1,1,TPV,2257,1,Thai Phong Vu,0
+444,Tài Linh,2,1,TL,2258,1,Tai Linh,0
+445,Tami Lê,2,1,TL,2259,1,Tami Le,0
+446,Thạch Thảo,2,1,TT,2260,1,Thach Thao,0
+447,Thanh Hoa,2,1,TH,2261,1,Thanh Hoa,0
+448,Trí Hải,1,1,TH,2262,1,Tri Hai,0
+449,Dương Tuấn Khanh,1,1,TK,2263,1,Duong Tuan Khanh,0
+450,Tuấn Khoa,1,1,TK,2264,1,Tuan Khoa,0
+451,Vân Quỳnh,2,1,VQ,2266,1,Van Quỳnh,0
+452,911,2,2,NOO,2267,1,911,0
+454,Đức Long,1,1,DL,2269,1,Duc Long,0
+455,Dương Liễu,1,1,DL,2270,1,Duong Lieu,0
+456,Duy Hạnh,1,1,DH,2271,1,Duy Hanh,0
+457,Hà Cẩm Tú,2,1,HCT,2272,1,Ha Cam Tu,0
+458,Hạ Lan,2,1,HL,2273,1,Ha Lan,0
+459,Hà My,2,1,HM,2274,1,Ha My,0
+460,Hằng Nga,2,1,HN,2275,1,Hang Nga,0
+461,Lâm Quốc Hùng,1,1,LQH,2276,1,Lam Quoc Hung,0
+462,Lệ Hằng,2,1,LH,2277,1,Le Hang,0
+463,Lily Huệ,2,1,LH,2278,1,Lily Hue,0
+464,Minh Nhi,2,1,MN,2279,1,Minh Nhi,0
+465,Minh Thúy,2,1,MT,2280,1,Minh Thuy,0
+466,Mộng Ngọc,2,1,MN,2281,1,Mong Ngoc,0
+467,Ngọc Đài,2,1,ND,2282,1,Ngoc Dai,0
+468,Nguyễn Sơn,1,1,NS,2283,1,Nguyen Son,0
+469,Ông Nhật Khánh,1,1,ONK,2284,1,Ong Nhat Khanh,0
+470,Thùy Dương,2,1,TD,2285,1,Thuy Duong,0
+471,Trần Nguyên,1,1,TN,2286,1,Tran Nguyen,0
+472,Vboys,3,1,V,2287,1,Vboys,0
+473,Bảo Thy,2,1,BT,2288,1,Bao Thy,0
+474,Minh Hà,1,1,MH,2289,1,Minh Ha,0
+475,Lô Thủy,2,1,LT,2290,1,Lo Thuy,0
+476,Hương Giang,2,1,HG,2291,1,Huong Giang,0
+477,Nhật Kim Anh,2,1,NKA,2292,1,Nhat Kim Anh,0
+479,Tô Thy Hằng,2,1,TTH,2295,1,To Thy Hang,0
+480,Vĩnh Thuyên Kim,2,1,VTK,2296,1,Vinh Thuyen Kim,0
+481,Quốc Dũng,1,1,QD,2297,1,Quoc Dung,0
+482,Quốc Hùng,1,1,QH,2298,1,Quoc Hung,0
+484,Quốc Tuấn,1,1,QT,2300,1,Quoc Tuan,0
+485,Thanh Huyền,2,1,TH,2301,1,Thanh Huyen,0
+486,Thanh Hằng,2,1,TH,2302,1,Thanh Hang,0
+487,Thanh Mai,2,1,TM,2303,1,Thanh Mai,0
+488,Akira Phan,1,1,AP,2306,1,Akira Phan,0
+489,Minh Hằng,2,1,MH,2315,1,Minh Hang,0
+490,Thùy Chi,2,1,TC,2316,1,Thuy Chi,0
+491,2b,3,1,HB,2326,1,2b,0
+492,Bằng Cường,1,1,BC,2329,1,Bang Cuong,0
+493,Duy Khoa,1,1,DK,2330,1,Duy Khoa,0
+495,Đông Nhi,2,1,DN,2334,1,Dong Nhi,0
+496,Hà Anh Tuấn,1,1,HAT,2335,1,Ha Anh Tuan,0
+497,Hải Nguyên,2,1,HN,2336,1,Hai Nguyen,0
+498,Hoàng Hải,1,1,HH,2337,1,Hoang Hai,0
+499,Hoàng Nghiệp,1,1,HN,2338,1,Hoang Nghiep,0
+500,Khánh Phương,1,1,KP,2341,1,Khanh Phuong,0
+501,Lê Hiếu,1,1,LH,2343,1,Le Hieu,0
+502,Ngô Kiến Huy,1,1,NKH,2348,1,Ngo Kien Huy,0
+503,Ngô Trác Linh,2,1,NTL,2350,1,Ngo Trac Linh,0
+504,Tần Khánh,1,1,TK,2351,1,Tan Khanh,0
+505,Tân Nhàn,2,1,TN,2352,1,Tan Nhan,0
+506,Tống Gia Vỹ,1,1,TGV,2353,1,Tong Gia Vy,0
+507,Ưng Đại Vệ,1,1,UDV,2355,1,Ung Dai Ve,0
+508,Vũ Duy Khánh,1,1,VDK,2356,1,Vu Duy Khanh,0
+509,Wanbi Tuấn Anh,1,1,WTA,2357,1,Wanbi Tuan Anh,0
+510,Chu Hiểu Minh,1,1,CHM,2358,1,Chu Hieu Minh,0
+511,Đinh Ứng Phi Trường,1,1,DUPT,2359,1,Dinh Ung Phi Truong,0
+512,Dương Triệu Vũ,1,1,DTV,2360,1,Duong Trieu Vu,0
+513,Hồ Ngọc Hà,2,1,HNH,2361,1,Ho Ngoc Ha,0
+514,Hoàng Hải Đăng,1,1,HHD,2362,1,Hoang Hai Dang,0
+515,Hoàng Lê Vy,2,1,HLV,2363,1,Hoang Le Vy,0
+516,Hoàng Thùy Linh,2,1,HTL,2364,1,Hoang Thuy Linh,0
+517,Khổng Tú Quỳnh,2,1,KTQ,2365,1,Khong Tu Quỳnh,0
+518,Kasim Hoàng Vũ,1,1,KHV,2366,1,Kasim Hoang Vu,0
+519,Lâm Chấn Khang,1,1,LCK,2367,1,Lam Chan Khang,0
+522,Mr.Siro,1,1,MS,2370,1,Mr.Siro,0
+523,Mỹ Dung,2,1,MD,2371,1,My Dung,0
+524,Nguyễn Đức Cường,1,1,NDC,2372,1,Nguyen Duc Cuong,0
+525,Nam Cường,1,1,NC,2373,1,Nam Cuong,0
+526,Ngân Khánh,2,1,NK,2374,1,Ngan Khanh,0
+527,Noo Phước Thịnh,1,1,NPT,2375,1,Noo Phuoc Thinh,0
+528,Phạm Nhật Huy,1,1,PNH,2376,1,Pham Nhat Huy,0
+530,Phương Vy,2,1,PV,2378,1,Phuong Vy,0
+531,Quỳnh Nga,2,1,QN,2379,1,Quỳnh Nga,0
+533,Sỹ Luân,1,1,SL,2381,1,Sy Luan,0
+534,Tim,1,1,T,2382,1,Tim,0
+535,Tô Minh Thắng,1,1,TMT,2383,1,To Minh Thang,0
+536,Tóc Tiên,2,1,TT,2384,1,Toc Tien,0
+538,Như Quỳnh,2,1,NQ,1988,1,Nhu Quỳnh,0
+1239,Anh Khang,1,1,AK,2501,1,Anh Khang,0
+1240,Bfb Band,3,1,BFB,2502,1,Bfb Band,0
+1241,Châu Anh Trường,1,1,CAT,2503,1,Chau Anh Truong,0
+1242,Châu Khải Phong,1,1,CKP,2504,1,Chau Khai Phong,0
+1243,Châu Việt Cường,1,1,CVC,2505,1,Chau Viet Cuong,0
+1244,Chí Thiện,1,1,CT,2506,1,Chi Thien,0
+1245,Đại Nhân,1,1,DN,2507,1,Dai Nhan,0
+1246,Đan Nguyên,1,1,DN,2508,1,Dan Nguyen,0
+1247,Đinh Mạnh Ninh,1,1,DMN,2509,1,Dinh Manh Ninh,0
+1248,Hải Băng,2,1,HB,2510,1,Hai Bang,0
+1249,Hkt Band,3,1,HKT,2511,1,Hkt Band,0
+1250,Hồ Quang Hiếu,1,1,HQH,2512,1,Ho Quang Hieu,0
+1251,Hòa Mi,2,1,HM,2513,1,Hoa Mi,0
+1252,Hoàng Bách,1,1,HB,2514,1,Hoang Bach,0
+1253,Khắc Việt,1,1,KV,2515,1,Khac Viet,0
+1254,Khang Duy,1,1,KD,2516,1,Khang Duy,0
+1255,Khánh Đơn,1,1,KD,2517,1,Khanh Don,0
+1256,Khánh Trung,1,1,KT,2518,1,Khanh Trung,0
+1257,Khởi My,2,1,KM,2519,1,Khoi My,0
+1259,Mai Phương,2,1,MP,2521,1,Mai Phuong,0
+1260,Minh Vương M4u,1,1,MV,2522,1,Minh Vuong M4u,0
+1261,Nguyễn Hải Phong,1,1,NHP,2523,1,Nguyen Hai Phong,0
+1262,Ông Cao Thắng,1,1,OCT,2524,1,Ong Cao Thang,0
+1263,Phạm Trưởng,1,1,PT,2525,1,Pham Truong,0
+1264,Quang Mẫn,1,1,QM,2526,1,Quang Man,0
+1266,Saka Trương Tuyền,2,1,SKTT,2528,1,Saka Truong Tuyen,0
+1267,The Men,3,1,TM,2529,1,The Men,0
+1268,Tina Tình,2,1,TT,2530,1,Tina Tinh,0
+1269,Trịnh Thăng Bình,1,1,TTB,2531,1,Trinh Thang Binh,0
+1270,Trương Quỳnh Anh,2,1,TQA,2532,1,Truong Quỳnh Anh,0
+1271,Trương Thế Vinh,1,1,TTV,2533,1,Truong The Vinh,0
+1272,Văn Mai Hương,2,1,VMH,2534,1,Van Mai Huong,0
+1273,Vĩ Mj,1,1,VM,2535,1,Vi Mj,0
+1274,Vmusic,3,1,VM,2536,1,Vmusic,0
+1275,Vy Oanh,2,1,VO,2537,1,Vy Oanh,0
+1276,Vy Thúy Vân,2,1,VTV,2538,1,Vy Thuy Van,0
+1277,Xband,3,1,XB,2539,1,Xband,0
+1278,Yanbi,1,1,YA,2540,1,Yanbi,0
+1279,Băng Tâm,2,1,BT,2541,1,Bang Tam,0
+1280,Dương Ngọc Thái,1,1,DNT,2542,1,Duong Ngoc Thai,0
+1281,Kevin Triệu,1,1,KT,2543,1,Kevin Trieu,0
+1282,Lưu Kỳ Hương,2,1,LKH,2544,1,Luu Kỳ Huong,0
+1283,Miu Lê,2,1,ML,2545,1,Miu Le,0
+1284,Uyên Linh,2,1,UL,2546,1,Uyen Linh,0
+1285,365 Band,3,1,BSNB,2547,1,365 Band,0
+1286,Ái Phương,2,1,AP,2548,1,Ai Phuong,0
+1288,Bích Phương,2,1,BP,2551,1,Bich Phuong,0
+1289,Bùi Anh Tuấn,1,1,BAT,2552,1,Bui Anh Tuan,0
+1290,Cao Tùng Anh,1,1,CTA,2553,1,Cao Tung Anh,0
+1291,Chánh Mạnh,1,1,CM,2554,1,Chanh Manh,0
+1292,Chi Dân,1,1,CD,2555,1,Chi Dan,0
+1293,Đào Bá Lộc,1,1,DBL,2556,1,Dao Ba Loc,0
+1294,Đỗ Xuân Sơn,1,1,DXS,2557,1,Do Xuan Son,0
+1295,Du Thiên,1,1,DT,2558,1,Du Thien,0
+1296,Đức Tuấn,1,1,DT,2559,1,Duc Tuan,0
+1297,Dương 565,1,1,DNSN,2560,1,Duong 565,0
+1298,Giang Hồng Ngọc,2,1,GHN,2561,1,Giang Hong Ngoc,0
+1299,Hà Okio,1,1,HO,2562,1,Ha Okio,0
+1300,Hồ Trung Dũng,1,1,HTD,2563,1,Ho Trung Dung,0
+1301,Hồ Việt Trung,1,1,HVT,2564,1,Ho Viet Trung,0
+1302,Hoàng Lê Vi,2,1,HLV,2565,1,Hoang Le Vi,0
+1303,Hoàng Rapper,1,1,HR,2566,1,Hoang Rapper,0
+1304,Hoàng Tôn,1,1,HT,2567,1,Hoang Ton,0
+1305,Hồng Dương M4u,1,1,HDM,2568,1,Hong Duong M4u,0
+1306,Hương Giang Idol,2,1,HGI,2569,1,Huong Giang Idol,0
+1307,Hương Tràm,2,1,HT,2570,1,Huong Tram,0
+1308,Huỳnh Nhật Đông,1,1,HND,2571,1,Huỳnh Nhat Dong,0
+1309,Justatee,1,1,J,2572,1,Justatee,0
+1310,Lê Bảo Bình,1,1,LBB,2573,1,Le Bao Binh,0
+1311,Lê Việt Anh,1,1,LVA,2574,1,Le Viet Anh,0
+1312,Lee Thiên Bảo,1,1,LTB,2575,1,Lee Thien Bao,0
+1313,Lều Phương Anh,2,1,LPA,2576,1,Leu Phuong Anh,0
+1314,Lương Khánh Vy,2,1,LKV,2577,1,Luong Khanh Vy,0
+1315,Lương Minh Trang,2,1,LMT,2578,1,Luong Minh Trang,0
+1316,Lưu Hương Giang,2,1,LHG,2579,1,Luu Huong Giang,0
+1317,Lý Hào Nam,1,1,LHN,2580,1,Ly Hao Nam,0
+1318,Lynk Lee,1,1,LL,2581,1,Lynk Lee,0
+1319,Mạnh Quân,1,1,MQ,2582,1,Manh Quan,0
+1320,Maya,2,1,MY,2583,1,Maya,0
+1321,Nguyên Khôi,1,1,NK,2584,1,Nguyen Khoi,0
+1322,Pha Lê,2,1,PL,2585,1,Pha Le,0
+1323,Phạm Hồng Phước,1,1,PHP,2586,1,Pham Hong Phuoc,0
+1324,Phạm Phương Thảo,2,1,PPT,2587,1,Pham Phuong Thao,0
+1325,Phương Linh,2,1,PL,2588,1,Phuong Linh,0
+1326,Phương Ý,2,1,PY,2589,1,Phuong Y,0
+1327,Sơn Tùng M-tp,1,1,ST,2590,1,Son Tung M-tp,0
+1328,Tăng Nhật Tuệ,1,1,TNT,2591,1,Tang Nhat Tue,0
+1329,Thanh Bùi,1,1,TB,2592,1,Thanh Bui,0
+1330,Thúy Khanh,2,1,TK,2593,1,Thuy Khanh,0
+1331,Tiên Cookie,2,1,TCK,2594,1,Tien Cookie,0
+1332,Trà My Idol,2,1,TMI,2595,1,Tra My Idol,0
+1333,Trần Tuấn Lương,1,1,TTL,2597,1,Tran Tuan Luong,0
+1334,Trần Tùng Anh,1,1,TTA,2598,1,Tran Tung Anh,0
+1335,Tùng Dương,1,1,TD,2599,1,Tung Duong,0
+1336,Việt Tú,1,1,VT,2600,1,Viet Tu,0
+1337,Xuân Hảo,1,1,XH,2601,1,Xuan Hao,0
+1338,Yến Nhi,2,1,YN,2602,1,Yen Nhi,0
+1339,Yến Trang,2,1,TTA,2603,1,Yen Trang,0
+1340,Yuki Huy Nam,1,1,YKHN,2604,1,Yuki Huy Nam,0
+1341,Bích Hồng,2,1,BH,2605,0,Bich Hong,
+1342,Cao Trung,1,1,CT,2606,0,Cao Trung,
+1343,Đinh Kiến Phong,1,1,DKP,2607,0,Dinh Kien Phong,
+1344,Hồ Quang 8,1,1,HQT,2608,0,Ho Quang 8,
+1345,Hoài Lâm,1,1,HL,2609,0,Hoai Lam,
+1346,Hương Mơ,2,1,HM,2610,0,Huong Mo,
+1347,Ngọc Ký,1,1,NK,2611,0,Ngoc Ky,
+1348,Phan Mạnh Quỳnh,1,1,PMQ,2612,0,Phan Manh Quỳnh,
+1349,Quốc Thiên,1,1,QT,2613,0,Quoc Thien,
+1350,Trung Quân Idol,1,1,TQI,2614,0,Trung Quan Idol,
+1351,Việt Hoàn,1,1,VH,2615,0,Viet Hoan,
+1352,Vũ Cát Tường,2,1,VCT,2616,0,Vu Cat Tuong,
+1353,Trịnh Đình Quang,1,1,TDQ,2617,0,Trinh Dinh Quang,
+1354,Đinh Hương,2,1,DH,2618,0,Dinh Huong,
+1355,Tiêu Châu Như Quỳnh,2,1,TCNQ,2619,0,Tieu Chau Nhu Quỳnh,
+1356,Hamlet Trương,1,1,HT,2620,0,Hamlet Truong,
+1357,Tiên Tiên,2,1,TT,2621,0,Tien Tien,
+1358,Hà Thúy Anh,2,1,HTA,2622,0,Ha Thuy Anh,
+1359,Lý Diệu Linh,2,1,LDL,2623,0,Ly Dieu Linh,
+1360,Lê Trọng Hiếu,1,1,LTH,2624,0,Le Trong Hieu,
+1361,Hari Won,2,1,HW,2625,0,Hari Won,
+1362,Sơn Ngọc Minh,1,1,SNM,2626,0,Son Ngoc Minh,
+1363,Thái Trinh,2,1,TT,2627,0,Thai Trinh,
+1364,Dương Hồng Loan,2,1,DHL,2628,0,Duong Hong Loan,
+1365,Đoàn Thúy Trang,2,1,DTT,2629,0,Doan Thuy Trang,
+1366,Song Thư,2,1,ST,2630,0,Song Thu,
+1367,Isaac,1,1,I,2631,0,Isaac,
+1369,Mai Quốc Huy,1,1,MQH,2633,0,Mai Quoc Huy,
+1370,Randy,1,1,RD,2634,0,Randy,
+1371,Hồ Vĩnh Khoa,1,1,HVK,2635,0,Ho Vinh Khoa,
+1372,Quang Hào,1,1,QH,2636,0,Quang Hao,
+1373,Onlyc,1,1,O,2637,0,Onlyc,
+1374,Lương Nguyệt Anh,2,1,LNA,2638,0,Luong Nguyet Anh,
+1375,5 Dòng Kẻ,3,1,NDK,2639,0,5 Dong Ke,
+1376,La Thăng,3,1,LT,2640,0,La Thang,
+1377,Sky Nguyễn,1,1,SN,2641,0,Sky Nguyen,
+1378,Wendy Thảo,2,1,WT,2642,0,Wendy Thao,
+1380,Quang Anh,1,1,QA,2644,0,Quang Anh,
+1381,Đoàn Việt Phương,1,1,DVP,2645,0,Doan Viet Phuong,
+1382,Nam Du,1,1,ND,2646,0,Nam Du,
+1383,Trịnh Tuấn Vy,1,1,TTV,2647,0,Trinh Tuan Vy,
+1384,Trương Khải Minh,1,1,TKM,2648,0,Truong Khai Minh,
+1385,Cao Trung Hiếu,1,1,CTH,2649,0,Cao Trung Hieu,
+1386,Nguyễn Thiện Nhân,2,1,NTN,2650,0,Nguyen Thien Nhan,
+1387,Vương Anh Tú,1,1,VAT,2651,0,Vuong Anh Tu,
+1388,Phú Luân,1,1,PL,2652,0,Phu Luan,
+1389,Đoàn Bá Chí,1,1,DBC,2653,0,Doan Ba Chi,
+1390,Trương Y Du,1,1,TYD,2654,0,Truong Y Du,
+1391,Thái Quang,1,1,TQ,2655,0,Thai Quang,
+1392,Hà Duy Thái,1,1,HDT,2656,0,Ha Duy Thai,
+1393,Lưu Quang Anh,1,1,LQA,2657,0,Luu Quang Anh,
+1394,Nhật Hoàng Tân,1,1,NHT,2658,0,Nhat Hoang Tan,
+1395,Trip Hậu,1,1,TH,2659,0,Trip Hau,
+1396,Thành Đại Siêu,1,1,TDS,2660,0,Thanh Dai Sieu,
+1397,Ka Như Ngọc,2,1,KNN,2661,0,Ka Nhu Ngoc,
+1398,Như Ý,2,1,NY,2662,0,Nhu Y,
+1399,New Star,3,1,NS,2663,0,New Star,
+1400,Alo Band,3,1,AB,2664,0,Alo Band,
+1401,Khánh Phong,1,1,KP,2665,0,Khanh Phong,
+1402,Nguyên Hy,1,1,NH,2666,0,Nguyen Hy,
+1403,Bigdaddy,1,1,B,2667,0,Bigdaddy,
+1404,Soobin Hoàng Sơn,1,1,SHS,2668,0,Soobin Hoang Son,
+1405,Nguyễn Đình Vũ,1,1,NDV,2669,0,Nguyen Dinh Vu,
+1406,Bảo Trâm,2,1,BT,2670,0,Bao Tram,
+1407,Thanh Ngọc,2,1,TN,2671,0,Thanh Ngoc,
+1408,Hand Leajung ,1,1,HL,2672,0,Hand Leajung ,
+1409,Duyên Anh Idol,2,1,DAI,2673,0,Duyen Anh Idol,
+1410,Ngô Huy Đồng,1,1,NHD,2674,0,Ngo Huy Dong,
+1411,Giáng Tiên,2,1,GT,2675,0,Giang Tien,
+1412,Minh Trang Lyly,2,1,MTL,2676,0,Minh Trang Lyly,
+1413,Lưu Minh Tuấn,1,1,LMT,2677,0,Luu Minh Tuan,
+1414,Ngọc Liên,2,1,NL,2678,0,Ngoc Lien,
+1415,Kevin Rogers,1,1,KR,2679,0,Kevin Rogers,
+1416,Khánh Dung,2,1,KD,2680,0,Khanh Dung,
+1417,Fm,3,1,F,2681,0,Fm,
+1418,Hòa Minzy,2,1,HM,2682,0,Hoa Minzy,
+1419,Bee T,3,1,BT,2683,0,Bee T,
+1420,Trần Thái Hòa,1,1,TTH,2684,0,Tran Thai Hoa,
+1421,Lam Trang,2,1,LT,2685,0,Lam Trang,
+1422,Sy Thanh,2,1,ST,2686,0,Sy Thanh,
+1423,Addy Trần,1,1,AT,2687,0,Addy Tran,
+1424,Vũ Thảo My,2,1,VTM,2688,0,Vu Thao My,
+1425,Phan Ngọc Luân,1,1,PNL,2689,0,Phan Ngoc Luan,
+1426,Hồ Quang Lộc,1,1,HQL,2690,0,Ho Quang Loc,
+1427,Nhất Minh,1,1,NM,2691,0,Nhat Minh,
+1428,Trường Sơn,1,1,TS,2692,0,Truong Son,
+1429,Artista Band,3,1,AB,2693,0,Artista Band,
+1430,Hoàng Sky,1,1,HS,2694,0,Hoang Sky,
+1431,Tam Hổ,3,1,TH,2695,0,Tam Ho,
+1432,Huỳnh Nguyễn Công Bằng ,1,1,HNCB,2696,0,Huỳnh Nguyen Cong Bang ,
+1433,Lil Shady,1,1,LS,2697,0,Lil Shady,
+1434,Trịnh Thiên Ân,1,1,TTA,2698,0,Trinh Thien An,
+1435,Lam Anh,2,1,LA,2699,0,Lam Anh,
+1436,Emily,2,1,E,2700,0,Emily,
+1437,Đào Phi Dương,1,1,DPD,2701,0,Dao Phi Duong,
+1438,Dương Hoàng Yến,2,1,DHY,2702,0,Duong Hoang Yen,
+1439,Hồ Hoàng Yến,2,1,HHY,2703,0,Ho Hoang Yen,
+1440,Duy Trường,1,1,DT,2704,0,Duy Truong,
+1441,Mai Thiên Vân,2,1,MTV,2705,0,Mai Thien Van,
+1442,Chế Phong,1,1,CP,2706,0,Che Phong,
+1443,Quế Vân,2,1,QV,2707,0,Que Van,
+1444,Quốc Hưng,1,1,QH,2708,0,Quoc Hung,
+1445,Quỳnh Vi,2,1,QV,2709,0,Quỳnh Vi,
+1446,Phương My Chi,2,1,PMC,2710,0,Phuong My Chi,
+1447,Trúc Nhân,1,1,TN,2711,0,Truc Nhan,
+1448,Lưu Ánh Loan,2,1,LAL,2712,0,Luu Anh Loan,
+1449,Khánh Lâm,1,1,KL,2713,0,Khanh Lam,
+1450,Mai Tiến Dũng,1,1,MTD,2714,0,Mai Tien Dung,
+1451,Tạ Quang Thắng,1,1,TQT,2715,0,Ta Quang Thang,
+1452,Lk,1,1,L,2716,0,Lk,
+1453,Hà Thanh Xuân,2,1,HTX,2717,0,Ha Thanh Xuan,
+1454,Xuân Nghi,2,1,XN,2718,0,Xuan Nghi,
+1455,Phúc Bồ,1,1,PB,2719,0,Phuc Bo,
+1456,Châu Khánh Hà,2,1,CKH,2720,0,Chau Khanh Ha,
+1457,Kavie Trần,2,1,KT,2721,0,Kavie Tran,
+1458,Thái Xuân Anh,1,1,TXA,2722,0,Thai Xuan Anh,
+1459,Nipe,2,1,N,2723,0,Nipe,
+1460,Hy Khang,1,1,HK,2724,0,Hy Khang,
+1461,Hoài Anh Kiệt,1,1,HAK,2725,0,Hoai Anh Kiet,
+1462,Phạm Bảo Nam,1,1,PBN,2726,0,Pham Bao Nam,
+1463,Leg,1,1,L,2727,0,Leg,
+1464,Mpkh,3,1,M,2728,0,Mpkh,
+1465,Trang Pháp,2,1,TP,2729,0,Trang Phap,
+1466,Khang Việt,1,1,KV,2730,0,Khang Viet,
+1467,Đông Hùng,1,1,DH,2731,0,Dong Hung,
+1468,Mun Phạm,2,1,MP,2732,0,Mun Pham,
+1469,Đông Nghi,2,1,DN,2733,0,Dong Nghi,
+1470,Quách Beem,1,1,QB,2734,0,Quach Beem,
+5004,She,3,3,SHE,5004,1,She,0
+5656,Westlife,3,2,W,5656,1,Westlife,0
+5681,Lionel Richie,1,2,LR,5681,1,Lionel Richie,0
+5686,Boyzone,3,2,BOYZO,5686,1,Boyzone,0
+6136,Tata Young,2,2,TY,6136,1,Tata Young,0
+6168,Blondie,3,2,B,6168,1,Blondie,0
+6868,Pink,2,2,P,6868,1,Pink,0
+6873,Sweetbox,3,2,S,6873,1,Sweetbox,0

@@ -20,6 +20,9 @@ class UsersTableSeeder extends Seeder
         foreach ($roles as $role) {
             $user = new App\Models\User;
             $user->name = $role->display_name;
+            if (stripos($user->name, 'admin') !== false) {
+                $user->is_superadmin = 1;
+            }
             $user->email = $role->name . '@gmail.com';
             $user->password = bcrypt('123456');
             $user->save();

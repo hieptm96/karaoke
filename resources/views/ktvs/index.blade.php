@@ -53,7 +53,7 @@ $user = Auth::user();
                                 <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
                                 <input type="text" id="email-search" class="form-control" placeholder="Email" name="email" />
                                 <select name="province" id="province" class="form-control" ng-model="province" ng-change="get_districts(province)">
-                                    <option value="">-- Chọn tỉnh -- </option>
+                                    <option value="">-- Chọn Tỉnh/Thành -- </option>
                                     @foreach ($provinces as $province)
                                         <option value="{{ $province->id }}">{{ $province->name }}</option>
                                     @endforeach
@@ -88,7 +88,7 @@ $user = Auth::user();
                             <th>Điện thoại</th>
                             <th width="10%">Email</th>
                             <th width="10%">Địa chỉ</th>
-                            <th width="10%">Tỉnh</th>
+                            <th width="10%">Tỉnh/Thành</th>
                             <th width="10%">Quận/Huyện</th>
                             <th width="10%">Số lượng đầu máy</th>
                             <th width="9%">#</th>

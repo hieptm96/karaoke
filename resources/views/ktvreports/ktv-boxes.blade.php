@@ -53,6 +53,7 @@
 @push('inline_scripts')
     <script>
         $(function () {
+            $.fn.dataTable.ext.errMode = 'none';
             var datatable = $("#ktv-boxes-report #datatable").DataTable({
                 searching: false,
                 serverSide: true,

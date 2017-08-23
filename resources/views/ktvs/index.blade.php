@@ -121,6 +121,7 @@ $user = Auth::user();
 <script>
     var url = '{{ route('ktvreports.getdistricts') }}';
     $(function () {
+        $.fn.dataTable.ext.errMode = 'none';
         var datatable = $("#datatable").DataTable({
             searching: false,
             serverSide: true,

@@ -121,7 +121,7 @@ $user = Auth::user();
     var dataSet = [];
 
     $(function () {
-
+        $.fn.dataTable.ext.errMode = 'none';
         var datatable = $("#datatable").DataTable({
             searching: true,
             // serverSide: true,

@@ -174,11 +174,14 @@ class SongRepository implements Contract
         $count = 0;
         foreach ($owners as $key => &$owner) {
             if ($count == count($owners) - 1) {
-
+                $owner['percentage'] = $remainPercent;
+                break;
             }
 
             $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
             $owner['percentage'] = round($realPercent);
+            $remainPercent -= $owner['percentage'];
+            $count++;
         }
 
         return $owners;

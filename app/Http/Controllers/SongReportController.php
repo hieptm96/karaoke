@@ -113,17 +113,28 @@ class SongReportController extends Controller
 
         $fileName = $request->filename;
 
+
+//        $query = DB::table('ktvs AS k')
+//                    ->selectRaw('k.id, k.name, k.phone, p.name AS province, d.name AS district, total_times')
+//                    ->join(DB::raw('(select  ktv_id, sum(times) as total_times
+//                                	from imported_data_usages i
+//                                	where song_file_name = ?
+//                                    AND date BETWEEN ? AND ?
+//                                	group by ktv_id) AS t'
+//                    ), 'k.id', '=' , 't.ktv_id')
+//                    ->join('provinces AS p', 'k.province_id', '=', 'p.id')
+//                    ->join('districts AS d', 'k.district_id', '=', 'd.id')
+//                    ->setBindings([$fileName, $startDate, $stopDate]);
+
         $query = DB::table('ktvs AS k')
-                    ->selectRaw('k.id, k.name, k.phone, p.name AS province, d.name AS district, total_times')
-                    ->join(DB::raw('(select  ktv_id, sum(times) as total_times
-                                	from imported_data_usages i
-                                	where song_file_name = ?
-                                    AND date BETWEEN ? AND ?
-                                	group by ktv_id) AS t'
-                    ), 'k.id', '=' , 't.ktv_id')
-                    ->join('provinces AS p', 'k.province_id', '=', 'p.id')
-                    ->join('districts AS d', 'k.district_id', '=', 'd.id')
-                    ->setBindings([$fileName, $startDate, $stopDate]);
+            ->selectRaw('k.id, k.name, k.phone, p.name AS province, d.name AS district, sum(times) as total_times')
+            ->join('imported_data_usages as i', 'k.id', '=' , 'i.ktv_id')
+            ->join('provinces AS p', 'k.province_id', '=', 'p.id')
+            ->join('districts AS d', 'k.district_id', '=', 'd.id')
+            ->where('i.song_file_name', '=', '?')
+            ->whereBetween('i.date', ['?', '?'])
+            ->setBindings([$fileName, $startDate, $stopDate]);
+
 
         return Datatables::of($query)
             ->filter(function ($query) use ($request) {

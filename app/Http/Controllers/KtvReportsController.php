@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Excel;
 use Datatables;
+use App\Models\Ktv;
 use Illuminate\Http\Request;
 use App\Models\ImportedDataUsage;
 use App\Transformers\KtvReportTransformer;
@@ -136,5 +137,10 @@ class KtvReportsController extends Controller
     public function detailDatatables(Request $request)
     {
         return $this->ktvReportRepository->getDetailDatatables($request);
+    }
+
+    public function boxesDetailDatatables(Ktv $ktv, Request $request)
+    {
+        return $this->ktvReportRepository->getBoxesDetailDatatables($ktv, $request);
     }
 }

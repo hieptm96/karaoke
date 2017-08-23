@@ -51,6 +51,12 @@
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
                    <input type="hidden" value="{{ $song['id'] }}" name="song_id">
 
+                    <div class="form-group">
+                        <label for="input-name" class="col-sm-4 control-label">Mã bài hát: </label>
+                        <div class="col-sm-7">
+                            <input type="text" readonly value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Mã bài hát">
+                        </div>
+                    </div>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
@@ -59,12 +65,6 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Mã bài hát*: </label>
-                    <div class="col-sm-7">
-                      <input type="text" name="file_name" value="{{ $song['file_name'] }}" class="form-control" id="file-name" placeholder="Mã bài hát" required>
-                    </div>
-                  </div>
 
                   <div class="form-group">
                     <label for="singers" class="col-sm-4 control-label">Ca sĩ: </label>

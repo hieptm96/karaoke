@@ -43,17 +43,24 @@
 
                 <form id="songs-create" class="form-horizontal" method="post" action="{{ route('songs.store') }}" role="form"  data-parsley-validate>
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
+<<<<<<< HEAD
+
+                    <div class="form-group">
+                        <label for="input-name" class="col-sm-4 control-label">Mã bài hát*: </label>
+                        <div class="col-sm-7">
+                            <input type="text" name="file_name" class="form-control" id="file-name" placeholder="Mã bài hát" value="{{ old('file_name') }}" required>
+                        </div>
+
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
                       <input type="text" name="name" class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}">
                     </div>
-                  </div>
 
                   <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Mã bài hát*: </label>
+                    <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="file_name" class="form-control" id="file-name" placeholder="Mã bài hát" value="{{ old('file_name') }}" required>
+                      <input type="text" name="name" class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}" required>
                     </div>
                   </div>
 

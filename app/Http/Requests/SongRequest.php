@@ -29,7 +29,7 @@ class SongRequest extends Request
             'name' => 'required',
             'language' => 'required|validLanguage',
         //    'file_name' =>  ['required'Rule::unique('songs')->ignore($song->id, 'id'),
-            'file_name' => 'required|unique:songs,file_name,'.$this->song_id,
+//            'file_name' => 'required|unique:songs,file_name,'.$this->song_id,
         ];
     }
 
@@ -39,7 +39,7 @@ class SongRequest extends Request
             'name.required' => 'Tên không được bỏ trống',
             'language.required' => 'Phải chọn ngôn ngữ',
             'file_name.required' => 'Tên file không được trống',
-            'file_name.unique' => 'Tên file bị trùng',
+            'file_name.unique' => 'Mã bài hát bị trùng',
         ];
     }
 }

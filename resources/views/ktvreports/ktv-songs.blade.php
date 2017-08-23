@@ -56,6 +56,7 @@
     <script>
         var url = '{{ route('ktvs.getdistricts') }}';
         $(function () {
+            $.fn.dataTable.ext.errMode = 'none';
             var datatable = $("#songs-datatable").DataTable({
                 searching: false,
                 serverSide: true,

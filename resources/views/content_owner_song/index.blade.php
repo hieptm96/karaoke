@@ -143,6 +143,7 @@
 @push('inline_scripts1')
 <script>
     $(function () {
+        $.fn.dataTable.ext.errMode = 'none';
         var datatable = $("#datatable").DataTable({
             searching: false,
             serverSide: true,

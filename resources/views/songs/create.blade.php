@@ -43,19 +43,20 @@
 
                 <form id="songs-create" class="form-horizontal" method="post" action="{{ route('songs.store') }}" role="form"  data-parsley-validate>
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
-<<<<<<< HEAD
 
                     <div class="form-group">
                         <label for="input-name" class="col-sm-4 control-label">Mã bài hát*: </label>
                         <div class="col-sm-7">
                             <input type="text" name="file_name" class="form-control" id="file-name" placeholder="Mã bài hát" value="{{ old('file_name') }}" required>
                         </div>
+                    </div>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
                       <input type="text" name="name" class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}">
                     </div>
+                  </div>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
@@ -251,6 +252,7 @@
     });
 
     $(function () {
+        $.fn.dataTable.ext.errMode = 'none';
         var datatable = $("#datatable").DataTable({
             searching: false,
             serverSide: true,
@@ -308,6 +310,7 @@
     var url = '{{ route('contentowners.getdistricts') }}';
     var owner;
     $(function () {
+        $.fn.dataTable.ext.errMode = 'none';
         var datatable = $("#content-owner-datatable").DataTable({
             searching: false,
             serverSide: true,

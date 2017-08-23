@@ -287,6 +287,7 @@
     });
 
     $(function () {
+        $.fn.dataTable.ext.errMode = 'none';
         var datatable = $("#datatable").DataTable({
             searching: false,
             serverSide: true,
@@ -352,6 +353,7 @@
     var owner;
     var contentOwnerDatatable;
     $(function () {
+        $.fn.dataTable.ext.errMode = 'none';
         contentOwnerDatatable = $("#content-owner-datatable").DataTable({
             searching: false,
             serverSide: true,

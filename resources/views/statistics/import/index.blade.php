@@ -21,6 +21,11 @@
         </div>
     </div>
 
+        <div class="alert alert-info alert-dismissable">
+                <a class="format-file" href="/imports/dataImportformatFile.xls" target="_blank">
+                    Bấm để download định dạng file</a>
+        </div>
+
     <div class="" id="alert-section">
     </div>
 

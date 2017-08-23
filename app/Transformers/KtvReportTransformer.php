@@ -11,6 +11,7 @@ class KtvReportTransformer extends TransformerAbstract
     {
          return [
              'id' => $import_data->id,
+             'ktv_id' => $import_data->ktv_id,
              // 'song_name' => $this->getSong($import_data->song_file_name),
              'ktv' => $import_data->ktv_name,
              'province' => $this->getProvince($import_data->province_id),

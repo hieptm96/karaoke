@@ -53,7 +53,7 @@
                             <label class="sr-only" for="date-search">Thời gian</label>
                             <input id="date-search" class="form-control input-daterange-datepicker" type="text" name="date" value="" placeholder="Chọn thời gian" style="width: 200px;">
                         </div>
-                        <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
+                        <button type="submit" id="btnSubmit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
                     </form>
                 </div>
             </div>
@@ -132,7 +132,7 @@
                 }
             },
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'ktv_id', name: 'ktv_id'},
                 {data: 'ktv', name: 'ktv_name'},
                 {data: 'province', name: 'province_id'},
                 {data: 'district', name: 'district_id'},
@@ -157,6 +157,11 @@
             e.preventDefault();
         });
         $('#district-search').on('change', function(e) {
+            datatable.draw();
+            e.preventDefault();
+        });
+
+        $('#btnSubmit').on('change', function(e) {
             datatable.draw();
             e.preventDefault();
         });

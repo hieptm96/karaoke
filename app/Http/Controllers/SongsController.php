@@ -100,7 +100,7 @@ class SongsController extends Controller
 
         flash()->success('Success!', 'Đã sửa thành công bài hát.');
 
-        return redirect()->route('songs.edit', ['id' => $song->file_name]);
+        return redirect()->route('songs.edit', ['id' => $song->id]);
     }
 
     /**

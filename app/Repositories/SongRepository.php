@@ -30,7 +30,7 @@ class SongRepository implements Contract
     public function getDatatables(Request $request)
     {
 
-        $songs = Song::with('singers', 'createdBy', 'contentOwners');
+        $songs = Song::with('singers', 'createdBy');
 
         return Datatables::of($songs)
             ->filter(function ($query) use ($request) {
@@ -138,21 +138,21 @@ class SongRepository implements Contract
         }
 
         if (!empty($request['musican-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('singer');
+            $defaultPercentage = $this->getDefaultPercentage('musican');
             $owners[] = ['content_owner_id' => $request['musican-owner'],
                     'type' => 'musican', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['title-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('singer');
+            $defaultPercentage = $this->getDefaultPercentage('title');
             $owners[] = ['content_owner_id' => $request['title-owner'],
                     'type' => 'title', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['film-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('singer');
+            $defaultPercentage = $this->getDefaultPercentage('film');
             $owners[] = ['content_owner_id' => $request['film-owner'],
                     'type' => 'film', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
@@ -170,7 +170,13 @@ class SongRepository implements Contract
             $sumPercent += $owner['percentage'];
         }
 
+        $remainPercent = 100;
+        $count = 0;
         foreach ($owners as $key => &$owner) {
+            if ($count == count($owners) - 1) {
+
+            }
+
             $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
             $owner['percentage'] = round($realPercent);
         }
@@ -224,7 +230,7 @@ class SongRepository implements Contract
     protected function getActionColumnPermissions($song)
     {
         return [
-            'songs.edit' => '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['file_name'])
+            'songs.edit' => '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['id'])
                 . '"><i class="fa fa-edit"></i> Sửa</a>',
             'songs.delete' => ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>'
         ];

@@ -54,10 +54,10 @@ class ContentOwnerReportController extends Controller
             	select content_owner_id, t.song_file_name,
                 	SUM(times) * percentage / 100 AS money, SUM(times), percentage
                 	FROM
-                	(select content_owner_id, song_id, song_file_name,
+                	(select content_owner_id, song_file_name,
                 	SUM(percentage) AS percentage
                 	FROM content_owner_song c
-                	GROUP BY content_owner_id, song_id) AS t
+                	GROUP BY content_owner_id, song_file_name) AS t
                 	JOIN imported_data_usages i
                 	ON t.song_file_name = i.song_file_name
                     WHERE date between ? and ?

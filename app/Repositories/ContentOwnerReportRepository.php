@@ -35,10 +35,10 @@ class ContentOwnerReportRepository implements Contract
             	select content_owner_id, t.song_file_name,
                 	SUM(times) * percentage / 100 AS money, SUM(times), percentage
                 	FROM
-                	(select content_owner_id, song_id, song_file_name,
+                	(select content_owner_id, song_file_name,
                 	SUM(percentage) AS percentage
                 	FROM content_owner_song c
-                	GROUP BY content_owner_id, song_id) AS t
+                	GROUP BY content_owner_id, song_file_name) AS t
                 	JOIN imported_data_usages i
                 	ON t.song_file_name = i.song_file_name
                     WHERE date between ? and ?
@@ -104,12 +104,11 @@ class ContentOwnerReportRepository implements Contract
             ->join('songs AS s', function($join) {
                 $join->on('i.song_file_name', '=', 's.file_name');
             })
-            ->join(DB::raw('(select song_id, song_file_name,
-                    GROUP_CONCAT(type SEPARATOR ";") owner_types,
-                    SUM(percentage) AS percentage
+            ->join(DB::raw('(select song_file_name, SUM(percentage) AS percentage,
+                    GROUP_CONCAT(type SEPARATOR ";") owner_types
                     FROM content_owner_song AS c
                     WHERE content_owner_id = ?
-                    GROUP BY song_id) AS t'
+                    GROUP BY song_file_name) AS t'
             ), 'i.song_file_name', '=', 't.song_file_name')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('i.song_file_name')

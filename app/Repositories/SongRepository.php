@@ -43,6 +43,13 @@ class SongRepository implements Contract
                             ->orWhere('name_raw', 'like', $param);
                     });
                 }
+                if ($request->has('filename')) {
+                    $param = '%'.$request->filename.'%';
+
+                    $query->where(function ($q) use ($param) {
+                        $q->where('file_name', 'like', $param);
+                    });
+                }
                 if ($request->has('singer')) {
                     $param = '%'.$request->singer.'%';
                     $query->whereHas('singers', function($q) use ($param) {
@@ -131,21 +138,21 @@ class SongRepository implements Contract
         }
 
         if (!empty($request['musican-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('musican');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['musican-owner'],
                     'type' => 'musican', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['title-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('title');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['title-owner'],
                     'type' => 'title', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
         }
 
         if (!empty($request['film-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('film');
+            $defaultPercentage = $this->getDefaultPercentage('singer');
             $owners[] = ['content_owner_id' => $request['film-owner'],
                     'type' => 'film', 'percentage' => $defaultPercentage,
                     'song_file_name' => $songFileName];
@@ -163,18 +170,9 @@ class SongRepository implements Contract
             $sumPercent += $owner['percentage'];
         }
 
-        $remainPercent = 100;
-        $nComputedOwners = 0;
-
         foreach ($owners as $key => &$owner) {
-            if ($nComputedOwners == count($owners) - 1) {    // last owner
-                $owner['percentage'] = $remainPercent;
-            } else {
-                $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
-                $owner['percentage'] = round($realPercent);
-                $remainPercent -= $owner['percentage'];
-                $nComputedOwners++;
-            }
+            $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
+            $owner['percentage'] = round($realPercent);
         }
 
         return $owners;
@@ -189,8 +187,6 @@ class SongRepository implements Contract
     public function update($id, Request $request)
     {
         $song = Song::findOrFail($id);
-
-        $success = true;
 
         $song->update($request->toArray());
 
@@ -207,7 +203,7 @@ class SongRepository implements Contract
         $song->contentOwners()->detach();
         $song->contentOwners()->attach($owners);
 
-        return $success;
+        return $song;
     }
 
     /**
@@ -228,7 +224,7 @@ class SongRepository implements Contract
     protected function getActionColumnPermissions($song)
     {
         return [
-            'songs.edit' => '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['id'])
+            'songs.edit' => '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['file_name'])
                 . '"><i class="fa fa-edit"></i> Sửa</a>',
             'songs.delete' => ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>'
         ];

@@ -53,6 +53,7 @@ return [
             'strict' => true,
             'engine' => null,
             'modes' => [],
+            'options' => [\PDO::MYSQL_ATTR_LOCAL_INFILE => true],
         ],
 
         'pgsql' => [

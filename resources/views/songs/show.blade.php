@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên file: </label>
+                    <label for="input-name" class="col-sm-4 control-label">Mã bài hát: </label>
                     <div class="col-sm-7">
                       <span class="form-control">{{ $song['file_name'] }}</span>
                     </div>

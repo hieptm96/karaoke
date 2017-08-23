@@ -12,7 +12,7 @@ class SongTransformer extends TransformerAbstract
     {
         return [
             'id' => $song['id'],
-            'name' => '<a href="'.route('songs.show', $song['id']).'">'.$song['name'].'</a>',
+            'name' => '<a href="'.route('songs.show', $song['file_name']).'">'.$song['name'].'</a>',
             'file_name' => $song['file_name'],
             'language' => config('ktv.languages.'.$song['language'], ''),
             'singers' => $this->getSingers($song),
@@ -75,7 +75,7 @@ class SongTransformer extends TransformerAbstract
 
     private function generateActions($song)
     {
-        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['id'])
+        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['file_name'])
                     . '"><i class="fa fa-edit"></i> Sửa</a>';
         $actions .= ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>';
 

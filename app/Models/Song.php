@@ -25,6 +25,10 @@ class Song extends ModelTracking
         'updated_by',
     ];
 
+    protected $primaryKey = 'file_name';
+
+    public $incrementing = false;
+
     protected $dates = ['deleted_at'];
 
     protected function beforeCreating()
@@ -36,7 +40,8 @@ class Song extends ModelTracking
 
     public function singers()
     {
-        return $this->belongsToMany(Singer::class)->withTimestamps();
+        return $this->belongsToMany(Singer::class, 'singer_song', 'song_file_name', 'singer_id')
+                    ->withTimestamps();
     }
 
     public function contentOwnerSongs()
@@ -47,7 +52,7 @@ class Song extends ModelTracking
     public function contentOwners()
     {
         return $this->belongsToMany(ContentOwner::class)
-                    ->withPivot('type', 'song_file_name', 'percentage')
+                    ->withPivot('type', 'percentage')
                     ->withTimestamps();
     }
 }

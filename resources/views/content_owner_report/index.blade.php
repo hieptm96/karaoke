@@ -41,7 +41,7 @@
                             <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
                         </div>
                         <select name="province" id="province" class="form-control fix-select" ng-model="province" ng-change="get_districts()">
-                            <option value="">-- Chọn tỉnh -- </option>
+                            <option value="">-- Chọn Tỉnh/Thành -- </option>
                             @foreach ($provinces as $province)
                                 <option value="{{ $province->id }}">{{ $province->name }}</option>
                             @endforeach
@@ -150,19 +150,12 @@
             e.preventDefault();
         });
 
-        $('#search-form').on('change', function(e) {
+        $('#search-form select').on('change', function(e) {
             datatable.draw();
         });
 
-        $('#name-search').on('keyup', function(e) {
-            var name = $(this).val();
-            if (name.length == 0) {
-                datatable.draw();
-            }
-        });
-
-        $('#phone-search').on('keyup', function(e) {
-            var createdBy = $($this).val();
+        $('#search-form input').on('keyup', function(e) {
+            var createdBy = $(this).val();
             if (createdBy.length == 0) {
                 datatable.draw();
             }

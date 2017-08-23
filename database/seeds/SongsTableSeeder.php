@@ -19,7 +19,7 @@ class SongsTableSeeder extends Seeder
         $singerIds = \App\Models\Singer::pluck('id')->toArray();
         $contentOwnerIds = \App\Models\ContentOwner::pluck('id')->toArray();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $song = \App\Models\Song::create([
                 'name' => $faker->name,
                 'language' => $faker->randomElement([1, 2, 3]),

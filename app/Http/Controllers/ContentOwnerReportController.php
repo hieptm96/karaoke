@@ -46,6 +46,7 @@ class ContentOwnerReportController extends Controller
 
         $config = json_decode(\App\Models\Config::orderBy('updated_at', 'desc')->first()->config, true);
 
+
         $query =
             DB::table('content_owners as co')
             ->selectRaw('co.id AS id, co.name AS name, SUM(money) * ? AS total_money,

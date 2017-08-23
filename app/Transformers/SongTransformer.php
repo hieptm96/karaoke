@@ -75,7 +75,7 @@ class SongTransformer extends TransformerAbstract
 
     private function generateActions($song)
     {
-        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['file_name'])
+        $actions = '<a class="btn btn-primary btn-xs waves-effect waves-light" href="' . route('songs.edit', $song['id'])
                     . '"><i class="fa fa-edit"></i> Sửa</a>';
         $actions .= ' <a class="btn btn-default delete-song btn-xs waves-effect waves-light" data-toggle="modal" data-target="#delete-song-modal"><i class="fa fa-trash"></i> Xóa</a>';
 

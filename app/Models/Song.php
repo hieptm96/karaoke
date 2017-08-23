@@ -25,7 +25,7 @@ class Song extends ModelTracking
         'updated_by',
     ];
 
-    protected $primaryKey = 'file_name';
+    protected $primaryKey = 'id';
 
     public $incrementing = false;
 
@@ -40,7 +40,7 @@ class Song extends ModelTracking
 
     public function singers()
     {
-        return $this->belongsToMany(Singer::class, 'singer_song', 'song_file_name', 'singer_id')
+        return $this->belongsToMany(Singer::class)
                     ->withTimestamps();
     }
 

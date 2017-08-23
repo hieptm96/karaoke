@@ -90,6 +90,7 @@
 <script src="/vendor/ubold/assets/js/wow.min.js"></script>
 <script src="/vendor/ubold/assets/js/jquery.nicescroll.js"></script>
 <script src="/vendor/ubold/assets/js/jquery.scrollTo.min.js"></script>
+<script src="/vendor/ubold/assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
 
 @stack('scripts')
 

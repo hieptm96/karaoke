@@ -111,5 +111,66 @@
 <script>
     var url = '{{ route('ktvs.getdistricts') }}';
     var provinces = {!! $provinces !!};
+
+    $(document).ready(function() {
+        $.validator.methods.phoneVN = function(value, element, params) {
+            var regex = new RegExp(params);
+            return this.optional( element ) || regex.test(value);
+        };
+        $('#content-owner-form').validate({
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 255
+                },
+                code: {
+                    required: true,
+                },
+                phone: {
+                    required: true,
+                    phoneVN: "^[0-9]+$"
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                address: {
+                    required: true,
+                },
+                province_id: {
+                    required: true
+                },
+                district_id: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Tên không được để trống",
+                    maxlength: "Tên tối đa 255 ký tự"
+                },
+                code: {
+                    required: "Mã số thuế không được để trống",
+                },
+                phone: {
+                    required: "Số điện thoại không được để trống",
+                    phoneVN: "Số điện thoại không đúng định dạng"
+                },
+                email: {
+                    required: "Email không được để trống",
+                    email: "Email không đúng định dạng"
+                },
+                address: {
+                    required: "Địa chỉ không được để trống",
+                },
+                province_id: {
+                    required: "Phải chọn Tỉnh"
+                },
+                district_id: {
+                    required: "Phải chọn Quận/Huyện"
+                }
+            }
+        });
+    });
 </script>
 @endpush

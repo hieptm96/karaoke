@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{--@include('ktvs.box-modal');--}}
+
 @section('content')
     <!-- Page-Title -->
     <div class="row">
@@ -29,7 +31,7 @@
                 <p class="text-muted font-13 m-b-30">
                 </p>
 
-                <form action="{{ route('ktvs.store')  }}" method="POST" class="form-horizontal" role="form" data-parsley-validate="" novalidate="">
+                <form action="{{ route('ktvs.store')  }}" method="POST" id="ktv-form" class="form-horizontal" role="form" data-parsley-validate="" validate="">
                     @include('ktvs._form')
                 </form>
             </div>

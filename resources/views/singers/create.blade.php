@@ -43,13 +43,13 @@
             <div class="card-box">
                 <h4 class="m-t-0 header-title"><b>Thông tin ca sĩ</b></h4>
 
-                <form class="form-horizontal" method="post" action="{{ route('singers.store') }}" role="form"  data-parsley-validate>
+                <form id="singers-create" class="form-horizontal" method="post" action="{{ route('singers.store') }}" role="form"  data-parsley-validate>
                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name"  class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}" required>
+                      <input type="text" name="name"  class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}">
                     </div>
                   </div>
                   <div class="form-group">
@@ -100,5 +100,22 @@
 @endpush
 
 @push('inline_scripts')
-
+<script>
+    $(document).ready(function() {
+        $('#singers-create').validate({
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 255
+                }
+            },
+            messages: {
+                name: {
+                    required: "Tên không được để trống",
+                    maxlength: "Tên tối đa 255 ký tự"
+                }
+            }
+        });
+    });
+</script>
 @endpush

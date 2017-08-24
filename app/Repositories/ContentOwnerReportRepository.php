@@ -30,13 +30,15 @@ class ContentOwnerReportRepository implements Contract
 
         $contentOwnerReport =
             DB::table('content_owners as co')
-            ->selectRaw('co.id AS id, co.name AS name, SUM(times * percentage / 100) as total_money, phone, province_id, district_id')  
+            ->selectRaw('co.id AS id, co.name AS name, SUM(times * percentage / 100) as total_money, phone, province_id, district_id')
             ->join('content_owner_song as cos', 'cos.content_owner_id', '=', 'co.id')
             ->join('songs AS s', function($join) {
                 $join->on('cos.song_id', '=', 's.id');
                 $join->on('s.has_fee', '<>', DB::raw('?'));
             })
             ->join('imported_data_usages as i', 'i.song_id', '=', 'cos.song_id')
+            ->whereNull('co.deleted_at')
+            ->whereNull('s.deleted_at')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('co.id')
             ->setBindings([0, $startDate, $stopDate]);
@@ -99,6 +101,7 @@ class ContentOwnerReportRepository implements Contract
                     GROUP BY song_id) AS t'
             ), 'i.song_id', '=', 't.song_id')
             ->whereBetween('i.date', ['?', '?'])
+            ->whereNull('s.deleted_at')
             ->groupBy('i.song_id')
             ->setBindings([$request->id, $startDate, $stopDate]);
 

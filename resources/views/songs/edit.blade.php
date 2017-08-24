@@ -42,7 +42,7 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['file_name'])}}" role="form"  data-parsley-validate>
+                <form class="form-horizontal" id="song-filer-form" method="post" action="{{ route('songs.update', $song['id'])}}" role="form"  data-parsley-validate>
                    <input name="_method" value="PUT" type="hidden">
                    <input type="hidden" value="{{ csrf_token() }}" name="_token">
                    <input type="hidden" value="{{ $song['id'] }}" name="song_id">

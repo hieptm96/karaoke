@@ -12,7 +12,7 @@ class SongTransformer extends TransformerAbstract
     {
         return [
             'id' => $song['id'],
-            'name' => '<a href="'.route('songs.show', $song['file_name']).'">'.$song['name'].'</a>',
+            'name' => '<a href="'.route('songs.show', $song['id']).'">'.$song['name'].'</a>',
             'file_name' => $song['file_name'],
             'language' => config('ktv.languages.'.$song['language'], ''),
             'singers' => $this->getSingers($song),

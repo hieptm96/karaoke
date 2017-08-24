@@ -46,6 +46,7 @@ class ContentOwnerReportController extends Controller
 
         $config = json_decode(\App\Models\Config::orderBy('updated_at', 'desc')->first()->config, true);
 
+
         $query =
             DB::table('content_owners as co')
             ->selectRaw('co.id AS id, co.name AS name, SUM(? * times * percentage / 100) as total_money, phone, p.name AS province, d.name AS district, has_fee')
@@ -57,6 +58,8 @@ class ContentOwnerReportController extends Controller
             ->join('imported_data_usages as i', 'i.song_id', '=', 'cos.song_id')
             ->join('provinces AS p', 'co.province_id', '=', 'p.id')
             ->join('districts AS d', 'co.district_id', '=', 'd.id')
+            ->whereNull('co.deleted_at')
+            ->whereNull('s.deleted_at')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('co.id')
             ->setBindings([intval($config['price']), 0, $startDate, $stopDate]);

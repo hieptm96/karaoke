@@ -14,13 +14,44 @@ $user = Auth::user();
 
 @section('content')
 
+    {{-- delete song modal --}}
+    <div id="delete-song-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Xóa bài hát</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc muốn xóa bài hát không?</p>
+                </div>
+                <div class="modal-footer">
+                    <div class="custom-modal-text text-left">
+                        <form role="form" id="delete-song-form" method="post" action="">
+                            <input name="_method" value="DELETE" type="hidden">
+                            {{-- {{ method_field('DELETE') }} --}}
+                            <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Xóa</button>
+                                <button type="button" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Page-Title -->
     <div class="row">
 
         {{ Session::has('deleted') }}
 
         <div class="col-sm-12">
-            @if ($user->can('singers.create'))
+            @if ($user->can('songs.create'))
             <div class="btn-group pull-right m-t-15">
                 <a href="{{ route('songs.create') }}" class="btn btn-default"><i class="md md-add"></i> Thêm bài hát </a>
             </div>
@@ -130,7 +161,8 @@ $user = Auth::user();
 @push('inline_scripts')
 <script>
     $(document).on('click', '.delete-song', function(e) {
-        var song_id = $(this).parent().parent().find('.singer-data').text();
+        var song_id = $(this).parent().parent().attr('row-data');
+        console.log("song_id: " + song_id);
         var action = '/songs/' + song_id;
         $('#delete-song-form').attr('action', action);
     });
@@ -140,6 +172,9 @@ $user = Auth::user();
             searching: false,
             serverSide: true,
             processing: true,
+            "createdRow": function ( row, data, index ) {
+                $(row).attr("row-data", data['id']);
+            },
             ajax: {
                 url: "{!! route('songs.datatables') !!}",
                 data: function (d) {

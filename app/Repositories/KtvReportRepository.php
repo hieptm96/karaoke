@@ -95,7 +95,7 @@ class KtvReportRepository implements Contract
                             ->leftJoin('imported_data_usages as i', function($join) {
                                 $join->on('i.box_code', '=', 'b.code');
                             })
-                            ->join('songs as s', 's.file_name', '=', 'i.song_file_name')
+                            ->join('songs as s', 's.id', '=', 'i.song_id')
                             ->whereNull('b.deleted_at')
                             ->whereNull('s.deleted_at')
                             ->where('i.ktv_id', '=', '?')

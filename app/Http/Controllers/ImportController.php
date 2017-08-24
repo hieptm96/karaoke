@@ -21,7 +21,7 @@ class ImportController extends Controller
         'ktv_id',
         'box_code',
         'date',
-        'song_file_name',
+        'song_id',
         'times'
     );
 

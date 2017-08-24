@@ -28,45 +28,15 @@ class ContentOwnerReportRepository implements Contract
             $stopDate = (new Carbon('last day of this month'))->format('Y-m-d');
         }
 
-        // $contentOwnerReport =
-        //     DB::table('content_owners as co')
-        //     ->selectRaw('co.id AS id, co.name AS name, SUM(money) total_money, phone, province_id, district_id')
-        //     ->join(DB::raw('(
-        //     	select content_owner_id, t.song_file_name,
-        //         	SUM(times) * percentage / 100 AS money, SUM(times), percentage
-        //         	FROM
-        //         	(select content_owner_id, song_file_name,
-        //         	SUM(percentage) AS percentage
-        //         	FROM content_owner_song c
-        //         	GROUP BY content_owner_id, song_file_name) AS t
-        //         	JOIN imported_data_usages i
-        //         	ON t.song_file_name = i.song_file_name
-        //             WHERE date between ? and ?
-        //         	GROUP BY i.song_file_name, content_owner_id
-        //         	ORDER BY content_owner_id, song_file_name
-        //         ) AS t2'
-        //     ), 'id', '=', 't2.content_owner_id')
-        //     ->join('songs AS s', function($join) {
-        //         $join->on('t2.song_file_name', '=', 's.file_name');
-        //         $join->on('s.has_fee', '<>', DB::raw('?'));
-        //     })
-        //     ->groupBy('co.id')
-        //     ->setBindings([$startDate, $stopDate, 0]);
-
-
         $contentOwnerReport =
             DB::table('content_owners as co')
-            ->selectRaw('co.id AS id, co.name AS name, SUM(times * percentage / 100) as total_money, phone, province_id, district_id')
-            ->join(DB::raw('(select content_owner_id, song_id,
-                    SUM(percentage) AS percentage
-                    FROM content_owner_song c
-                    GROUP BY content_owner_id, song_id) AS t'
-            ), 'co.id', '=', 't.content_owner_id')
+            ->selectRaw('co.id AS id, co.name AS name, SUM(times * percentage / 100) as total_money, phone, province_id, district_id')  
+            ->join('content_owner_song as cos', 'cos.content_owner_id', '=', 'co.id')
             ->join('songs AS s', function($join) {
-                $join->on('t.song_id', '=', 's.id');
+                $join->on('cos.song_id', '=', 's.id');
                 $join->on('s.has_fee', '<>', DB::raw('?'));
             })
-            ->join('imported_data_usages as i', 'i.song_id', '=', 't.song_id')
+            ->join('imported_data_usages as i', 'i.song_id', '=', 'cos.song_id')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('co.id')
             ->setBindings([0, $startDate, $stopDate]);

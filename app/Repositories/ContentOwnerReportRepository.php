@@ -28,32 +28,39 @@ class ContentOwnerReportRepository implements Contract
             $stopDate = (new Carbon('last day of this month'))->format('Y-m-d');
         }
 
+//        ->join(DB::raw('(
+//            	select content_owner_id, t.song_file_name, t.song_id,
+//                	SUM(times) * percentage / 100 AS money, SUM(times), percentage
+//                	FROM
+//                	(select content_owner_id, song_file_name,
+//                	SUM(percentage) AS percentage
+//                	FROM content_owner_song c
+//                	GROUP BY content_owner_id, song_file_name) AS t
+//                	JOIN imported_data_usages i
+//                	ON t.song_file_name = i.song_file_name
+//                    WHERE date between ? and ?
+//                	GROUP BY i.song_file_name, content_owner_id
+//                	ORDER BY content_owner_id, song_file_name
+//                ) AS t2'
+//    ), 'id', '=', 't2.content_owner_id')
+
         $contentOwnerReport =
             DB::table('content_owners as co')
-            ->selectRaw('co.id AS id, co.name AS name, SUM(money) total_money, phone, province_id, district_id')
-            ->join(DB::raw('(
-            	select content_owner_id, t.song_file_name,
-                	SUM(times) * percentage / 100 AS money, SUM(times), percentage
-                	FROM
-                	(select content_owner_id, song_file_name,
+            ->selectRaw('co.id AS id, co.name AS name, SUM(times) * percentage / 100 AS total_money, phone, province_id, district_id')
+            ->join(DB::raw('(select content_owner_id, song_id,
                 	SUM(percentage) AS percentage
                 	FROM content_owner_song c
-                	GROUP BY content_owner_id, song_file_name) AS t
-                	JOIN imported_data_usages i
-                	ON t.song_file_name = i.song_file_name
-                    WHERE date between ? and ?
-                	GROUP BY i.song_file_name, content_owner_id
-                	ORDER BY content_owner_id, song_file_name
-                ) AS t2'
-            ), 'id', '=', 't2.content_owner_id')
+                	GROUP BY content_owner_id, song_file_name) AS t'
+            ), 'co.id', '=', 't.content_owner_id')
             ->join('songs AS s', function($join) {
-                $join->on('t2.song_file_name', '=', 's.file_name');
+                $join->on('t.song_id', '=', 's.id');
                 $join->on('s.has_fee', '<>', DB::raw('?'));
             })
+            ->join('imported_data_usages as i', 'i.song_id', '=','s.id')
+            ->whereBetween('i.date', ['?', '?'])
             ->groupBy('co.id')
-            ->setBindings([$startDate, $stopDate, 0]);
+            ->setBindings([0, $startDate, $stopDate]);
 
-        // dd($contentOwnerReport);
 
         return Datatables::of($contentOwnerReport)
             ->filter(function ($query) use ($request) {
@@ -102,14 +109,13 @@ class ContentOwnerReportRepository implements Contract
                         (case when has_fee <> 0 then SUM(times) * percentage / 100 else 0 end) AS discount,
                         percentage')
             ->join('songs AS s', function($join) {
-                $join->on('i.song_file_name', '=', 's.file_name');
+                $join->on('i.song_id', '=', 's.id');
             })
-            ->join(DB::raw('(select song_file_name, SUM(percentage) AS percentage,
-                    GROUP_CONCAT(type SEPARATOR ";") owner_types
-                    FROM content_owner_song AS c
+            ->join(DB::raw('(select song_id, SUM(percentage) AS percentage,
+                    FROM content_owner_song
                     WHERE content_owner_id = ?
-                    GROUP BY song_file_name) AS t'
-            ), 'i.song_file_name', '=', 't.song_file_name')
+                    GROUP BY song_id) AS t'
+            ), 'i.song_id', '=', 't.song_id')
             ->whereBetween('i.date', ['?', '?'])
             ->groupBy('i.song_file_name')
             ->setBindings([$request->id, $startDate, $stopDate]);

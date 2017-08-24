@@ -11,7 +11,7 @@ $user = Auth::user();
 @endphp
 
 @section('content')
-    {{-- delete song modal --}}
+    {{-- delete singer modal --}}
     <div id="delete-singer-modal" class="modal fade" role="dialog">
       <div class="modal-dialog">
 

@@ -117,7 +117,7 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{!! route('songDetailReport.datatables', ['file-name' => $song['file_name']]) !!}",
+                url: "{!! route('songDetailReport.datatables', ['song' => $song['id']]) !!}",
                 data: function (d) {
                     d.name = $('#name-search').val();
                     d.phone = $('#phone-search').val();

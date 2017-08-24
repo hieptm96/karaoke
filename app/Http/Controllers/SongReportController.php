@@ -61,14 +61,13 @@ class SongReportController extends Controller
         }
 
         $query = DB::table('songs AS s')
-                    ->selectRaw('id, file_name, name, has_fee, total_times,
-                            (CASE WHEN has_fee <> 0 THEN total_times ELSE 0 END) AS total_money')
-                    ->join(DB::raw('(SELECT  song_file_name, sum(times) AS total_times
-                            	FROM imported_data_usages i
-                                WHERE date BETWEEN ? AND ?
-                            	GROUP BY song_file_name) AS t'
-                    ), 's.file_name', '=' , 't.song_file_name')
-                    ->setBindings([$startDate, $stopDate]);
+            ->selectRaw('s.id, file_name, name, has_fee, sum(times) as total_times,
+                            sum(CASE WHEN has_fee <> 0 THEN times ELSE 0 END) AS total_money')
+            ->join('imported_data_usages as i', 'i.song_id', '=' , 's.id')
+            ->whereNull('s.deleted_at')
+            ->whereBetween('i.date', ['?', '?'])
+            ->groupBy('s.id')
+            ->setBindings([$startDate, $stopDate]);
                     // ->get();
         // dd($query);
         return Datatables::of($query)
@@ -93,7 +92,7 @@ class SongReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return mix
      */
-    public function detailDatatables(Request $request)
+    public function detailDatatables(Song $song, Request $request)
     {
         if ($request->has('date')) {
             $dates = explode(':', $request->date, 2);
@@ -109,32 +108,16 @@ class SongReportController extends Controller
             }
         }
 
-//        $song = Song::where('id', '=', $request->id)->findOrFail();
-
-        $fileName = $request->filename;
-
-
-//        $query = DB::table('ktvs AS k')
-//                    ->selectRaw('k.id, k.name, k.phone, p.name AS province, d.name AS district, total_times')
-//                    ->join(DB::raw('(select  ktv_id, sum(times) as total_times
-//                                	from imported_data_usages i
-//                                	where song_file_name = ?
-//                                    AND date BETWEEN ? AND ?
-//                                	group by ktv_id) AS t'
-//                    ), 'k.id', '=' , 't.ktv_id')
-//                    ->join('provinces AS p', 'k.province_id', '=', 'p.id')
-//                    ->join('districts AS d', 'k.district_id', '=', 'd.id')
-//                    ->setBindings([$fileName, $startDate, $stopDate]);
-
         $query = DB::table('ktvs AS k')
             ->selectRaw('k.id, k.name, k.phone, p.name AS province, d.name AS district, sum(times) as total_times')
             ->join('imported_data_usages as i', 'k.id', '=' , 'i.ktv_id')
             ->join('provinces AS p', 'k.province_id', '=', 'p.id')
             ->join('districts AS d', 'k.district_id', '=', 'd.id')
-            ->where('i.song_file_name', '=', '?')
+            ->where('i.song_id', '=', '?')
+            ->whereNull('k.deleted_at')
             ->whereBetween('i.date', ['?', '?'])
-            ->setBindings([$fileName, $startDate, $stopDate]);
-
+            ->groupBy('k.id')
+            ->setBindings([$song->id, $startDate, $stopDate]);
 
         return Datatables::of($query)
             ->filter(function ($query) use ($request) {

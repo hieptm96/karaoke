@@ -49,31 +49,20 @@ class ContentOwnerReportController extends Controller
 
         $query =
             DB::table('content_owners as co')
-            ->selectRaw('co.id AS id, co.name AS name, SUM(money) * ? AS total_money,
-             phone, p.name AS province, d.name AS district, has_fee')
-            ->join(DB::raw('(
-            	select content_owner_id, t.song_file_name,
-                	SUM(times) * percentage / 100 AS money, SUM(times), percentage
-                	FROM
-                	(select content_owner_id, song_file_name,
-                	SUM(percentage) AS percentage
-                	FROM content_owner_song c
-                	GROUP BY content_owner_id, song_file_name) AS t
-                	JOIN imported_data_usages i
-                	ON t.song_file_name = i.song_file_name
-                    WHERE date between ? and ?
-                	GROUP BY i.song_file_name, content_owner_id
-                	ORDER BY content_owner_id, song_file_name
-                ) AS t2'
-            ), 'id', '=', 't2.content_owner_id')
+            ->selectRaw('co.id AS id, co.name AS name, SUM(? * times * percentage / 100) as total_money, phone, p.name AS province, d.name AS district, has_fee')
+            ->join('content_owner_song as cos', 'cos.content_owner_id', '=', 'co.id')
             ->join('songs AS s', function($join) {
-                $join->on('t2.song_file_name', '=', 's.file_name');
+                $join->on('cos.song_id', '=', 's.id');
                 $join->on('s.has_fee', '<>', DB::raw('?'));
             })
+            ->join('imported_data_usages as i', 'i.song_id', '=', 'cos.song_id')
             ->join('provinces AS p', 'co.province_id', '=', 'p.id')
             ->join('districts AS d', 'co.district_id', '=', 'd.id')
+            ->whereNull('co.deleted_at')
+            ->whereNull('s.deleted_at')
+            ->whereBetween('i.date', ['?', '?'])
             ->groupBy('co.id')
-            ->setBindings([intval($config['price']), $startDate, $stopDate, 0]);
+            ->setBindings([intval($config['price']), 0, $startDate, $stopDate]);
 
         if ($request->has('name')) {
             $query->where('co.name', 'like', '%'.$request->name.'%');

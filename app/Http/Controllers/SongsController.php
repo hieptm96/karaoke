@@ -53,7 +53,7 @@ class SongsController extends Controller
         if ($result != null) {
             flash()->success('Success!', 'Đã thêm thành công bài hát.');
 
-            return redirect()->route('songs.edit', ['id' => $result->file_name ]);
+            return redirect()->route('songs.edit', ['id' => $result->id ]);
         } else {
             flash()->warning('Error!', 'Không thể thêm bài hát.');
 

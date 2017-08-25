@@ -54,13 +54,6 @@
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
                     <div class="col-sm-7">
-                      <input type="text" name="name" class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Tên*: </label>
-                    <div class="col-sm-7">
                       <input type="text" name="name" class="form-control" id="input-name" placeholder="Tên" value="{{ old('name') }}" required>
                     </div>
                   </div>

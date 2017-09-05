@@ -27,7 +27,7 @@ class ImportedDataUsage extends Model
 
     public function song()
     {
-        return $this->belongsTo(Song::class, 'song_file_name', 'file_name');
+        return $this->belongsTo(Song::class);
     }
 
     public function ktv()

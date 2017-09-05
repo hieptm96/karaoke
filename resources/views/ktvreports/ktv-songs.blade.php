@@ -71,7 +71,7 @@
                     }
                 },
                 columns: [
-                    {data: 'song.file_name', name: 'song.file_name'},
+                    {data: 'song.id', name: 'song.id'},
                     {data: 'song.name', name: 'song.name'},
                     {data: 'times', name: 'times'},
                     {data: 'date', name: 'date'},

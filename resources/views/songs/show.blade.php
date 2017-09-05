@@ -10,7 +10,7 @@
 
     @include('songs.singer-modal')
 
-    @include('songs.owner-modal')
+    @include('songs.content-owner-modal')
 
     <!-- Page-Title -->
     <div class="row">

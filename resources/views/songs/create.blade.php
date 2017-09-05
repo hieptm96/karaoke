@@ -29,7 +29,7 @@
 
     @include('songs.singer-modal')
 
-    @include('songs.owner-modal')
+    @include('songs.content-owner-modal')
 
 
     @include('flash-message::default')

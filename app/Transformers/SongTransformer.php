@@ -37,6 +37,7 @@ class SongTransformer extends TransformerAbstract
             'updated_at' => $song->updated_at,
             'contentOwners' => $this->getContentOwners($song),
             'has_fee' => $song['has_fee'],
+            'all' => $song,
         ];
     }
 

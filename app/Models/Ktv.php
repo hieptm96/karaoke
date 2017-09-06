@@ -48,4 +48,10 @@ class Ktv extends Model
                 ->selectRaw('ktv_id, count(*) as n_boxes')
                 ->groupBy('ktv_id');
     }
+
+    public static function findKtvByCode($code = null)
+    {
+        //TODO: update
+        return 1;
+    }
 }

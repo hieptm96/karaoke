@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/data', 'SongsController@importDataUsage');
+
+Route::post('/data-usages', 'DataUsagesController@store');

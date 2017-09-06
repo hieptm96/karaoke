@@ -18,7 +18,11 @@ class DataUsagesController extends Controller
             $value['ktv_id'] = $ktvId;
             $value['created_at'] = $now;
             $value['updated_at'] = $now;
-            $value['date'] = Carbon::today()->toDateString();
+            
+            if (! isset($value['date'])) {
+                $value['date'] = Carbon::today()->toDateString();
+            }
+
             return $value;
         }, $request->data);
 

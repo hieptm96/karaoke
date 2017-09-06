@@ -11,14 +11,13 @@ class DataUsagesController extends Controller
 {
     public function store(DataUsage $request)
     {
-        $ktvId = Ktv::findKtvByCode($request->partner);
-
-        $data = array_map(function ($value) use ($ktvId) {
+        $data = array_map(function ($value) use ($request) {
             $now = Carbon::now()->toDateTimeString();
-            $value['ktv_id'] = $ktvId;
+            $value['ktv_id'] = Ktv::findKtvByCode($request->partner);
+            $value['mac'] = $request->mac;
             $value['created_at'] = $now;
             $value['updated_at'] = $now;
-            
+
             if (! isset($value['date'])) {
                 $value['date'] = Carbon::today()->toDateString();
             }

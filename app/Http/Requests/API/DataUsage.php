@@ -13,8 +13,8 @@ class DataUsage extends Request
     {
         return [
             'partner' => 'required',
+            'mac' => 'required',
             'data' => 'array|required',
-            'data.*.mac' => 'required',
             'data.*.song_id' => 'required',
             'data.*.times' => 'required',
         ];

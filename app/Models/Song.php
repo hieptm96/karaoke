@@ -10,6 +10,7 @@ class Song extends ModelTracking
     use SoftDeletes;
 
     protected $fillable = [
+        'id',
         'file_name',
         'name',
         'name_raw',
@@ -24,10 +25,6 @@ class Song extends ModelTracking
         'created_by',
         'updated_by',
     ];
-
-    protected $primaryKey = 'id';
-
-    public $incrementing = false;
 
     protected $dates = ['deleted_at'];
 

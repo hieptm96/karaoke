@@ -59,10 +59,12 @@ class KtvReportRepository implements Contract
     public function getDetailDatatables(Request $request)
     {
         $ktv_reports = \App\Models\ImportedDataUsage::with(array('song'=>function($query){
-                            $query->select('file_name','name');
+                            // $query->select('file_name','name');
+                            $query->select('id','name');
                         }))
                         ->where('ktv_id', $request->id)
-                        ->select('song_file_name','ktv_id', 'times', 'date');
+                        // ->select('song_file_name','ktv_id', 'times', 'date');
+                        ->select('song_id','ktv_id', 'times', 'date');
 
 
         return Datatables::of($ktv_reports)
@@ -95,7 +97,7 @@ class KtvReportRepository implements Contract
                             ->leftJoin('imported_data_usages as i', function($join) {
                                 $join->on('i.box_code', '=', 'b.code');
                             })
-                            ->join('songs as s', 's.file_name', '=', 'i.song_file_name')
+                            ->join('songs as s', 's.id', '=', 'i.song_id')
                             ->whereNull('b.deleted_at')
                             ->whereNull('s.deleted_at')
                             ->where('i.ktv_id', '=', '?')

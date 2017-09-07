@@ -80,6 +80,46 @@
 @push('inline_scripts')
 <script>
 
+    var rowTemplate = 
+        '<tr id="row-template">'
+        +    '<td class="hidden"><input type="text" id="owner-id"></td>'
+        +    '<td class="hidden"><input type="text" id="owner-percentage" name="percentage"></td>'
+        +    '<td class="id"></td>'
+        +    '<td class="name"></td>'
+        +    '<td class="percentage"></td>'
+        +    '<td>'
+        +    '    <a class="btn btn-primary btn-xs waves-effect waves-light"><i class="fa fa-edit"></i> sửa</a>'
+        +    '    <a class="btn btn-default delete-song btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>'
+        +    '</td>'
+        +'</tr>';
+
+    function addAuthor(authorRow) {
+        var newRow = $(rowTemplate).clone().insertBefore($('#add-author-row'));
+        newRow.find('#owner-id').val(authorRow.find('.owner-id').html());
+        newRow.find('#owner-id').attr('name', 'authorId[]');
+        newRow.find('.id').html(authorRow.find('.owner-id').html());
+        newRow.find('.name').html(authorRow.find('.owner-name').html());
+    }
+
+    function addOwnerRow(ownerRowData, beforeElement, ownerType) {
+        var ownerIdName = ownerType + 'Id[]';
+        var newRow = $(rowTemplate).clone().insertBefore(beforeElement);
+        newRow.find('#owner-id').val(ownerRowData.find('.owner-id').html());
+        newRow.find('#owner-id').attr('name', ownerIdName);
+        newRow.find('.id').html(ownerRowData.find('.owner-id').html());
+        newRow.find('.name').html(ownerRowData.find('.owner-name').html());
+    }
+
+    function addAuthor2(row) {
+        var beforeElement = $('#add-author-row');
+        addOwnerRow(row, beforeElement, 'author');
+    }
+
+    function addRecord(recordRowData) {
+        var beforeElement = $('#add-record-row');
+        addOwnerRow(recordRowData, beforeElement, 'record');
+    }
+
     $(function() {
         $('#songs-edit').validate({
             rules: {
@@ -104,27 +144,10 @@
             }
         });
 
-        var rowTemplate = $('#row-template tr');
-
         var callBack = null;
 
-        function addAuthor(authorRow) {
-            var row = $('#add-author-row');
-            var newRow = row.clone().insertBefore(row);
-            newRow.find('.id').html(authorRow.find('.owner-id').html());
-            newRow.find('.name').html(authorRow.find('.owner-name').html());
-        }
-
-        function addRecord(authorRow) {
-            var row = $('#add-record-row');
-            var newRow = row.clone().insertBefore(row);
-            newRow.find('.id').html(authorRow.find('.owner-id').html());
-            newRow.find('.name').html(authorRow.find('.owner-name').html());
-            newRow.find('.id').val(authorRow.find('.owner-id').html());
-        }
-
         $(document).on('click', '#add-author', function() {
-            callBack = addAuthor;
+            callBack = addAuthor2;
         });
 
         $(document).on('click', '#add-record', function() {
@@ -133,6 +156,7 @@
 
         $(document).on('click', '.select-owner', function() {
             var row = $(this).parent().parent();
+            var rowTemplate = $('#row-template');
             callBack(row);
         });
 

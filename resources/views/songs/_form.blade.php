@@ -66,7 +66,21 @@
 
 <div class="form-group">
     <label for="singers" class="col-sm-4 control-label">Đơn vị sở hữu nội dung: </label>
-
+   {{--  <div class="hidden">
+        <table>
+            <tr id="row-template">
+                <td class="hidden"><input type="text" class="hidden" name="ownerId[]"></td>
+                <td class="id"></td>
+                <td class="name"></td>
+                <td class="percentage"></td>
+                <td>
+                    <a class="btn btn-primary btn-xs waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
+                    <a class="btn btn-default delete-song btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+ --}}
     <div class="col-sm-7">
         <br />
 
@@ -81,14 +95,14 @@
                         <th width="20%"></th>
                     </tr>
                     <tr>
-                        <td class="id"></td>
+                        <td class="hidden"></td>
+                        <td class="id">1</td>
                         <td class="name">Nhạc sỹ phú quang</td>
                         <td class="percentage">100</td>
                         <td>
                             <a class="btn btn-primary btn-xs waves-effect waves-light"><i class="fa fa-edit"></i> Sửa</a>
                             <a class="btn btn-default delete-song btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>
                         </td>
-                        <input type="text" class="id" class="hidden" value="1" name="ownerId[]">
                     </tr>
                     <tr id="add-author-row">
                         <td class="id"></td>
@@ -97,7 +111,6 @@
                         <td>
                             <a id="add-author" class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> Thêm</a>
                         </td>
-                        <input type="text" class="id" class="hidden" value="1" name="ownerId[]">
                     </tr>
                 </table>
             </div>
@@ -126,7 +139,6 @@
                         <td>
                             <a id="add-record" class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> Thêm</a>
                         </td>
-                        <input type="text" class="id" class="hidden" value="1" name="ownerId[]">
                     </tr>
                 </table>
             </div>

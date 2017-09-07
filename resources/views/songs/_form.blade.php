@@ -92,12 +92,12 @@
                         @endforeach
                     @endif
 
-                    <tr id="add-author-row">
+                    <tr id="add-content-owner-row">
                         <td class="id"></td>
                         <td class="name"></td>
                         <td class="percentage"></td>
                         <td>
-                            <a id="add-author" class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> Thêm</a>
+                            <a id="add-author" class="add-content-owner-btn btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> Thêm</a>
                         </td>
                     </tr>
                 </table>
@@ -130,12 +130,12 @@
                         @endforeach
                     @endif
 
-                    <tr id="add-record-row">
+                    <tr id="add-content-owner-row">
                         <td class="id"></td>
                         <td class="name"></td>
                         <td class="percentage"></td>
                         <td>
-                            <a id="add-record" class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> Thêm</a>
+                            <a id="add-record" class="add-content-owner-btn btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> Thêm</a>
                         </td>
                     </tr>
                 </table>
@@ -176,9 +176,6 @@
 
 @push('inline_scripts')
     <script>
-        var editOwnerEvent = null;
-        var addOwner = null;
-
         var rowTemplate =
             '<tr class="content-owner">'
             +    '<td class="id"><input size="10" class="input-td" id="owner-id" type="text" readonly></td>'
@@ -189,6 +186,7 @@
             +    '    <a class="btn btn-default delete-owner btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>'
             +    '</td>'
             +'</tr>';
+
 
         function updatePercentage(table) {
             var contentOwnerRows = table.find('.content-owner');
@@ -201,73 +199,81 @@
             });
         }
 
-        function addOwnerRow(ownerRowData, beforeElement, ownerType) {
-            var ownerId = ownerRowData.find('.owner-id').html();
+        function ContentOwnerManager() {
+            this.ownerTable = null;
+            this.ownerRowToEdit = null;
+            this.action = null; // "add" or "edit"
+            this.ownerType = null; // "author" or "record"
 
-            // check ownerId has selected
-            var table = beforeElement.closest('table');
-            var contentOwnerRows = table.find('.content-owner');
-            for (let i = 0; i < contentOwnerRows.length; i++) {
-                if ($(contentOwnerRows.get(i)).find('#owner-id').val() === ownerId) {
+            this.addOwnerRow = function(ownerRowData) {
+                var ownerId = ownerRowData.find('.owner-id').html();
+
+                if (this.checkExistedOwnerId(ownerId)) {
                     return;
+                }
+
+                var beforeElement = this.ownerTable.find('#add-content-owner-row');
+
+                var newRow = $(rowTemplate).clone().insertBefore(beforeElement);
+
+                newRow.find('#owner-id').val(ownerId);
+                newRow.find('#owner-id').attr('name', this.ownerType + 'Ids[]');
+                newRow.find('.name').html(ownerRowData.find('.owner-name').html());
+                newRow.find('#percentage').attr('name', this.ownerType + 'Percentages[' + ownerId + ']');
+
+                updatePercentage(this.ownerTable);
+            }
+
+            this.editOwnerRow = function(selectedOwnerRow) {
+                var ownerId = selectedOwnerRow.find('.owner-id').html();
+
+                if (this.checkExistedOwnerId(ownerId)) {
+                    return;
+                }
+
+                this.ownerRowToEdit.find('#owner-id').val(ownerId);
+                this.ownerRowToEdit.find('.name').html(selectedOwnerRow.find('.owner-name').html());
+
+                var inputName = this.ownerRowToEdit.find('#percentage').attr('name');
+                var newInputName = inputName.replace(/[0-9]+/g, ownerId);
+                this.ownerRowToEdit.find('#percentage').attr('name', newInputName);
+            }
+
+            this.checkExistedOwnerId = function(ownerId) {
+                var contentOwnerRows = this.ownerTable.find('.content-owner');
+                for (let i = 0; i < contentOwnerRows.length; i++) {
+                    if ($(contentOwnerRows.get(i)).find('#owner-id').val() === ownerId) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+
+            this.handleSelectOwner = function(selectedOwnerRow) {
+                if (this.action === 'add') {
+                    this.addOwnerRow(selectedOwnerRow);
+                } else if (this.action === 'edit') {
+                    this.editOwnerRow(selectedOwnerRow);
                 }
             }
 
-            var newRow = $(rowTemplate).clone().insertBefore(beforeElement);
-
-            newRow.find('#owner-id').val(ownerId);
-            newRow.find('#owner-id').attr('name', ownerType + 'Ids[]');
-            newRow.find('.name').html(ownerRowData.find('.owner-name').html());
-            newRow.find('#percentage').attr('name', ownerType + 'Percentages[' + ownerId + ']');
-
-            updatePercentage(table);
-        }
-
-        function addAuthor(row) {
-            var beforeElement = $('#add-author-row');
-            addOwnerRow(row, beforeElement, 'author');
-            console.log(1);
-        }
-
-        function addRecord(recordRowData) {
-            var beforeElement = $('#add-record-row');
-            addOwnerRow(recordRowData, beforeElement, 'record');
-        }
-
-        function editOwner(selectedOwnerRow) {
-            var ownerId = selectedOwnerRow.find('.owner-id').html();
-
-            var table = this.row.closest('table');
-            console.log(table);
-            var contentOwnerRows = table.find('.content-owner');
-            console.log(contentOwnerRows.length);
-            for (let i = 0; i < contentOwnerRows.length; i++) {
-                console.log($(contentOwnerRows.get(i)).find('#owner-id').val());
-                if ($(contentOwnerRows.get(i)).find('#owner-id').val() === ownerId) {
-                    return;
-                }
+            this.registerAddOwnerAction = function(ownerTable, ownerType) {
+                this.ownerTable = ownerTable;
+                this.action = 'add';
+                this.ownerType = ownerType;
             }
 
-            this.row.find('#owner-id').val(ownerId);
-            this.row.find('.name').html(selectedOwnerRow.find('.owner-name').html());
-            var inputName = this.row.find('#percentage').attr('name');
-            var newInputName = inputName.replace(/[0-9]+/g, ownerId);
-
-
-            this.row.find('#percentage').attr('name', newInputName);
-        }
-
-        function selectOwner(selectedOwnerRow) {
-            if (this.action === "edit") {
-                editOwnerEvent(selectedOwnerRow);
-            } else {
-                addOwner(selectedOwnerRow);
+            this.registerEditOwnerAction = function(ownerTable, ownerRowToEdit) {
+                this.ownerTable = ownerTable;
+                this.action = 'edit';
+                this.ownerRowToEdit = ownerRowToEdit;
             }
         }
 
-        function bindAddAction() {
-            selectOwner = selectOwner.bind({action: 'add'});
-        }
+        var contentOwnerManager = new ContentOwnerManager();
+
 
         $(function() {
             $('#songs-edit').validate({
@@ -294,23 +300,22 @@
             });
 
             $(document).on('click', '#add-author', function() {
-                addOwner = addAuthor;
                 $('input#owner-type').val({{ array_search('author', config('ktv.contentOwnerTypes')) }});
 
-                bindAddAction();
+                var table = $(this).closest('table');
+                contentOwnerManager.registerAddOwnerAction(table, 'author');
             });
 
             $(document).on('click', '#add-record', function() {
-                addOwner = addRecord;
                 $('input#owner-type').val({{ array_search('record', config('ktv.contentOwnerTypes')) }});
 
-                bindAddAction();
+                var table = $(this).closest('table');
+                contentOwnerManager.registerAddOwnerAction(table, 'record');
             });
 
             $(document).on('click', '.select-owner', function(e) {
                 var row = $(this).parent().parent();
-
-                selectOwner(row);
+                contentOwnerManager.handleSelectOwner(row);
             });
 
             $(document).on('click', '.delete-owner', function(e) {
@@ -321,9 +326,10 @@
 
             $(document).on('click', '.edit-owner', function(e) {
                 $('input#owner-type').val($(this).closest('table').attr('owner-type'));
+
                 var row = $(this).parent().parent();
-                editOwnerEvent = editOwner.bind({row: row});
-                selectOwner = selectOwner.bind({action: 'edit'});
+                var table = $(this).closest('table');
+                contentOwnerManager.registerEditOwnerAction(table, row);
             });
         });
 

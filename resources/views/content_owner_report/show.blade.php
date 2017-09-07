@@ -13,7 +13,7 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Thống kê số tiền cần thu của {{ $content_owner->name }}</h4>
+            <h4 class="page-title">Thống kê số tiền bản quyền của {{ $content_owner->name }}</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">Đơn vị sở hữu bản quyền</a>

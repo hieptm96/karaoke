@@ -16,6 +16,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <form class="row form-inline" role="form" id="search-form">
+                                            <input type="text" id="owner-type" class="form-control hidden" />
                                             <input type="text" id="name-search" class="form-control" placeholder="Tên đơn vị sở hữu bản quyền" name="name" />
                                             <input type="text" id="phone-search" class="form-control" placeholder="Số điện thoại" name="phone" />
                                             <input type="text" id="email-search" class="form-control" placeholder="Email" name="email" />
@@ -29,6 +30,8 @@
                                                 <option     value="">-- Chọn Quận/Huyện --</option>
                                                 <option ng-repeat="district in districts" value="<% district.id %>"><% district.name %></option>
                                             </select>
+
+                                            <button type="submit" class="btn btn-default waves-effect waves-light m-l-15">Tìm kiếm</button>
                                         </form>
                                     </div>
                                 </div>
@@ -73,17 +76,11 @@
 
 @push('inline_scripts')
     <script>
-        var deleteAndEditAction = '<a class="btn btn-default owner-btn delete-owner input-group-addon btn-block" >Xóa</a>'
-            + '<a class="btn btn-primary owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Sửa</a>';
-        var selectAction = '<a class="btn btn-default owner-btn select-owner-btn input-group-addon btn-block" data-toggle="modal" data-target="#owner-modal">Chọn</a>';
 
-        // author
         var url = '{{ route('contentowners.getdistricts') }}';
-        var owner;
-        var contentOwnerDatatable;
         $(function () {
             $.fn.dataTable.ext.errMode = 'none';
-            contentOwnerDatatable = $("#content-owner-datatable").DataTable({
+            var contentOwnerDatatable = $("#content-owner-datatable").DataTable({
                 searching: false,
                 serverSide: true,
                 processing: true,
@@ -92,7 +89,7 @@
                 ajax: {
                     url: "{!! route('contentowners.datatables') !!}",
                     data: function (d) {
-                        d.type = 2;
+                        d.type = $('#owner-type').val();
                         d.name = $('#name-search').val();
                         d.phone = $('#phone-search').val();
                         d.email = $('#email-search').val();
@@ -124,28 +121,22 @@
                     {data: 'code', name: 'code'},
                     {name: 'select', orderable: false, searchable: false},
                 ],
-                order: [[2, 'asc']]
+                order: [[1, 'asc']]
             });
 
-            $('#name-search').on('keyup', function(e) {
+            $('#search-form').on('submit', function(e) {
                 contentOwnerDatatable.draw();
                 e.preventDefault();
             });
-            $('#phone-search').on('keyup', function(e) {
+
+            $('#search-form select').on('change', function(e) {
                 contentOwnerDatatable.draw();
-                e.preventDefault();
             });
-            $('#email-search').on('keyup', function(e) {
-                contentOwnerDatatable.draw();
-                e.preventDefault();
-            });
-            $('#province').on('change', function(e) {
-                contentOwnerDatatable.draw();
-                e.preventDefault();
-            });
-            $('#district-search').on('change', function(e) {
-                contentOwnerDatatable.draw();
-                e.preventDefault();
+
+            $('#search-form input').on('keyup', function(e) {
+                if ($(this).val().length == 0) {
+                    contentOwnerDatatable.draw();
+                }
             });
         });
 

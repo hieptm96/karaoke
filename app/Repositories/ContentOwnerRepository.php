@@ -36,6 +36,10 @@ class ContentOwnerRepository implements Contract
                  if ($request->has('district')) {
                      $query->where('district_id', $request->district);
                  }
+
+                 if ($request->has('type')) {
+                     $query->where('type', $request->type);
+                 }
              })
             ->setTransformer(new ContentOwnerTransformer)
             ->make(true);

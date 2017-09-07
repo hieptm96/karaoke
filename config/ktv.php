@@ -12,7 +12,7 @@ return [
         2 => 'Nữ',
         3 => 'Chưa xác định'
     ],
-    'contentOwners' => [
+    'contentOwnerTypes' => [
         1 => 'author',
         2 => 'record'
     ]

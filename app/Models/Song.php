@@ -11,7 +11,6 @@ class Song extends ModelTracking
 
     protected $fillable = [
         'id',
-        'file_name',
         'name',
         'name_raw',
         'abbr',

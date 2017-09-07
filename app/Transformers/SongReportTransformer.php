@@ -18,7 +18,6 @@ class SongReportTransformer extends TransformerAbstract
     {
         return [
          'id' => $songReport['id'],
-         'file_name' => $songReport['file_name'],
          'name' => $songReport['name'],
          'has_fee' => $this->getHasFeeColumn($songReport['has_fee']),
          'total_money' => $this->getTotalMoney($songReport),

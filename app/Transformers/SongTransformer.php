@@ -13,14 +13,13 @@ class SongTransformer extends TransformerAbstract
         return [
             'id' => $song['id'],
             'name' => '<a href="'.route('songs.show', $song['id']).'">'.$song['name'].'</a>',
-            'file_name' => $song['file_name'],
             'language' => config('ktv.languages.'.$song['language'], ''),
             'singers' => $this->getSingers($song),
             'created_by' => $song['created_by']['name'],
             'created_at' =>  $song['created_at'],
             'updated_at' =>  $song['updated_at'],
             'actions' => $song['actions'],
-            'has_fee' => $this->getHasFeeColumn($song['has_fee']) ,
+            'has_fee' => $this->getHasFeeColumn($song['has_fee']),
         ];
     }
 
@@ -29,7 +28,6 @@ class SongTransformer extends TransformerAbstract
         return [
             'id' => $song->id,
             'name' => $song->name,
-            'file_name' => $song['file_name'],
             'language' => $song->language,
             'singers' => $this->getSingerUrls($song),
             'created_by' => !empty($song->createdBy) ? $song->createdBy->name : '',
@@ -37,7 +35,6 @@ class SongTransformer extends TransformerAbstract
             'updated_at' => $song->updated_at,
             'contentOwners' => $this->getContentOwners($song),
             'has_fee' => $song['has_fee'],
-            'all' => $song,
         ];
     }
 
@@ -45,8 +42,17 @@ class SongTransformer extends TransformerAbstract
     {
         $owners = [];
 
-        foreach ($song['contentOwners'] as $owner) {
-            $owners[$owner['pivot']['type']] = ['id' => $owner['id'], 'name' => $owner['name']];
+        $authorType = array_search('author', config('ktv.contentOwnerTypes'));
+        $recordType = array_search('record', config('ktv.contentOwnerTypes'));
+
+        foreach ($song['contentOwners'] as $ownerRaw) {
+            $owner = ['id' => $ownerRaw['id'], 'name' => $ownerRaw['name'], 'percentage' => $ownerRaw['pivot']['percentage']];
+
+            if ($ownerRaw['pivot']['type'] == $authorType) {
+                $owners['author'][] = $owner;
+            } else {
+                $owners['record'][] = $owner;
+            }
         }
 
         return $owners;

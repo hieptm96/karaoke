@@ -14,7 +14,6 @@ class ContentOwnerDetailReportTransformer extends TransformerAbstract
             //  'detail' => $detail,
              'has_fee' => $this->getHasFeeColumn($detail['has_fee']),
              'total_times' => $detail['total_times'],
-             'song_file_name' => $detail['song_file_name'],
              'total_money' => $this->getTotalMoney($detail['total_money']),
              'discount' => $this->getTotalMoney($detail['discount']),
          ];

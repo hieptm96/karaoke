@@ -4,13 +4,10 @@
     <link href="/vendor/ubold/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/vendor/ubold/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
     <link href="/vendor/ubold/assets/plugins/custombox/css/custombox.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet" type="text/css"/>
 @endpush
 
 @section('content')
-
-    @include('songs.singer-modal')
-
-    @include('songs.content-owner-modal')
 
     <!-- Page-Title -->
     <div class="row">
@@ -49,21 +46,12 @@
             <div class="card-box table-responsive">
                 <h4 class="m-t-0 header-title"><b>Thông tin bài hát</b></h4>
 
-                <form class="form-horizontal" id="song-filer-form" method="post" action="/songs/{{ $song['id'] }}" role="form"  data-parsley-validate novalidate>
-                   <input name="_method" value="PUT" type="hidden">
-                   <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                <form class="form-horizontal" id="song-filer-form" role="form"  data-parsley-validate novalidate>
 
                   <div class="form-group">
                     <label for="input-name" class="col-sm-4 control-label">Tên: </label>
                     <div class="col-sm-7">
                       <span class="form-control">{{ $song['name'] }}</span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="input-name" class="col-sm-4 control-label">Mã bài hát: </label>
-                    <div class="col-sm-7">
-                      <span class="form-control">{{ $song['file_name'] }}</span>
                     </div>
                   </div>
 
@@ -111,62 +99,55 @@
                   <div class="form-group">
                     <label for="singers" class="col-sm-4 control-label">Đơn vị sở hữu nội dung: </label>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <br />
 
-                        <div class="">
-                          <label for="singers" class="">Nhạc sĩ: </label>
-                          <div class="">
-                              <span class="form-control">{{ $song['contentOwners']['musican']['name'] or 'Không có ...' }}</span>
-                          </div>
-                        </div>
+                        <table id="author" class="table table-striped table-bordered">
+                            <tr>
+                                <th width="10%">Mã</th>
+                                <th>Quyền tác giả</th>
+                            </tr>
+
+                            @if (!empty($song['contentOwners']['author']))
+                                @foreach ($song['contentOwners']['author'] as $owner)
+                                    <tr class="content-owner">
+                                        <td class="id"><input size="10" class="input-td" type="text" readonly value="{{ $owner['id'] }}"></td>
+                                        <td class="name">{{ $owner['name'] }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td valign="top" colspan="10">Hiện chưa có</td>
+                                </tr>
+                            @endif
+                        </table>
 
                         <div class="">
-                          <label for="singers" class="">Lời: </label>
-                          <div class="">
-                              <span class="form-control">{{ $song['contentOwners']['title']['name'] or 'Không có ...' }}</span>
-                          </div>
+                            <label for="" class=""></label>
+                            <div class="">
+                                <table id="record" class="table table-striped table-bordered dataTable">
+                                    <tr>
+                                        <th width="10%">Mã</th>
+                                        <th>Quyền bản ghi</th>
+                                    </tr>
+
+                                    @if (!empty($song['contentOwners']['record']))
+                                        @foreach ($song['contentOwners']['record'] as $owner)
+                                            <tr class="content-owner">
+                                                <td class="id"><input size="10" class="input-td" type="text" readonly value="{{ $owner['id'] }}"></td>
+                                                <td class="name">{{ $owner['name'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td valign="top" colspan="10">Hiện chưa có</td>
+                                        </tr>
+                                    @endif
+
+                                </table>
+                            </div>
                         </div>
 
-                        <div class="">
-                          <label for="singers" class="">Ca sĩ: </label>
-                          <div class="">
-                              <span class="form-control">{{ $song['contentOwners']['singer']['name'] or 'Không có ...' }}</span>
-
-                          </div>
-                        </div>
-
-
-                        <div class="">
-                          <label for="singers" class="">Quay phim: </label>
-                          <div class="">
-                              <span class="form-control">{{ $song['contentOwners']['film']['name'] or 'Không có ...' }}</span>
-
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-
-                  <hr />
-
-
-                  <div class="form-group">
-                    <label for="created-by"class="col-sm-4 control-label">Người tạo: </label>
-                    <div class="col-sm-7">
-                        <span class="form-control">{{ $song['created_by'] }}</span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="webSite" class="col-sm-4 control-label">Thời gian tạo: </label>
-                    <div class="col-sm-7">
-                        <span class="form-control">{{ $song['created_at'] }}</span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="webSite" class="col-sm-4 control-label">Thời gian sửa đổi lần cuối: </label>
-                    <div class="col-sm-7">
-                        <span class="form-control">{{ $song['updated_at'] }}</span>
                     </div>
                   </div>
 

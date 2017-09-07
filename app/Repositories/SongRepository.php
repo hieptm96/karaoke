@@ -43,11 +43,11 @@ class SongRepository implements Contract
                             ->orWhere('name_raw', 'like', $param);
                     });
                 }
-                if ($request->has('filename')) {
-                    $param = '%'.$request->filename.'%';
+                if ($request->has('id')) {
+                    $param = '%'.$request->id.'%';
 
                     $query->where(function ($q) use ($param) {
-                        $q->where('file_name', 'like', $param);
+                        $q->where('id', 'like', $param);
                     });
                 }
                 if ($request->has('singer')) {
@@ -111,7 +111,7 @@ class SongRepository implements Contract
             $song->singers()->sync($singerIds);
         }
 
-        $owners = $this->getOwners($request);
+        $owners = $this->getContentOwners($request);
         $song->contentOwners()->sync($owners);
 
         return $song;
@@ -126,61 +126,34 @@ class SongRepository implements Contract
         return static::$config[static::$percentType[$ownerType]];
     }
 
-    public function getOwners($request)
+    public function getContentOwners($request)
     {
-        $owners = [];
+        $authorType = array_search('author', config('ktv.contentOwnerTypes'));
+        $recordType = array_search('record', config('ktv.contentOwnerTypes'));
 
-        if (!empty($request['singer-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('singer');
-            $owners[] = ['content_owner_id' => $request['singer-owner'],
-                    'type' => 1, 'percentage' => $defaultPercentage];
+        $contentOwners = [];
+
+        $recordIds = $request->recordIds;
+        if ($recordIds === null) {
+            $recordIds = [];
+        }
+        $recordPercentages = $request->recordPercentages;
+        foreach ($recordIds as $recordId) {
+            $contentOwners[] = ['content_owner_id' => $recordId,
+                'type' => $recordType, 'percentage' => $recordPercentages[$recordId]];
         }
 
-        if (!empty($request['musican-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('musican');
-            $owners[] = ['content_owner_id' => $request['musican-owner'],
-                    'type' => 2, 'percentage' => $defaultPercentage];
+        $authorIds = $request->authorIds;
+        if ($authorIds === null) {
+            $authorIds = [];
+        }
+        $authorPercentages = $request->authorPercentages;
+        foreach ($authorIds as $authorId) {
+            $contentOwners[] = ['content_owner_id' => $authorId,
+                'type' => $authorType, 'percentage' => $authorPercentages[$authorId]];
         }
 
-        if (!empty($request['title-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('title');
-            $owners[] = ['content_owner_id' => $request['title-owner'],
-                    'type' => 3, 'percentage' => $defaultPercentage];
-        }
-
-        if (!empty($request['film-owner'])) {
-            $defaultPercentage = $this->getDefaultPercentage('film');
-            $owners[] = ['content_owner_id' => $request['film-owner'],
-                    'type' => 4, 'percentage' => $defaultPercentage];
-        }
-
-        $nOwners = count($owners);
-        $getMaximumOwners = 4;
-        if ($nOwners == $getMaximumOwners) {
-            return $owners;
-        }
-
-        $sumPercent = 0;
-
-        foreach ($owners as $key => $owner) {
-            $sumPercent += $owner['percentage'];
-        }
-
-        $remainPercent = 100;
-        $count = 0;
-        foreach ($owners as $key => &$owner) {
-            if ($count == count($owners) - 1) {
-                $owner['percentage'] = $remainPercent;
-                break;
-            }
-
-            $realPercent = floatval($owner['percentage']) / $sumPercent * 100;
-            $owner['percentage'] = round($realPercent);
-            $remainPercent -= $owner['percentage'];
-            $count++;
-        }
-
-        return $owners;
+        return $contentOwners;
     }
 
     /**
@@ -191,7 +164,8 @@ class SongRepository implements Contract
      */
     public function update($id, Request $request)
     {
-        dd($request->toArray());
+        $owners = $this->getContentOwners($request);
+
         $song = Song::findOrFail($id);
 
         $song->update($request->toArray());
@@ -204,10 +178,10 @@ class SongRepository implements Contract
             $song->singers()->detach();
         }
 
-
-        $owners = $this->getOwners($request, $song->file_name);
-        $song->contentOwners()->detach();
-        $song->contentOwners()->attach($owners);
+        $owners = $this->getContentOwners($request);
+        $song->contentOwners()->sync($owners);
+//        $song->contentOwners()->detach();
+//        $song->contentOwners()->attach($owners);
 
         return $song;
     }

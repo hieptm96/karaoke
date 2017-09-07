@@ -12,11 +12,15 @@ class DataUsage extends Request
     public function rules()
     {
         return [
-            'partner' => 'required',
-            'mac' => 'required',
-            'data' => 'array|required',
+//            'partner' => 'required',
+//            'mac' => 'required',
+//            'data' => 'array|required',
+//            'data.*.song_id' => 'required',
+//            'data.*.times' => 'required',
+            'ktv_id' => 'required',
+            'box_id' => 'required',
+            'song_id' => 'required',
             'data.*.song_id' => 'required',
-            'data.*.times' => 'required',
         ];
     }
 }

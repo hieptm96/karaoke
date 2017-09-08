@@ -136,6 +136,8 @@ class SongRepository implements Contract
         $recordIds = $request->recordIds;
         if ($recordIds === null) {
             $recordIds = [];
+        } else {
+            $recordIds = array_unique($recordIds);
         }
         $recordPercentages = $request->recordPercentages;
         foreach ($recordIds as $recordId) {
@@ -146,7 +148,10 @@ class SongRepository implements Contract
         $authorIds = $request->authorIds;
         if ($authorIds === null) {
             $authorIds = [];
+        } else {
+            $authorIds = array_unique($authorIds);
         }
+
         $authorPercentages = $request->authorPercentages;
         foreach ($authorIds as $authorId) {
             $contentOwners[] = ['content_owner_id' => $authorId,
@@ -179,9 +184,9 @@ class SongRepository implements Contract
         }
 
         $owners = $this->getContentOwners($request);
-        $song->contentOwners()->sync($owners);
-//        $song->contentOwners()->detach();
-//        $song->contentOwners()->attach($owners);
+//        $song->contentOwners()->sync($owners);    // work with some errors
+        $song->contentOwners()->detach();
+        $song->contentOwners()->attach($owners);
 
         return $song;
     }

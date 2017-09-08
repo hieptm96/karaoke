@@ -15,7 +15,7 @@ class ChangeTypeOfContentOwnerSong extends Migration
     {
         try {
             Schema::table('content_owner_song', function ($table) {
-                $table->dropUnique(['content_owner_id', 'song_file_name', 'type']);
+                $table->dropUnique(['content_git powner_id', 'song_file_name', 'type']);
             });
         } catch(Exception $e) {
             echo 'Co gi do sai sai!!!';

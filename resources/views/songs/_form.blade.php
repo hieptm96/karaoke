@@ -83,7 +83,7 @@
                                 <td class="id"><input size="10" class="input-td" name="authorIds[]" id="owner-id" type="text" readonly value="{{ $owner['id'] }}"></td>
                                 <td class="name">{{ $owner['name'] }}</td>
                                 <td class="percentage"><input size="6" id="percentage" name="authorPercentages[{{ $owner['id'] }}]"
-                                                              class="input-td autonumber" data-a-sep="," data-a-dec="." type="text" value="{{ $owner['percentage'] }}"></td>
+                                                              class="autonumber" data-a-sep="," data-a-dec="." type="text" value="{{ $owner['percentage'] }}"></td>
                                 <td>
                                     <a class="btn btn-primary btn-xs waves-effect waves-light edit-owner" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> sửa</a>
                                     <a class="btn btn-default delete-owner btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>
@@ -121,7 +121,7 @@
                                 <td class="id"><input size="10" class="input-td" name="recordIds[]" id="owner-id" type="text" readonly value="{{ $owner['id'] }}"></td>
                                 <td class="name">{{ $owner['name'] }}</td>
                                 <td class="percentage"><input size="6" id="percentage" name="recordPercentages[{{ $owner['id'] }}]"
-                                                              class="input-td autonumber" data-a-sep="," data-a-dec="." type="text" value="{{ $owner['percentage'] }}"></td>
+                                                              class="autonumber" data-a-sep="," data-a-dec="." type="text" value="{{ $owner['percentage'] }}"></td>
                                 <td>
                                     <a class="btn btn-primary edit-owner btn-xs waves-effect waves-light" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> sửa</a>
                                     <a class="btn btn-default delete-owner btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>
@@ -180,7 +180,7 @@
             '<tr class="content-owner">'
             +    '<td class="id"><input size="10" class="input-td" id="owner-id" type="text" readonly></td>'
             +    '<td class="name"></td>'
-            +    '<td class="percentage"><input size="6" id="percentage" name="percentage" class="input-td autonumber" data-a-sep="," data-a-dec="." type="text"></td>'
+            +    '<td class="percentage"><input size="6" id="percentage" name="percentage" class="autonumber" data-a-sep="," data-a-dec="." type="text"></td>'
             +    '<td>'
             +    '    <a class="btn btn-primary btn-xs waves-effect waves-light edit-owner" data-toggle="modal" data-target="#content-owner-modal"><i class="fa fa-edit"></i> sửa</a>'
             +    '    <a class="btn btn-default delete-owner btn-xs waves-effect waves-light"><i class="fa fa-trash"></i> Xóa</a>'

@@ -20,7 +20,6 @@ class DataUsage extends Request
             'ktv_id' => 'required',
             'box_id' => 'required',
             'song_id' => 'required',
-            'data.*.song_id' => 'required',
         ];
     }
 }

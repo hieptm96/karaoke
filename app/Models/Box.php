@@ -16,6 +16,7 @@ class Box extends ModelTracking
         'code',
         'ktv_id',
         'info',
+        'mac'
     ];
 
     protected $dates = ['deleted_at'];

@@ -14,7 +14,7 @@ class AddSingerIdSongIdUniqueToSingerSongTable extends Migration
     public function up()
     {
         Schema::table('singer_song', function (Blueprint $table) {
-            $table->unique(['singer_id', 'song_id']);
+//            $table->unique(['singer_id', 'song_id']);
         });
     }
 

@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/data', 'SongsController@importDataUsage');
 
 Route::post('/data-usages', 'DataUsagesController@store');
+Route::post('/register', 'RegisterKtvsController@store');
+Route::post('/cancel', 'RegisterKtvsController@cancel');

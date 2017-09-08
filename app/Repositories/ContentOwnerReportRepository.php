@@ -69,7 +69,7 @@ class ContentOwnerReportRepository implements Contract
             ->make(true);
     }
 
-    public function getDetailDatatables(Request $request)
+    public function getDetailDatatables(Request $request, $id)
     {
         if ($request->has('date')) {
             $dates = explode(':', $request->date, 2);
@@ -87,15 +87,14 @@ class ContentOwnerReportRepository implements Contract
 
         $details =
             DB::table('imported_data_usages AS i')
-            ->selectRaw('s.name, s.id, s.file_name as song_file_name, has_fee, owner_types, SUM(times) AS total_times,
+            ->selectRaw('s.name, s.id, has_fee, SUM(times) AS total_times,
                         (case when has_fee <> 0 then SUM(times) else 0 end) AS total_money,
                         (case when has_fee <> 0 then SUM(times) * percentage / 100 else 0 end) AS discount,
                         percentage')
             ->join('songs AS s', function($join) {
                 $join->on('i.song_id', '=', 's.id');
             })
-            ->join(DB::raw('(select song_id, song_file_name, SUM(percentage) AS percentage,
-                    GROUP_CONCAT(type SEPARATOR ";") owner_types
+            ->join(DB::raw('(select song_id, SUM(percentage) AS percentage
                     FROM content_owner_song AS c
                     WHERE content_owner_id = ?
                     GROUP BY song_id) AS t'
@@ -103,15 +102,15 @@ class ContentOwnerReportRepository implements Contract
             ->whereBetween('i.date', ['?', '?'])
             ->whereNull('s.deleted_at')
             ->groupBy('i.song_id')
-            ->setBindings([$request->id, $startDate, $stopDate]);
+            ->setBindings([$id, $startDate, $stopDate]);
 
         return Datatables::of($details)
             ->filter(function ($query) use ($request) {
                 if ($request->has('name')) {
                     $query->where('s.name', 'like', '%' . $request->name . '%');
                 }
-                if ($request->has('file_name')) {
-                    $query->where('s.file_name', 'like', '%' . $request->file_name . '%');
+                if ($request->has('id')) {
+                    $query->where('s.id', 'like', '%' . $request->id . '%');
                 }
                 if ($request->has('owner-types')) {
                     $ownerTypes = $request['owner-types'];

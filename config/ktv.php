@@ -11,5 +11,9 @@ return [
         1 => 'Nam',
         2 => 'Nữ',
         3 => 'Chưa xác định'
+    ],
+    'contentOwnerTypes' => [
+        1 => 'author',
+        2 => 'record'
     ]
 ];

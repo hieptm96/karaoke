@@ -79,7 +79,7 @@ $user = Auth::user();
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
                             <label class="sr-only" for="">Mã bài hát</label>
-                            <input type="text" id="filename-filter" class="form-control" placeholder="Mã bài hát" name="filename" />
+                            <input type="text" id="id-filter" class="form-control" placeholder="Mã bài hát" name="id" />
                         </div>
 
                         <div class="form-group">
@@ -178,7 +178,7 @@ $user = Auth::user();
             ajax: {
                 url: "{!! route('songs.datatables') !!}",
                 data: function (d) {
-                    d.filename = $('#filename-filter').val();
+                    d.id = $('#id-filter').val();
                     d.name = $('#name-filter').val();
                     d.singer = $('#singer-filter').val();
                     d.language = $('#language-filter').val();
@@ -190,7 +190,7 @@ $user = Auth::user();
                 'className': "singer-data",
             } ],
             columns: [
-                {data: 'file_name', name: 'file_name'},
+                {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'singers', name: 'singers', orderable: false, searchable: false},
                 {data: 'has_fee', name: 'has_fee', searchable: false},
@@ -216,8 +216,7 @@ $user = Auth::user();
         });
         
         $('#search-form input').on('keyup', function(e) {
-            var createdBy = $(this).val();
-            if (createdBy.length == 0) {
+            if ($(this).val().length == 0) {
                 datatable.draw();
             }
         });

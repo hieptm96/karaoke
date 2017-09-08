@@ -33,7 +33,7 @@
                         <form class="form-inline" role="form" id="search-form">
                             <div class="form-group">
                                 <label class="sr-only" for="">Mã bài hát</label>
-                                <input type="text" id="file-name-search" class="form-control" placeholder="Mã bài hát" name="file_name" />
+                                <input type="text" id="id-search" class="form-control" placeholder="Mã bài hát" name="file_name" />
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="">Tên bài hát</label>
@@ -105,12 +105,12 @@
                 url: "{!! route('songReport.datatables') !!}",
                 data: function (d) {
                     d.name = $('#name-search').val();
-                    d.file_name = $('#file-name-search').val();
+                    d.id = $('#id-search').val();
                     d.date = $('#date-search').val();
                 }
             },
             columns: [
-                {data: 'file_name', name: 'file_name'},
+                {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'has_fee', name: 'has_fee'},
                 {data: 'total_times', name: 'total_times'},

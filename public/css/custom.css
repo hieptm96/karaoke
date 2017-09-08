@@ -1,3 +1,8 @@
 .bg-white {
     background-color: #fff;
 }
+
+.input-td {
+    border: none;
+    background-color: transparent;
+}

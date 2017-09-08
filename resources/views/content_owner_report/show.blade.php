@@ -13,7 +13,7 @@
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Thống kê số tiền cần thu của {{ $content_owner->name }}</h4>
+            <h4 class="page-title">Thống kê số tiền bản quyền của {{ $content_owner->name }}</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="#">Đơn vị sở hữu bản quyền</a>
@@ -35,7 +35,7 @@
                     <form class="form-inline" role="form" id="search-form">
                         <div class="form-group">
                             <label class="sr-only" for="">Mã bài hát</label>
-                            <input type="text" id="file-name-search" class="form-control" placeholder="Mã bài hát" name="file_name" />
+                            <input type="text" id="id-search" class="form-control" placeholder="Mã bài hát" name="id" />
                         </div>
                         <div class="form-group">
                             <label class="sr-only" for="">Tên bài hát</label>
@@ -106,14 +106,14 @@
                 url: "{!! route('contentOwnerDetailReport.datatables', ['id' => $content_owner->id]) !!}",
                 data: function (d) {
                     d.name = $('#name-search').val();
-                    d.file_name = $('#file-name-search').val();
+                    d.id = $('#id-search').val();
                     d.date = $('#date-search').val();
                     d.from = '{{ Request::get('from') }}';
                     d.to = '{{ Request::get('to') }}';
                 }
             },
             columns: [
-                {data: 'song_file_name', name: 'song_file_name'},
+                {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'has_fee', name: 'has_fee'},
                 {data: 'total_times', name: 'total_times'},

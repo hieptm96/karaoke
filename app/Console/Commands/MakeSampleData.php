@@ -61,7 +61,7 @@ class MakeSampleData extends Command
 
             $data[] = [
                 'ktv_id' => $ktvBox->ktv_id,
-                'song_file_name' => $song->file_name,
+                'song_id' => $song->id,
                 'box_code' => $ktvBox->code,
                 'times' => rand(10, 1000),
                 'date' => array_random($dates),

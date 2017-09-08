@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContentOwner;
 use DB;
 use Excel;
 use Carbon\Carbon;
@@ -131,10 +132,11 @@ class ContentOwnerReportController extends Controller
      * API for datatable
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param int $id
      * @return mix
      */
-    public function detailDatatables(Request $request)
+    public function detailDatatables(Request $request, $id)
     {
-        return $this->contentOwnerReportRepository->getDetailDatatables($request);
+        return $this->contentOwnerReportRepository->getDetailDatatables($request, $id);
     }
 }

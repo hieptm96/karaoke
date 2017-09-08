@@ -61,7 +61,7 @@ class SongReportController extends Controller
         }
 
         $query = DB::table('songs AS s')
-            ->selectRaw('s.id, file_name, name, has_fee, sum(times) as total_times,
+            ->selectRaw('s.id, name, has_fee, sum(times) as total_times,
                             sum(CASE WHEN has_fee <> 0 THEN times ELSE 0 END) AS total_money')
             ->join('imported_data_usages as i', 'i.song_id', '=' , 's.id')
             ->whereNull('s.deleted_at')
@@ -76,8 +76,8 @@ class SongReportController extends Controller
                      $param = '%'.$request->name.'%';
                     $query->where('name', 'like', $param);
                  }
-                 if ($request->has('file_name')) {
-                     $query->where('file_name', 'like', '%'.$request->file_name.'%');
+                 if ($request->has('id')) {
+                     $query->where('s.id', 'like', '%'.$request->id.'%');
                  }
             })
             ->setTransformer(new SongReportTransformer)
